@@ -1,4 +1,4 @@
-# dotfiles
+# .files (dotfiles)
 
 These are my dotfiles. They apply to my Linux machine mostly, but there may be
 some artifacts from my short stint on OS X, and some hacky workarounds for WSL.
