@@ -1,0 +1,6 @@
+[submodule "i3lock-fancy"]
+	path = i3lock-fancy
+	url = https://github.com/meskarune/i3lock-fancy.git
+[submodule "xst"]
+	path = xst
+	url = git@github.com:Utagai/xst.git

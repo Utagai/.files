@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "baby",
+  "theme": {
+    "images": {},
+    "properties": {},
+    "colors": {
+      "toolbar": "rgb(34, 34, 34)",
+      "toolbar_text": "rgb(186, 186, 186)",
+      "frame": "rgb(34, 34, 34)",
+      "tab_background_text": "rgb(119, 119, 119)",
+      "toolbar_field": "rgb(25, 25, 25)",
+      "toolbar_field_text": "rgb(200, 130, 148)",
+      "tab_line": "rgb(150, 190, 200)",
+      "popup": "rgb(31, 34, 61)",
+      "popup_text": "rgb(215, 226, 239)",
+      "tab_loading": "rgb(150, 190, 200)"
+    }
+  }
+}

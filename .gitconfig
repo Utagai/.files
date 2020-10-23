@@ -1,0 +1,40 @@
+[user]
+	email = mehrabhoque@gmail.com
+  name = may h
+[core]
+	editor = nvim
+[color]
+  diff = auto
+[color "diff"]
+  meta = blue bold
+  old = red bold
+  new = green bold
+[apply]
+	whitespace = fix
+[credential]
+	helper = cache --timeout=86400
+[log]
+  date = relative
+[format]
+  pretty = format:%C(auto,yellow)%h%C(auto,magenta)%  %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(15,trunc)%aN %C(auto,red)% gD% D %n\t %C(auto,reset)%<(80,trunc)%s
+[alias]
+  graph = !"fish -c 'git graph-fmt --all'"
+  graph-fmt = log --graph --abbrev-commit --decorate --exclude=refs/stash --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	c = commit -v
+  append = !"fish -c 'git up; git c --amend --no-edit'"
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  undo = checkout
+  s = status
+  a = add
+  msg = show -s --format=%B
+  when = show --no-patch --no-notes --pretty='%cI'
+  up = add -u .
+  d = diff
+  b = branch -l
+  l = log -50 --graph
+  rems = remote -v
+  addnew = !"fish -c 'git add (git ls-files --o --exclude-standard)'"
+  co = checkout
+[url "git@github.com:"]
+  insteadOf = https://github.com/

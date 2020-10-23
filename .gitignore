@@ -1,0 +1,13 @@
+.config/fish/functions/quote.txt
+.config/fish/fishd.LOVELY
+.config/fish/fish_history
+*.swp
+osp*
+*.pyc
+fishd*
+.DS_STORE
+.netrwhist
+nimcache/
+rng
+fish_variables
+scripts/nohup.out
