@@ -154,7 +154,7 @@ bindsym Mod1+r mode "resize"
 exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper.jpg
 # start dunst
 exec --no-startup-id killall -q notify-osd
-exec_always --no-startup-id killall -q dunst
+exec --no-startup-id killall -q dunst
 exec --no-startup-id dunst
 # set sensitivity of mouse
 exec --no-startup-id ~/dotfiles/scripts/sens.sh 'ZOWIE' 2.5
