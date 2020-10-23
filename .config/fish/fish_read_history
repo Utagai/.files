@@ -1,4 +1,0 @@
-- cmd: function stoptouching!\nxinput --enable\nend
-   when: 1504500878
-- cmd: function stoptouching!\nset -x touchpad (cat ~/.config/fish/functions/touchpad);xinput --enable\nend
-   when: 1504500973
