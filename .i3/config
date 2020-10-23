@@ -56,6 +56,9 @@ bindsym Mod1+l focus right
 bindsym Mod1+k focus up
 bindsym Mod1+j focus down
 
+# move from focused float to tiled and vice-versa
+bindsym Mod4+space focus mode_toggle
+
 # alternatively, you can use the cursor keys:
 bindsym Mod1+Left focus left
 bindsym Mod1+Down focus down
