@@ -218,6 +218,9 @@ bindsym Mod4+b exec playerctl previous
 # PrintScr bind for scrot
 bindsym --release Print exec "~/dotfiles/scripts/scr.sh"
 
+# A PrintScr binding for the TeckNet keyboard that has no PrintScr
+bindsym --release XF86Explorer exec "~/dotfiles/scripts/scr.sh"
+
 # Cycle window and workspace binds
 bindsym Mod1+Tab workspace back_and_forth
 
