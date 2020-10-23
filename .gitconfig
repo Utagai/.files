@@ -1,8 +1,8 @@
 [user]
-	email = mehrabhoque@gmail.com
+  email = mehrabhoque@gmail.com
   name = may h
 [core]
-	editor = nvim
+  editor = nvim
 [color]
   diff = auto
 [color "diff"]
@@ -10,9 +10,9 @@
   old = red bold
   new = green bold
 [apply]
-	whitespace = fix
+  whitespace = fix
 [credential]
-	helper = cache --timeout=86400
+  helper = cache --timeout=86400
 [log]
   date = relative
 [format]
@@ -20,7 +20,7 @@
 [alias]
   graph = !"fish -c 'git graph-fmt --all'"
   graph-fmt = log --graph --abbrev-commit --decorate --exclude=refs/stash --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-	c = commit -v
+  c = commit -v
   append = !"fish -c 'git up; git c --amend --no-edit'"
   unstage = reset HEAD --
   last = log -1 HEAD
