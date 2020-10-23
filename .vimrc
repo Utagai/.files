@@ -297,8 +297,8 @@ nmap <silent> <leader>p :ALEPrevious<cr>
 highlight clear SignColumn
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let g:ale_sign_error = '•'
-let g:ale_sign_warning = '•'
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '❗'
 let g:ale_go_govet_options = '-composites=false -tags=integration,local,cloud,aws,atlas,e2e'
 let g:ale_rust_cargo_use_clippy = 1
 
