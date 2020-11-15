@@ -283,7 +283,7 @@ command! Nonumbers set nonumber | set norelativenumber
 let g:ale_echo_msg_format = '%linter% says %s'
 " Set the fixer for certain file types
 let g:ale_fixers = { 'cpp' : ['clang-format'], 'go': ['goimports'],  'haskell': ['brittany'], 'rust': ['rustfmt'] }
-let g:ale_linters = { 'cpp': ['cpplint', 'clang'], 'haskell': ['hlint', 'stack_build', 'stack_ghc'] }
+let g:ale_linters = { 'cpp': ['cpplint', 'clang'], 'haskell': ['hlint'] }
 " Auto-fix on buffer write.
 let g:ale_fix_on_save = 1
 " Don't lint the moment I start typing, it is annoying because 99% of the time
