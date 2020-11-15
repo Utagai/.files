@@ -74,3 +74,6 @@ set -U fish_color_comment eab700
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
 # set -e MANPATH # delete if you already modified MANPATH elsewhere in your config
 # set -x MANPATH "$NPM_PACKAGES/share/man:(manpath)"
+# ghcup-env
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME
+test -f /home/may/.ghcup/env ; and set -gx PATH $HOME/.cabal/bin /home/may/.ghcup/bin $PATH
