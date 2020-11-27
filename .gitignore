@@ -11,3 +11,10 @@ nimcache/
 rng
 fish_variables
 scripts/nohup.out
+bass.fish
+nvm.fish
+fisher.fish
+__bass.py
+completions/
+.config/fish/conf.d
+.config/fish/fish_plugins
