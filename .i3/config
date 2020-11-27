@@ -181,6 +181,8 @@ for_window [class="Totem" instance="totem"] floating enable
 for_window [class="zoom" instance="zoom"] floating enable
 for_window [class="Pluma" instance="pluma"] floating enable
 for_window [class="firefox" instance="Places"] floating enable
+for_window [class="discord"] floating enable
+for_window [class="Signal"] floating enable
 # Add a nice pink border to our windows.
 for_window [class="^.*"] border pixel 2
 client.focused #C88294 #C88294 #C88294 #C88294
