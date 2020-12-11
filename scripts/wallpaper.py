@@ -9,10 +9,8 @@ import argparse
 HOME = os.path.expanduser('~')
 FEH_OPTIONS = ['center', 'fill', 'max', 'scale', 'tile']
 WALLPAPER_JPG_PATH = '{}/Pictures/wallpaper.jpg'.format(HOME)
-WALLPAPER_PNG_PATH = '{}/Pictures/wallpaper.png'.format(HOME)
 FEH_CMD = "feh --bg-{} " + WALLPAPER_JPG_PATH
 LOCK_CONVERT_CMD_JPG = "convert {} " + WALLPAPER_JPG_PATH
-LOCK_CONVERT_CMD_PNG = "convert {} " + WALLPAPER_PNG_PATH
 
 # Extract CLI arguments.
 parser = argparse.ArgumentParser(description="Set the wallpaper on fruit.")
@@ -40,10 +38,8 @@ def convert(convert_cmd):
     conversion_proc.wait()
 
 
-# Transfer over the wallpaper to ~/Pictures/wallpaper.[jpg|png] for lightdm.
+# Transfer over the wallpaper to ~/Pictures/wallpaper.[jpg|png].
 final_lock_convert_cmd = LOCK_CONVERT_CMD_JPG.format(args.image)
-convert(final_lock_convert_cmd)
-final_lock_convert_cmd = LOCK_CONVERT_CMD_PNG.format(args.image)
 convert(final_lock_convert_cmd)
 
 # Fire the FEH command to update the bg.
