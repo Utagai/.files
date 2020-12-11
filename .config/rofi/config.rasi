@@ -1,0 +1,13 @@
+configuration {
+	lines: 5;
+	columns: 1;
+	font: "Fantasque Sans Mono Bold 12";
+	padding: 20;
+	separator-style: "none";
+	hide-scrollbar: true;
+
+	color-normal: "argb:AA333333,#96BEC8,argb:AA333333,argb:AA222222,argb:AAFFD1DC";
+	color-urgent: "argb:00000000,#FFD1DC,argb:AA333333,argb:AA222222,argb:AAFFD1DC";
+	color-active: "argb:00000000,#FFD1DC,argb:AA333333,argb:AA222222,argb:AAFFD1DC";
+	color-window: "argb:AA333333,#96BEC8,argb:AA333333";
+}
