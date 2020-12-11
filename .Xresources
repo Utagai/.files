@@ -9,7 +9,7 @@ st.termname:     xst-256color
 st.borderless:        1
 
 ! --- The following options options can be reloaded via USR1 signal. ---
-st.font:              monofur for Powerline:size=11:style=bold:autohint=true;
+st.font:              Fantasque Sans Mono:size=11:style=bold:autohint=true;
 
 ! window padding
 st.borderpx:          40
