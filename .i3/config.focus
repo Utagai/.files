@@ -194,8 +194,8 @@ for_window [class="^.*"] border pixel 2
 focus_follows_mouse no
 
 # Disable gaps in focus mode.
-# gaps inner 20
-# gaps outer 5
+gaps inner 1
+gaps outer 1
 
 # Media keys
 # Brightness
