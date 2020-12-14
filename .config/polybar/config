@@ -235,6 +235,8 @@
   format-warn = <ramp> <label-warn>
   format-warn-underline = ${colors.alert}
 
+  hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input
+
   label = %temperature%
   label-warn = %temperature%
   label-warn-foreground = ${colors.background}

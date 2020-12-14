@@ -1,5 +1,5 @@
 [global]
-    font = monofur for Powerline Bold 10
+    font = Fantasque Sans Mono Bold 10
     markup = yes
     format = "<b>%s</b>\n%b"
     sort = yes
