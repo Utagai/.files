@@ -5,6 +5,9 @@
 ! --- These options only take effect on startup. ---
 st.termname:     xst-256color
 
+st.shell: 	 fish
+st.utmp: 	 tmux
+
 ! Set to a non-zero value to disable window decorations (titlebar, etc) and go borderless.
 st.borderless:        1
 
