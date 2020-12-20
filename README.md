@@ -5,3 +5,5 @@ some artifacts from my short stint on OS X, and some hacky workarounds for WSL.
 
 _fun fact_: The original dotfiles repo that this was cloned from used to have 
 600+ commits.
+
+![demo](./screenshot.gif)
