@@ -149,25 +149,7 @@
   toggle-off-foreground = #66
 
 ; No CPU or memory sections.
-
-[module/network]
-  type = internal/network
-; interface = wlp10s0
-  interface = wlp2s0
-  interval = 3.0
-
-  format-connected = <ramp-signal> <label-connected>
-  format-connected-underline = ${colors.healthy}
-  format-connected-foreground-foreground = ${colors.underline}
-  label-connected = %essid% @ %signal%%
-  label-connected-foreground = ${colors.foreground}
-
-  format-disconnected = <label-disconnected>
-  format-disconnected-underline = ${colors.alert}
-  label-disconnected =  No Connection
-
-  ramp-signal-0 = 
-  ramp-signal-foreground = ${colors.icon-foreground}
+; No network/wifi section.
 
 [module/date]
   type = internal/date
@@ -210,49 +192,7 @@
   ramp-volume-foreground = ${colors.icon-foreground}
 
 ; No temperature section.
-
-[module/battery]
-  type = internal/battery
-
-  format-charging-underline = ${colors.healthy}
-  format-charging-warn = <ramp> <label-warn>
-  format-charging-warn-underline = ${colors.alert}
-
-  format-discharging-underline = ${colors.healthy}
-  format-discharging-warn = <ramp> <label-warn>
-  format-discharging-warn-underline = ${colors.alert}
-
-  ; This is useful in case the battery never reports 100% charge
-  full-at = 99
-
-  ; Use the following command to list batteries and adapters:
-  ; $ ls -1 /sys/class/power_supply/
-  battery = BAT0
-  adapter = ADP1
-
-  format-charging = <ramp-capacity> <label-charging>
-  format-discharging = <ramp-capacity> <label-discharging>
-
-  label-charging =  %percentage%%
-  label-discharging = %percentage%%
-
-  ramp-capacity-0 = 
-  ramp-capacity-1 = 
-  ramp-capacity-2 = 
-  ramp-capacity-3 = 
-  ramp-capacity-foreground = ${colors.icon-foreground}
-
-  ; If an inotify event haven't been reported in this many
-  ; seconds, manually poll for new values.
-  ;
-  ; Needed as a fallback for systems that don't report events
-  ; on sysfs/procfs.
-  ;
-  ; Disable polling by setting the interval to 0.
-  ;
-  ; Default: 5
-  poll-interval = 5
-
+; No battery section.
 ; No power button.
 
 ; vim:ft=dosini
