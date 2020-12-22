@@ -6,6 +6,7 @@ if not test -e ~/Pictures/wallpaper.old.jpg
   mv ~/Pictures/wallpaper.jpg ~/Pictures/wallpaper.old.jpg
 end
 ~/dotfiles/scripts/wallpaper.py ~/dotfiles/wallpapers/black.jpg
+killall compton
 i3-msg restart
 
 ~/dotfiles/scripts/notif.sh "Focus on" (hostname)
