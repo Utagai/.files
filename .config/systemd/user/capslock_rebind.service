@@ -1,0 +1,10 @@
+[Unit]
+Description=Automatically rebind caps lock and notify on keyboard connect.
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/home/may/dotfiles/scripts/capslock_rebind.fish
+
+[Install]
+WantedBy=multi-user.target
