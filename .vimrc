@@ -254,8 +254,6 @@ let g:javascript_plugin_jsdoc = 1
 
 " Trim trailing whitespace before we write
 autocmd BufWritePre * %s/\s\+$//e
-autocmd BufWritePre *.go GoFmt
-autocmd BufWritePre *.go GoImports
 " Set the terminal title to the currently open file, helps with tmux window
 " naming
 autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
