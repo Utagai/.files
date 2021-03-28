@@ -1,0 +1,11 @@
+[Unit]
+Description=Runs Gallery locally.
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=/usr/local/bin/gallery /home/may/dotfiles/.config/gallery/wallpapers.json
+WorkingDirectory=/home/may/code/gallery/
+
+[Install]
+WantedBy=default.target
