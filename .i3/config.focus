@@ -183,6 +183,7 @@ for_window [class="Pluma" instance="pluma"] floating enable
 for_window [class="firefox" instance="Places"] floating enable
 for_window [class="discord"] floating enable
 for_window [class="Signal"] floating enable
+for_window [class="Electron"] floating enable
 # Revert to default i3 bordering (but without the title bar).
 # for_window [class="^.*"] border pixel 2
 for_window [class="^.*"] border pixel 2
@@ -232,9 +233,11 @@ bindsym Mod1+Tab workspace back_and_forth
 
 # Lock.
 # Graphite
-bindsym XF86Search exec "i3lock-fancy"
+bindsym XF86Search exec "i3lock-fancy 5 3"
 # LOVELY
-bindsym Menu exec "i3lock-fancy"
+bindsym Menu exec "i3lock-fancy 5 3"
+# Any
+bindsym Mod4+Shift+l exec "i3lock-fancy 5 3"
 
 # LastPass Rofi
 bindsym Mod4+l exec "~/dotfiles/scripts/lpass.sh"
