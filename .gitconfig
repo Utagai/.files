@@ -3,6 +3,11 @@
   name = may h
 [core]
   editor = nvim
+  pager = delta
+[delta]
+  syntax-theme = TwoDark
+[interactive]
+  diffFilter = delta --color-only
 [color]
   diff = auto
 [color "diff"]
