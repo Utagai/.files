@@ -290,7 +290,7 @@ map <C-l> <C-W>l
 
 " Add a shortcut command for copying the current buffer contents to the system
 " clipboard.
-command Copy w !tee | co.py
+command! Copy w !co.py
 
 " Make vim write its files to a universal location to avoid tarnishing the
 " working directory, even if its with hidden files.
