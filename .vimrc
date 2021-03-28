@@ -18,6 +18,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [ 'coc-rust-analyzer', 'coc-json', 'coc-tsserver' ]
 
 " Vim git
 Plug 'tpope/vim-fugitive'
