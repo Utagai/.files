@@ -339,6 +339,9 @@ command! -bang -nargs=* GGrep
   \     'options': ['--bind', 'tab:down,btab:up', '+m', '--cycle']
   \   }, <bang>0)
 
+" This is some fzf command that I absolutely despise. This disables it.
+command! -nargs=* W w
+
 " map GGrep to CTRL+s
 nnoremap <silent> <C-s> :GGrep<cr>
 
