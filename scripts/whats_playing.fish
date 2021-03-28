@@ -29,4 +29,8 @@ if test $status -ne 0
 end
 
 # Bypass notif.sh, since that is for one-off small notifications. We need more customizability here.
-notify-send --icon=$album_dl_loc -u low --expire-time=10000 "Currently Playing" "'$track'"\n"by $artist"\n"from '$album'"
+set msg "Currently Playing" "'$track'"\n"by $artist"\n"from '$album'"
+notify-send --icon=$album_dl_loc -u low --expire-time=10000 $msg
+
+# For terminal usage.
+printf "{ \"track\": \"$track\", \"artist\": \"$artist\", \"album\": \"$album\" }" | python -m json.tool
