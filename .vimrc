@@ -58,6 +58,8 @@ Plug 'mboughaba/i3config.vim'
 Plug 'fatih/vim-go'
 " Better Nim support
 Plug 'zah/nim.vim'
+" Better Rust support
+Plug 'rust-lang/rust.vim'
 " neodark colorscheme (vim only)
 Plug 'KeitaNakamura/neodark.vim'
 " my deep space colorscheme
