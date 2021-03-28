@@ -84,7 +84,8 @@
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "rootPatterns": [".ccls", "compile_commands.json"],
+      "trace.server": "verbose",
       "initializationOptions": {
         "cache": {
           "directory": ".ccls-cache"
