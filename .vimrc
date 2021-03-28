@@ -32,6 +32,10 @@ Plug 'junegunn/fzf.vim'
 " better Haskell
 Plug 'neovimhaskell/haskell-vim'
 Plug 'Twinside/vim-hoogle'
+" better typescript
+Plug 'leafgarland/typescript-vim'
+" better typescriptreact
+Plug 'peitalin/vim-jsx-typescript'
 " Plug 'parsonsmatt/intero-neovim'
 " better terraform
 Plug 'hashivim/vim-terraform'
