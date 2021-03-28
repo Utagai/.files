@@ -96,11 +96,13 @@
       }
     }
   },
-  "diagnostic": {
-    "displayByAle": true,
-    "errorSign": "•",
-    "warningSign": "•",
-    "infoSign": "•",
-    "hintSign": "•"
-  }
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "golang",
+    "css",
+    "markdown",
+    "javascript",
+    "typescript",
+    "json"
+  ]
 }

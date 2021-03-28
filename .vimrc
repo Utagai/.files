@@ -23,9 +23,6 @@ let g:coc_global_extensions = [ 'coc-rust-analyzer', 'coc-json', 'coc-tsserver' 
 " Vim git
 Plug 'tpope/vim-fugitive'
 
-" Asynchronous Linting Engine
-Plug 'w0rp/ale'
-
 " Fuzzy finder for vim
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
@@ -201,7 +198,6 @@ let g:airline_section_y=''
 let g:airline_section_z='☰  %l/%L  : ⮁ %c'
 " remove separators for empty sections remove separators for empty sections
 let g:airline_skip_empty_sections = 1
-let g:airline#extensions#ale#enabled = 1
 " show buffers
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
@@ -283,29 +279,7 @@ set relativenumber
 command! Numbers set number | set relativenumber
 command! Nonumbers set nonumber | set norelativenumber
 
-" ale options
-" Set the format of the echo msg so we know which thing is complaining
-let g:ale_echo_msg_format = '%linter% says %s'
-" Set the fixer for certain file types
-let g:ale_fixers = { 'cpp' : ['clang-format'], 'go': ['goimports'],  'haskell': ['brittany'], 'rust': ['rustfmt'] }
-let g:ale_linters = { 'cpp': ['cpplint', 'clang'], 'haskell': ['hlint'] }
-" Auto-fix on buffer write.
-let g:ale_fix_on_save = 1
-" Don't lint the moment I start typing, it is annoying because 99% of the time
-" code being written will not even be syntactically correct until I finish
-" typing.
-let g:ale_lint_on_text_changed = "never"
-" Some keybinds for navigating through issues
-nmap <silent> <leader>n :ALENext<cr>
-nmap <silent> <leader>p :ALEPrevious<cr>
-" Some prettification
 highlight clear SignColumn
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '❗'
-let g:ale_go_govet_options = '-composites=false -tags=integration,local,cloud,aws,atlas,e2e'
-let g:ale_rust_cargo_use_clippy = 1
 
 " Make vim split switches easier by directly using h, j, k, l to move
 map <C-j> <C-W>j
@@ -338,7 +312,8 @@ let g:go_highlight_variable_assignments = 1
 let g:go_fmt_fail_silently = 1
 let g:go_def_mapping_enabled = 0
 let g:go_def_mode = "godef"
-let g:go_fmt_autosave = 0
+let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1
 let g:go_code_completion_enabled = 0
 let g:go_gopls_enabled = 0
 
