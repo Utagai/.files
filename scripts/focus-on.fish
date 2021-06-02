@@ -5,7 +5,7 @@ ln -sf $HOME/dotfiles/.i3/config.focus $HOME/.i3/config
 if not test -e ~/Pictures/wallpaper.old.jpg
   mv ~/Pictures/wallpaper.jpg ~/Pictures/wallpaper.old.jpg
 end
-~/dotfiles/scripts/wallpaper.py ~/dotfiles/wallpapers/black.jpg
+~/dotfiles/scripts/wallpaper.py ~/dotfiles/wallpapers/gray.jpg
 i3-msg restart
 
 ~/dotfiles/scripts/notif.sh "Focus on" (hostname)
