@@ -60,8 +60,8 @@ Plug 'fatih/vim-go'
 Plug 'zah/nim.vim'
 " Better Rust support
 Plug 'rust-lang/rust.vim'
-" neodark colorscheme (vim only)
-Plug 'KeitaNakamura/neodark.vim'
+" colorscheme
+Plug 'hardselius/warlock'
 " my deep space colorscheme
 Plug 'Utagai/vim-deep-space'
 
@@ -152,24 +152,11 @@ set completeopt=menu
 " Use dark colorscheme
 set background=dark
 
-if has('termguicolors')
-  " keep the terminal bg what the terminal wants (i.e. transparent)
-  set termguicolors
-  let g:deepspace_italics=1
-  let g:deepspace_transparent=1
-
-  colorscheme deepspace
-else
-  colorscheme neodark
-  " Below are 256 color options if we are ever on a terminal that doesn't
-  " support true color:
-  " Use 256 colours, disable if your terminal doesn't support 256.
-  set t_Co=256
-" Use whatever the terminal wants for our background.
-  let g:neodark#terminal_transparent = 1
-" Use 256 colors from neodark.
-  let g:neodark#use_256color = 1
-endif
+colorscheme warlock
+" Below are 256 color options if we are ever on a terminal that doesn't
+" support true color:
+" Use 256 colours, disable if your terminal doesn't support 256.
+set t_Co=256
 
 " SO THIS IS KIND OF A HACK (if you are using fish or some other non bourne)
 set shell=/bin/bash
