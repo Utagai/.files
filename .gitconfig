@@ -1,6 +1,7 @@
 [user]
   email = mehrabhoque@gmail.com
   name = may h
+  signingKey = 168DEC2EBEA9E004
 [core]
   editor = nvim
   pager = delta
@@ -43,3 +44,5 @@
   co = checkout
 [url "git@github.com:"]
   insteadOf = https://github.com/
+[commit]
+	gpgSign = true
