@@ -29,18 +29,14 @@ Plug 'junegunn/fzf.vim'
 
 " better Haskell
 Plug 'neovimhaskell/haskell-vim'
-Plug 'Twinside/vim-hoogle'
 " better typescript
 Plug 'leafgarland/typescript-vim'
 " better typescriptreact
 Plug 'peitalin/vim-jsx-typescript'
-" Plug 'parsonsmatt/intero-neovim'
 " better terraform
 Plug 'hashivim/vim-terraform'
 " better TOML
 Plug 'cespare/vim-toml'
-" better Swift syntax highlighting
-Plug 'utagai/swift.vim'
 " better js syntax
 Plug 'pangloss/vim-javascript'
 " adds extra C syntax highlighting
@@ -56,8 +52,6 @@ Plug 'mboughaba/i3config.vim'
 " and vim-go has the best one, but it can't be used outside the plugin. So I
 " end up having to download the ENTIRE plugin.
 Plug 'fatih/vim-go'
-" Better Nim support
-Plug 'zah/nim.vim'
 " Better Rust support
 Plug 'rust-lang/rust.vim'
 " colorscheme
@@ -82,11 +76,6 @@ set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
-
-" Detect WSL.
-if filereadable('/proc/sys/kernel/osrelease') && readfile('/proc/sys/kernel/osrelease')[0] =~# 'Microsoft'
-  set guicursor=
-endif
 
 " Scroll with keyboard
 function! FloatScroll(forward) abort
@@ -157,9 +146,6 @@ colorscheme warlock
 " support true color:
 " Use 256 colours, disable if your terminal doesn't support 256.
 set t_Co=256
-
-" SO THIS IS KIND OF A HACK (if you are using fish or some other non bourne)
-set shell=/bin/bash
 
 " Sets folding behaviors
 set foldmethod=indent
@@ -236,9 +222,6 @@ cmap w!! w !sudo tee > /dev/null %
 " Let markdown live preview utilize grip.
 let vim_markdown_preview_github=1
 let g:vim_markdown_math=1
-
-" Enable JSDocs highlighting
-let g:javascript_plugin_jsdoc = 1
 
 " Trim trailing whitespace before we write
 autocmd BufWritePre * %s/\s\+$//e
@@ -331,7 +314,4 @@ command! -nargs=* W w
 
 " map GGrep to CTRL+s
 nnoremap <silent> <C-s> :GGrep<cr>
-
-" Change the intero window size; default is 10.
-let g:intero_window_size = 5
 endif
