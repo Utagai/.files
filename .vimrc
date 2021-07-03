@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged')
 
 " Surrounding quickies.
 Plug 'tpope/vim-surround'
-" Enables auto parens, bracket, quote, etc completion
+" Closes brackets for me.
 Plug 'jiangmiao/auto-pairs'
 
 " pretty hacker boy bar
@@ -16,44 +16,27 @@ Plug 'vim-airline/vim-airline'
 " allows for theming the airline bar
 Plug 'vim-airline/vim-airline-themes'
 
-" CoC
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = [ 'coc-rust-analyzer', 'coc-json', 'coc-tsserver' ]
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Vim git
 Plug 'tpope/vim-fugitive'
 
 " Fuzzy finder for vim
-Plug '~/.fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
-" better Haskell
-Plug 'neovimhaskell/haskell-vim'
-" better typescript
-Plug 'leafgarland/typescript-vim'
-" better typescriptreact
-Plug 'peitalin/vim-jsx-typescript'
 " better terraform
 Plug 'hashivim/vim-terraform'
-" better TOML
-Plug 'cespare/vim-toml'
-" better js syntax
-Plug 'pangloss/vim-javascript'
-" adds extra C syntax highlighting
-Plug 'justinmk/vim-syntax-extra'
 " markdown syntax
 Plug 'plasticboy/vim-markdown'
-" extends vim support for fish syntax
-Plug 'dag/vim-fish'
 " Better i3 config/etc syntax highlighting
 Plug 'mboughaba/i3config.vim'
-" Use vim-go for easy improved Go syntax.
-" This is unfortunate, because really I just want better syntax highlighting,
-" and vim-go has the best one, but it can't be used outside the plugin. So I
-" end up having to download the ENTIRE plugin.
-Plug 'fatih/vim-go'
-" Better Rust support
-Plug 'rust-lang/rust.vim'
 " my deep space colorscheme
 Plug 'Utagai/vim-deep-space'
 
@@ -75,66 +58,78 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-" Scroll with keyboard
-function! FloatScroll(forward) abort
-  let float = coc#util#get_float()
-  if !float | return '' | endif
-  let buf = nvim_win_get_buf(float)
-  let buf_height = nvim_buf_line_count(buf)
-  let win_height = nvim_win_get_height(float)
-  if buf_height < win_height | return '' | endif
-  let pos = nvim_win_get_cursor(float)
-  if a:forward
-    if pos[0] == 1
-      let pos[0] += 3 * win_height / 4
-    elseif pos[0] + win_height / 2 + 1 < buf_height
-      let pos[0] += win_height / 2 + 1
-    else
-      let pos[0] = buf_height
-    endif
-  else
-    if pos[0] == buf_height
-      let pos[0] -= 3 * win_height / 4
-    elseif pos[0] - win_height / 2 + 1  > 1
-      let pos[0] -= win_height / 2 + 1
-    else
-      let pos[0] = 1
-    endif
-  endif
-  call nvim_win_set_cursor(float, pos)
-  return ''
-endfunction
+" Treesitter enable highlighting
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true
+  },
+}
+EOF
 
-inoremap <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
-inoremap <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) :  "\<up>"
+" -------------------- LSP ---------------------------------
+lua << EOF
+  local nvim_lsp = require('lspconfig')
 
-" GoTo code navigation.
-nmap <silent> gp <Plug>(coc-diagnostic-prev)
-nmap <silent> gn <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> grn <Plug>(coc-rename)
+  local on_attach = function(client, bufnr)
+    require('completion').on_attach()
 
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-inoremap <silent><expr> <S-Tab>
-      \ pumvisible() ? "\<C-p>" :
-      \ <SID>check_back_space() ? "\<S-Tab>" :
-      \ coc#refresh()
+    -- Mappings
+    local opts = { noremap=true, silent=true }
+    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'gk', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', 'gK', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', 'grn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', 'gp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', 'gn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
-" enables autocomplete menu
-set completeopt=menu
+    -- Set some keybinds conditional on server capabilities
+    if client.resolved_capabilities.document_formatting then
+        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    elseif client.resolved_capabilities.document_range_formatting then
+        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    end
+
+    vim.fn.sign_define("LspDiagnosticsSignError", {text = "X", texthl = "LspDiagnosticsDefaultError"})
+    vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "!", texthl = "LspDiagnosticsDefaultWarning"})
+  end
+
+  local servers = {'gopls', 'rust_analyzer'}
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+  end
+EOF
+
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    layout_strategy = "vertical",
+    layout_config = {
+      vertical = {
+        preview_height = 0.8,
+      },
+    },
+  }
+}
+EOF
+
+" Completion
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+set completeopt=menu,noinsert
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" -------------------- LSP ---------------------------------
 
 " Use dark colorscheme
 set background=dark
@@ -143,10 +138,6 @@ set termguicolors
 let g:deepspace_italics=1
 let g:deepspace_transparent=1
 colorscheme deepspace
-" Below are 256 color options if we are ever on a terminal that doesn't
-" support true color:
-" Use 256 colours, disable if your terminal doesn't support 256.
-set t_Co=256
 
 " Sets folding behaviors
 set foldmethod=indent
@@ -271,50 +262,7 @@ set nobackup
 set noswapfile
 set undodir=~/.vim/undo//
 
-" Enable/disable certain features of vim-go:
-let g:go_highlight_extra_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_arguments = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_variable_declarations = 1
-let g:go_highlight_variable_assignments = 1
-let g:go_fmt_fail_silently = 1
-let g:go_def_mapping_enabled = 0
-let g:go_def_mode = "godef"
-let g:go_fmt_command = "goimports"
-let g:go_fmt_autosave = 1
-let g:go_code_completion_enabled = 0
-let g:go_gopls_enabled = 0
-
-" follow ctrlp keybinds
-nnoremap <silent> <C-p> :FZF +m --cycle --bind tab:down,btab:up<cr>
-
-" hide the ugly statusline for the fzf terminal emulator window
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler number relativenumber
-
-" make fzf pop up at the bottom
-let g:fzf_layout = { 'down': '~20%' }
-
-" Command for git grep, taken from fzf.vim's README.
-" - fzf#vim#grep(command, with_column, [options], [fullscreen])
-command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number '.shellescape(<q-args>), 0,
-  \   {
-  \     'dir': systemlist('git rev-parse --show-toplevel')[0],
-  \     'options': ['--bind', 'tab:down,btab:up', '+m', '--cycle']
-  \   }, <bang>0)
-
-" This is some fzf command that I absolutely despise. This disables it.
-command! -nargs=* W w
-
-" map GGrep to CTRL+s
-nnoremap <silent> <C-s> :GGrep<cr>
+" Find files using Telescope command-line sugar.
+nnoremap <silent> <C-s> :Telescope live_grep<cr>
+nnoremap <silent> <C-p> :Telescope git_files<cr>
 endif
