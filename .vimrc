@@ -39,6 +39,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'mboughaba/i3config.vim'
 " my deep space colorscheme
 Plug 'Utagai/vim-deep-space'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()            " required
 
@@ -135,9 +136,9 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 set background=dark
 
 set termguicolors
-let g:deepspace_italics=1
-let g:deepspace_transparent=1
-colorscheme deepspace
+" let g:deepspace_italics=1
+" let g:deepspace_transparent=1
+colorscheme nord
 
 " Sets folding behaviors
 set foldmethod=indent
@@ -157,7 +158,7 @@ set textwidth=0
 
 " Don't show the Vim mode cause airline does that for us already
 set noshowmode
-let g:airline_theme='deep_space'
+let g:airline_theme='nord'
 " allow vim to render utf-8 characters, allowing airline to be pretty and
 " unicode files to render better.
 set encoding=utf-8
