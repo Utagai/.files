@@ -2,12 +2,7 @@ set fish_key_bindings fish_default_key_bindings
 
 switch (uname)
   case Linux
-    set -x LS_COLORS (vivid generate jellybeans)
-  case Darwin
-    eval (gdircolors ~/.dir_colors/dircolors | head -n 1 | sed 's/^LS_COLORS=/set -x LS_COLORS /;s/;$//')
-    function ls
-      gls --color=auto $argv
-    end
+    set -x LS_COLORS (vivid generate nord)
   case "*"
     echo "Uname not caught"
 end
