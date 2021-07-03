@@ -40,9 +40,8 @@ Plug 'hashivim/vim-terraform'
 Plug 'plasticboy/vim-markdown'
 " Better i3 config/etc syntax highlighting
 Plug 'mboughaba/i3config.vim'
-" my deep space colorscheme
-Plug 'Utagai/vim-deep-space'
-Plug 'arcticicestudio/nord-vim'
+" Nord colorscheme, but with some personal tweaks.
+Plug 'Utagai/nord-vim'
 
 call plug#end()            " required
 
