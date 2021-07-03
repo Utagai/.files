@@ -54,8 +54,6 @@ Plug 'mboughaba/i3config.vim'
 Plug 'fatih/vim-go'
 " Better Rust support
 Plug 'rust-lang/rust.vim'
-" colorscheme
-Plug 'hardselius/warlock'
 " my deep space colorscheme
 Plug 'Utagai/vim-deep-space'
 
@@ -141,7 +139,10 @@ set completeopt=menu
 " Use dark colorscheme
 set background=dark
 
-colorscheme warlock
+set termguicolors
+let g:deepspace_italics=1
+let g:deepspace_transparent=1
+colorscheme deepspace
 " Below are 256 color options if we are ever on a terminal that doesn't
 " support true color:
 " Use 256 colours, disable if your terminal doesn't support 256.
