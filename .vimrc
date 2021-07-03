@@ -31,6 +31,8 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
+" better fish script editing
+Plug 'dag/vim-fish'
 " better terraform
 Plug 'hashivim/vim-terraform'
 " markdown syntax
