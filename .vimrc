@@ -18,7 +18,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/nvim-compe'
+Plug 'ray-x/lsp_signature.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -45,21 +46,21 @@ Plug 'arcticicestudio/nord-vim'
 
 call plug#end()            " required
 
-" CoC configuration
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
+lua<<EOF
+require'lsp_signature'.on_attach({
+  hint_enable = false,
+})
+EOF
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
+lua <<EOF
+-- Settings...
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
+-- Always show the signcolumn, otherwise it would shift the text each time
+-- diagnostics appear or become resolved.
+vim.opt.signcolumn = 'yes'
+-- Don't show any messages when we are using a completion menu.
+vim.opt.shortmess = 'c'
+EOF
 
 " Treesitter enable highlighting
 lua <<EOF
@@ -75,7 +76,7 @@ lua << EOF
   local nvim_lsp = require('lspconfig')
 
   local on_attach = function(client, bufnr)
-    require('completion').on_attach()
+    -- require('completion').on_attach()
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -129,13 +130,66 @@ EOF
 
 " Completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-set completeopt=menu,noinsert
+set completeopt=menu,noinsert,noselect
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" -------------------- LSP ---------------------------------
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'disable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.resolve_timeout = 800
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
 
-" Use dark colorscheme
-set background=dark
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.nvim_lsp = v:true
+
+lua << EOF
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    -- If <S-Tab> is not working in your terminal, change it to <C-h>
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
+" -------------------- LSP ---------------------------------
 
 set termguicolors
 " let g:deepspace_italics=1
