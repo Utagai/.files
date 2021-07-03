@@ -4,11 +4,13 @@
   signingKey = 168DEC2EBEA9E004
 [core]
   editor = nvim
-  pager = delta
+  pager = delta --color-only --24-bit-color=always
+[include]
+  path = ~/.config/delta/nord.gitconfig
 [delta]
-  syntax-theme = TwoDark
+  feature = "Nord"
 [interactive]
-  diffFilter = delta --color-only
+  diffFilter = delta --color-only --24-bit-color=always
 [color]
   diff = auto
 [color "diff"]
