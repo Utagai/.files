@@ -164,6 +164,8 @@ autocmd FileType go match OverLength /\%>120v.\+/
 
 set textwidth=0
 
+" Don't show the Vim mode cause airline does that for us already
+set noshowmode
 let g:airline_theme='deep_space'
 " allow vim to render utf-8 characters, allowing airline to be pretty and
 " unicode files to render better.
