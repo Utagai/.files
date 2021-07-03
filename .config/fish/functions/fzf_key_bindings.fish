@@ -135,7 +135,7 @@ function fzf_key_bindings
     if [ $FZF_TMUX -eq 1 ]
       echo "fzf-tmux -d$FZF_TMUX_HEIGHT"
     else
-      echo "fzf --bind tab:down,btab:up +m --cycle --preview 'bat --theme "TwoDark" --color always -r :40 {}'"
+      echo "fzf --bind tab:down,btab:up +m --cycle --preview 'bat --color always -r :40 {}'"
     end
   end
 

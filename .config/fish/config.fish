@@ -21,6 +21,9 @@ set -x FZF_CTRL_R_COMMAND "$FZF_DEFAULT_COMMAND"
 set -x FZF_CTRL_Y_COMMAND "$FZF_DEFAULT_COMMAND"
 set -x FZF_CTRL_O_COMMAND "$FZF_DEFAULT_COMMAND"
 
+# Use the Nord syntax highlighting theme when using bat.
+set -x BAT_THEME "Nord"
+
 set -x NPM_PACKAGES "$HOME/.npm-packages"
 
 set -x PATH $PATH "$NPM_PACKAGES/bin"
