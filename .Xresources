@@ -72,7 +72,7 @@ st.disable_alpha_correction: 0
 
 ! colors
 st.foreground:   #a7a7a7
-st.background:   #1c1c1c
+st.background:   #2c2c2c
 
 ! -- NORMAL COLORS
 ! Black
