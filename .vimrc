@@ -1,4 +1,3 @@
-if has('nvim')
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -321,4 +320,3 @@ set undodir=~/.vim/undo//
 " Find files using Telescope command-line sugar.
 nnoremap <silent> <C-s> :Telescope live_grep<cr>
 nnoremap <silent> <C-p> :Telescope git_files<cr>
-endif
