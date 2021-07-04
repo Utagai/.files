@@ -13,13 +13,6 @@
 font pango:monofur for Powerline Bold 10
 
 exec --no-startup-id compton
-# exec nm-applet
-
-# Handle issues with dual display immediately.
-exec --no-startup-id "~/dotfiles/scripts/monitor.sh"
-exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id i3-msg move workspace to output left
-exec_always --no-startup-id "~/dotfiles/scripts/renumber_workspaces.py"
 
 # Rebind caps lock to escape.
 exec --no-startup-id setxkbmap -option caps:escape
