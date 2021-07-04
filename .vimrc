@@ -57,7 +57,7 @@ lua <<EOF
 -- diagnostics appear or become resolved.
 vim.opt.signcolumn = 'yes'
 -- Don't show any messages when we are using a completion menu.
-vim.opt.shortmess = 'c'
+vim.opt.shortmess = 'atTc'
 EOF
 
 " Treesitter enable highlighting
