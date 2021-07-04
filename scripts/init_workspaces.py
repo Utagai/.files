@@ -49,10 +49,12 @@ workspace_cmds = {
         'workspace 4': [App('Music', 'spotify')],
 }
 
-workspaces = sorted(workspace_cmds.keys())
-
 if socket.gethostname() == "graphite":
     workspace_cmds['workspace 5'] = [App('Slack', 'slack')]
+elif socket.gethostname() == "shizuka":
+    workspace_cmds['workspace 5'] = [App('Discord', 'discord'), App('Signal', 'signal-desktop')]
+
+workspaces = sorted(workspace_cmds.keys())
 
 previous_workspace = None
 for workspace in workspaces:
