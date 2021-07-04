@@ -187,7 +187,7 @@ for_window [class="Electron"] floating enable
 # Revert to default i3 bordering (but without the title bar).
 # for_window [class="^.*"] border pixel 2
 for_window [class="^.*"] border pixel 2
-# client.focused #C88294 #C88294 #C88294 #C88294
+client.focused #809fA2 #809fA2 #809fA2 #809fA2
 # client.unfocused #efdce1 #efdce1 #efdce1 #efdce1
 # client.focused_inactive #efdce1 #efdce1 #efdce1 #efdce1
 
