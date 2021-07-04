@@ -11,14 +11,13 @@ function fish_prompt
     end
   end
 
-  set -l pink (set_color -o FF6B81)
-  set -l green (set_color -o 89B86D)
-  set -l blue (set_color -o 74ABA1)
-  set -l marine (set_color -o D4D4F7)
+  set -l pink (set_color -o b48ead)
+  set -l green (set_color -o 8FBCBB)
+  set -l marine (set_color -o 5E81AC)
   set -l default (set_color -o 96BEC8)
 
   set -l circle "|"
-  set -l cwd $blue(basename (prompt_pwd))
+  set -l cwd $marine(basename (prompt_pwd))
 
   if [ (_git_branch_name) ]
     if [ (_is_git_dirty) ]
