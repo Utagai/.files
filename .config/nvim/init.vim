@@ -7,3 +7,4 @@ source ~/.config/nvim/pretty.vim
 source ~/.config/nvim/airline.vim
 source ~/.config/nvim/commands.vim
 source ~/.config/nvim/settings.vim
+source ~/.config/nvim/keybinds.vim

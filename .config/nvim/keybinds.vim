@@ -2,27 +2,27 @@
 " to other sourced vim files. For example, this means keybinds related to LSP
 " functionality is in lsp.vim, not here. This file contains the randoms.
 
-" Disable ex mode, lol.
-nnoremap Q <nop>
+lua << EOF
+-- Disable ex mode, lol.
+vim.api.nvim_set_keymap('n', 'Q', '', {})
 
-" Set F2 to enable PASTE mode for copy-pasting code cleanly.
-nnoremap <F2> :set invpaste paste?<CR>
-" TODO: WTF?
-set pastetoggle=<F2>
+-- Set F2 to enable PASTE mode for copy-pasting code cleanly.
+vim.api.nvim_set_keymap('n', '<F2>', ':set invpaste paste?<CR>', { silent = true })
 
-" Hit enter to clear highlights (from searches, usually)
-nnoremap <C-l> :noh<CR>
+-- Hit Ctrl+l to clear highlights (from searches, usually)
+vim.api.nvim_set_keymap('n', '<C-l>', ':noh<CR>', { silent = true })
 
-" disable mouse
-noremap <ScrollWheelUp>      <nop>
-noremap <S-ScrollWheelUp>    <nop>
-noremap <C-ScrollWheelUp>    <nop>
-noremap <ScrollWheelDown>    <nop>
-noremap <S-ScrollWheelDown>  <nop>
-noremap <C-ScrollWheelDown>  <nop>
-noremap <ScrollWheelLeft>    <nop>
-noremap <S-ScrollWheelLeft>  <nop>
-noremap <C-ScrollWheelLeft>  <nop>
-noremap <ScrollWheelRight>   <nop>
-noremap <S-ScrollWheelRight> <nop>
-noremap <C-ScrollWheelRight> <nop>
+-- Disable the mouse.
+vim.api.nvim_set_keymap('n', '<ScrollWheelUp>', '', {})
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelUp>', '', {})
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelUp>', '', {})
+vim.api.nvim_set_keymap('n', '<ScrollWheelDown>', '', {})
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelDown> ', '', {})
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelDown> ', '', {})
+vim.api.nvim_set_keymap('n', '<ScrollWheelLeft>', '', {})
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelLeft> ', '', {})
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelLeft> ', '', {})
+vim.api.nvim_set_keymap('n', '<ScrollWheelRight>', '', {})
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelRight>', '', {})
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelRight>', '', {})
+EOF
