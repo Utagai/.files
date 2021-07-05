@@ -121,6 +121,10 @@ require('telescope').setup{
     },
   }
 }
+
+-- Find files using Telescope command-line sugar.
+vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope git_files<CR>', { noremap = true, silent = true })
 EOF
 
 " Completion
@@ -307,7 +311,3 @@ command! Copy w !co.py
 set nobackup
 set noswapfile
 set undodir=~/.vim/undo//
-
-" Find files using Telescope command-line sugar.
-nnoremap <silent> <C-s> :Telescope live_grep<cr>
-nnoremap <silent> <C-p> :Telescope git_files<cr>
