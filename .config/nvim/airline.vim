@@ -11,7 +11,7 @@ vim.g.airline_powerline_fonts = 1
 vim.g.airline_section_y=''
 -- Customize the last section (not including error, etc section) to include
 -- percentage through the file and column number.
-vim.g.airline_section_z='☰ %3p%% ⇌ %c'
+vim.g.airline_section_z='☰  %l/%L%3p%% ⇌ %c'
 -- Remove separators for empty sections which we don't care about.
 vim.g.airline_skip_empty_sections = 1
 
