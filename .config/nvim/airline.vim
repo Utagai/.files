@@ -27,13 +27,13 @@ vim.g["airline#extensions#tabline#buffer_nr_show"] = 1
 -- abbreviated full path.
 vim.g["airline#extensions#tabline#formatter"] = 'unique_tail_improved'
 -- Start vim without buffer line, because usually we don't want it immediately.
+-- TODO: API for defining auto commands not yet in lua neovim.
 vim.api.nvim_command('autocmd VimEnter * set showtabline=0')
 -- Allow us to quickly toggle the buffer tabline.
 -- Note that we are using `nvim_exec()` here. This is because we couldn't get
 -- this keybind working in Lua for some reason, the updates to `showtabline` were
 -- not persisting...
-vim.api.nvim_exec(
-  'nnoremap <silent> <leader>b :execute \'set showtabline=\' . (&showtabline ==# 0 ? 2 : 0)<CR>',
-  false
+vim.cmd(
+  'nnoremap <silent> <leader>b :execute \'set showtabline=\' . (&showtabline ==# 0 ? 2 : 0)<CR>'
 )
 EOF
