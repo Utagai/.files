@@ -1,4 +1,3 @@
-lua <<EOF
 -- Always show the signcolumn, otherwise it would shift the text each time
 -- diagnostics appear or become resolved.
 vim.opt.signcolumn = 'yes'
@@ -36,4 +35,3 @@ vim.opt.viminfo = '\'50,<1000,s100,h'
 vim.g.backup = false
 vim.g.writebackup = false
 vim.g.swapfile = false
-EOF

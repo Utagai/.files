@@ -1,4 +1,3 @@
-lua <<EOF
 -- Don't show the Vim mode cause airline does that for us already.
 vim.opt.showmode = false
 
@@ -36,4 +35,3 @@ vim.api.nvim_command('autocmd VimEnter * set showtabline=0')
 vim.cmd(
   'nnoremap <silent> <leader>b :execute \'set showtabline=\' . (&showtabline ==# 0 ? 2 : 0)<CR>'
 )
-EOF

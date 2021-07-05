@@ -1,8 +1,7 @@
-" Commands, command maps and autocommands.
-" These guys have to use `nvim_command` unfortunately, because there is no API
-" yet for autocmds and such.
+-- Commands, command maps and autocommands.
+-- These guys have to use `nvim_command` unfortunately, because there is no API
+-- yet for autocmds and such.
 
-lua << EOF
 -- Allow saving of files as sudo when I forgot to start vim using sudo.
 vim.api.nvim_set_keymap('c', 'w!!', 'w !sudo tee > /dev/null &', {})
 
@@ -19,5 +18,3 @@ vim.api.nvim_command('autocmd BufEnter * let &titlestring = \' \' . expand("%:t"
 -- clipboard.
 -- TODO: API for defining user commands not yet in lua neovim.
 vim.cmd('command! Copy w !co.py')
-EOF
-

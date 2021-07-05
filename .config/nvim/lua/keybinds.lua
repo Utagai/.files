@@ -1,8 +1,7 @@
-" This file contains miscellaneous keybinds that have no thematic connection
-" to other sourced vim files. For example, this means keybinds related to LSP
-" functionality is in lsp.vim, not here. This file contains the randoms.
+-- This file contains miscellaneous keybinds that have no thematic connection
+-- to other sourced vim files. For example, this means keybinds related to LSP
+-- functionality is in lsp.vim, not here. This file contains the randoms.
 
-lua << EOF
 -- Disable ex mode, lol.
 vim.api.nvim_set_keymap('n', 'Q', '', {})
 
@@ -25,4 +24,3 @@ vim.api.nvim_set_keymap('n', '<C-ScrollWheelLeft> ', '', {})
 vim.api.nvim_set_keymap('n', '<ScrollWheelRight>', '', {})
 vim.api.nvim_set_keymap('n', '<S-ScrollWheelRight>', '', {})
 vim.api.nvim_set_keymap('n', '<C-ScrollWheelRight>', '', {})
-EOF

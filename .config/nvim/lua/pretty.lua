@@ -1,7 +1,6 @@
-" All all things pretty related, or in other words: syntax highlighting and
-" some number column stuff.
-highlight clear SignColumn
-lua <<EOF
+-- All all things pretty related, or in other words: syntax highlighting and
+-- some number column stuff.
+
 -- Enable Treesitter highlighting.
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -27,4 +26,3 @@ vim.cmd('highlight clear SignColumn')
 -- Give us commands to quickly turn off/on line numbers if we want.
 vim.cmd('command! Numbers set number | set relativenumber')
 vim.cmd('command! Nonumbers set nonumber | set norelativenumber')
-EOF

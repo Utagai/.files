@@ -1,4 +1,3 @@
-lua << EOF
 require('telescope').setup{
   defaults = {
     layout_strategy = "vertical",
@@ -13,4 +12,3 @@ require('telescope').setup{
 -- Find files using Telescope command-line sugar.
 vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope git_files<CR>', { noremap = true, silent = true })
-EOF
