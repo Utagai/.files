@@ -1,37 +1,39 @@
 lua <<EOF
--- Settings...
-
 -- Always show the signcolumn, otherwise it would shift the text each time
 -- diagnostics appear or become resolved.
 vim.opt.signcolumn = 'yes'
 -- Don't show any messages when we are using a completion menu.
 vim.opt.shortmess = 'atTc'
+-- Fold method should be manual.
+vim.opt.foldmethod = 'manual'
+
+-- I believe this only affects things like comments or text files..., for
+-- which having this as my width is pretty good for my personally at least.
+vim.opt.textwidth = 80
+
+-- Tab/Spaces settings
+-- TODO: We may want to add some autocmd overrides for Go...
+vim.opt.tabstop = 2
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+
+-- Always show statusline.
+vim.opt.laststatus = 2
+
+-- Allows vim to the set the title to whatever the titlestring is. See
+-- commands.vim for how we set that.
+-- This is the last piece of the puzzle that enables tmux to give useful names
+-- to each of its windows containing a running vim instance.
+vim.opt.title = true
+
+-- Increase the yank buffer size
+vim.opt.viminfo = '\'50,<1000,s100,h'
+
+-- Disable backup/swapfiles. I don't care, having things on a remote repo is
+-- good enough and I have never had issues with PC/laptop dying or losing lots
+-- of work... it's a risk but I don't care.
+vim.g.backup = false
+vim.g.writebackup = false
+vim.g.swapfile = false
 EOF
-
-" Sets folding behaviors
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=1
-
-set textwidth=0
-
-" converts our use of tab into some number(2) of spaces
-set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-
-" Always show statusline
-set laststatus=2
-
-" Allows vim to the set the title to whatever the titlestring is. See
-" commands.vim for how we set that.
-" This is the last piece of the puzzle that enables tmux to give useful names
-" to each of its windows containing a running vim instance.
-set title
-
-" Increase the yank buffer size
-set viminfo='50,<1000,s100,h
-
-" Make vim write its files to a universal location to avoid tarnishing the
-" working directory, even if its with hidden files.
-set nobackup
-set noswapfile

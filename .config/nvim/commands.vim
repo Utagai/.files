@@ -1,7 +1,5 @@
 " Commands, command maps and autocommands.
 
-autocmd FileType go match OverLength /\%>120v.\+/
-
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
