@@ -1,29 +1,30 @@
 " All all things pretty related, or in other words: syntax highlighting and
 " some number column stuff.
-
-" Turns on syntax highlighting.
-syntax enable
-
-" Enable Treesitter highlighting.
+highlight clear SignColumn
 lua <<EOF
+-- Enable Treesitter highlighting.
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true
   },
 }
+-- TODO: I am doing this because vim.g.syntax = 'enable' doesn't seem to work...
+vim.cmd('syntax enable')
+vim.opt.termguicolors = true
+-- TODO: No lua-native colorscheme setting.
+vim.cmd('colorscheme nord')
+
+-- Show current line number
+vim.opt.number = true
+-- Show relative line numbers.
+vim.opt.relativenumber = true
+
+-- Clear the sign column, otherwise an ugly solid colored column appears to the
+-- left.
+-- TODO: No lua-native color setting.
+vim.cmd('highlight clear SignColumn')
+
+-- Give us commands to quickly turn off/on line numbers if we want.
+vim.cmd('command! Numbers set number | set relativenumber')
+vim.cmd('command! Nonumbers set nonumber | set norelativenumber')
 EOF
-
-set termguicolors
-colorscheme nord
-
-
-" ----- Line number stuff
-" Show current line number
-set number
-" Show relative line numbers
-set relativenumber
-" Give us a command to quickly turn off/on line numbers if we want
-command! Numbers set number | set relativenumber
-command! Nonumbers set nonumber | set norelativenumber
-
-highlight clear SignColumn
