@@ -74,10 +74,7 @@ lua << EOF
   local nvim_lsp = require('lspconfig')
 
   local on_attach = function(client, bufnr)
-    -- require('completion').on_attach()
-
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
     -- Mappings
     local opts = { noremap=true, silent=true }
@@ -102,6 +99,15 @@ lua << EOF
       on_attach = on_attach,
     }
   end
+EOF
+
+" neovim-lsp find-all-references opens the results in a quickfix window, so we
+" we have some binds to make working with it less painful:
+lua << EOF
+vim.api.nvim_set_keymap('n', '<C-k>', ':cprev<CR>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':cnext<CR>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<CR>', ':.cc<CR>:cclose<CR>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-q>', ':cclose<CR>', { noremap = true, silent = true })
 EOF
 
 lua << EOF
@@ -231,7 +237,7 @@ set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 set laststatus=2
 
 " Hit enter to clear highlights (from searches, usually)
-nnoremap <CR> :noh<CR>
+nnoremap <C-l> :noh<CR>
 " Make search highlight colors much nicer on the eyes
 hi Search cterm=NONE ctermfg=blue ctermbg=black
 hi IncSearch cterm=NONE ctermfg=black ctermbg=blue
@@ -291,12 +297,6 @@ command! Numbers set number | set relativenumber
 command! Nonumbers set nonumber | set norelativenumber
 
 highlight clear SignColumn
-
-" Make vim split switches easier by directly using h, j, k, l to move
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " Add a shortcut command for copying the current buffer contents to the system
 " clipboard.
