@@ -28,7 +28,7 @@ lua << EOF
   -- really use this with our LSP stuff, so that's why it exists in lsp.vim.
   vim.api.nvim_set_keymap('n', '<C-k>', ':cprev<CR>zz', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<C-j>', ':cnext<CR>zz', { noremap = true, silent = true })
-  -- TODO: This beind causes errors if you press enter in normal mode.
+  -- TODO: This bind causes errors if you press enter in normal mode.
   vim.api.nvim_set_keymap('n', '<CR>', ':.cc<CR>:cclose<CR>zz', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<C-q>', ':cclose<CR>', { noremap = true, silent = true })
 
@@ -38,67 +38,49 @@ lua << EOF
       on_attach = on_attach,
     }
   end
-EOF
 
-" Completion
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-set completeopt=menu,noinsert,noselect
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" TODO: These are default values, I'm pretty sure, so let's try removing them.
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'disable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.resolve_timeout = 800
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
+  -- Only load compe stuff for LSP.
+  require'compe'.setup {
+    source = {
+      path = true;
+      buffer = true;
+      nvim_lsp = true;
+    };
+  }
 
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.nvim_lsp = v:true
+  -- How to match things in the completion menu.
+  vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
+  -- Some options for how the completion menu should behave.
+  vim.opt.completeopt = {'menu', 'noinsert', 'noselect'}
 
-lua << EOF
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
-end
-
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
+  -- Use Tab + ShiftTab to navigation the completion menu.
+  local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  else
-    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    return t "<S-Tab>"
-  end
-end
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+  local check_back_space = function()
+      local col = vim.fn.col('.') - 1
+      return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+  end
+
+  _G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+      return t "<C-n>"
+    elseif check_back_space() then
+      return t "<Tab>"
+    else
+      return vim.fn['compe#complete']()
+    end
+  end
+  _G.s_tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+      return t "<C-p>"
+    else
+      return t "<S-Tab>"
+    end
+  end
+  vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+  vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 EOF
