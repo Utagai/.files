@@ -50,7 +50,7 @@ require'compe'.setup {
 -- How to match things in the completion menu.
 vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
 -- Some options for how the completion menu should behave.
-vim.opt.completeopt = {'menu', 'noinsert', 'noselect'}
+vim.opt.completeopt = {'menu', 'noinsert'}
 
 -- Use Tab + ShiftTab to navigation the completion menu.
 local t = function(str)
