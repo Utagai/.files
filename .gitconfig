@@ -1,7 +1,6 @@
 [user]
   email = mehrabhoque@gmail.com
   name = may h
-  signingKey = 168DEC2EBEA9E004
 [core]
   editor = nvim
   pager = delta --color-only --24-bit-color=always
