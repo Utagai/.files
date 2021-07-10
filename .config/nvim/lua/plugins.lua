@@ -1,3 +1,5 @@
+-- Configures plugins.
+
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
@@ -8,13 +10,19 @@ return require('packer').startup(function()
   -- Closes brackets for me.
   use 'jiangmiao/auto-pairs'
 
+  -- Airline status bar.
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
 
+  -- LSP & Autocompletion.
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'ray-x/lsp_signature.nvim'
 
+  -- Linting.
+  use 'dense-analysis/ale'
+
+  -- Git in vim.
   use 'tpope/vim-fugitive'
 
   -- Finder.

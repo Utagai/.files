@@ -1,3 +1,5 @@
+-- Configures the LSP settings and autocompletion.
+
 local nvim_lsp = require('lspconfig')
 
 local on_attach = function(client, bufnr)
@@ -19,8 +21,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', 'gn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
-  vim.fn.sign_define("LspDiagnosticsSignError", {text = "X", texthl = "LspDiagnosticsDefaultError"})
-  vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "!", texthl = "LspDiagnosticsDefaultWarning"})
+  vim.fn.sign_define("LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsDefaultError"})
+  vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "❗", texthl = "LspDiagnosticsDefaultWarning"})
 end
 
 -- Quickfix window keybinds. These are technically general, but we only ever

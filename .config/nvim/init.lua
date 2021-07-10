@@ -10,6 +10,9 @@ require('pretty')
 -- Neovim LSP
 require('lsp')
 
+-- ALE
+require('ale')
+
 -- Some command configuration.
 require('commands')
 
