@@ -26,7 +26,7 @@ vim.opt.laststatus = 2
 -- to each of its windows containing a running vim instance.
 vim.opt.title = true
 
--- Increase the yank buffer size
+-- Increase the yank buffer size.
 vim.opt.viminfo = '\'50,<1000,s100,h'
 
 -- Disable backup/swapfiles. I don't care, having things on a remote repo is

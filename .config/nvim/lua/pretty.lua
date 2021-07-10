@@ -7,6 +7,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
 }
+
 -- TODO: I am doing this because vim.g.syntax = 'enable' doesn't seem to work...
 vim.cmd('syntax enable')
 vim.opt.termguicolors = true
