@@ -32,6 +32,6 @@ vim.opt.viminfo = '\'50,<1000,s100,h'
 -- Disable backup/swapfiles. I don't care, having things on a remote repo is
 -- good enough and I have never had issues with PC/laptop dying or losing lots
 -- of work... it's a risk but I don't care.
-vim.g.backup = false
+vim.o.backup = false
 vim.g.writebackup = false
-vim.g.swapfile = false
+vim.bo.swapfile = false
