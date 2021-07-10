@@ -3,7 +3,7 @@
 -- yet for autocmds and such.
 
 -- Allow saving of files as sudo when I forgot to start vim using sudo.
-vim.api.nvim_set_keymap('c', 'w!!', 'w !sudo tee > /dev/null &', {})
+vim.api.nvim_set_keymap('c', 'w!!', 'w !sudo tee > /dev/null %', {})
 
 -- Trim trailing whitespace before we write
 -- TODO: API for defining auto commands not yet in lua neovim.
