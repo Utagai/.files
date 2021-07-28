@@ -20,6 +20,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'cc', '<cmd>cc<CR>', opts)
   buf_set_keymap('n', 'gp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', 'gn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', 'g?', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 
   vim.fn.sign_define("LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsDefaultError"})
   vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "❗", texthl = "LspDiagnosticsDefaultWarning"})
