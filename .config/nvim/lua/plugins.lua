@@ -24,6 +24,7 @@ return require('packer').startup(function()
 
   -- Git in vim.
   use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'
 
   -- Finder.
   use 'nvim-lua/popup.nvim'
