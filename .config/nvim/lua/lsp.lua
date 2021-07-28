@@ -22,6 +22,16 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', 'g?', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 
+  -- Stops diagnostics from spamming my screen when I haven't even finished
+  -- typing yet.
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false,
+      -- Disable a feature
+      update_in_insert = false,
+    }
+  )
+
   vim.fn.sign_define("LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsDefaultError"})
   vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "❗", texthl = "LspDiagnosticsDefaultWarning"})
 end
