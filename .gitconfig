@@ -3,7 +3,11 @@
   name = may h
 [core]
   editor = nvim
-  pager = delta --color-only --24-bit-color=always
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
 [include]
   path = ~/.config/delta/nord.gitconfig
 [delta]
