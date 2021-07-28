@@ -33,13 +33,16 @@ def report_copy(copy_txt):
 
 
 def main():
-    copy_cmd = get_copy_cmd()
-    piped_input = sys.stdin.read()
-    sanitized_input = piped_input.strip()
-    xsel_proc = Popen(copy_cmd.split(), stdin=PIPE, stdout=PIPE)
-    xsel_proc.communicate(sanitized_input.encode('utf-8'))
+    try:
+        copy_cmd = get_copy_cmd()
+        piped_input = sys.stdin.read()
+        sanitized_input = piped_input.strip()
+        xsel_proc = Popen(copy_cmd.split(), stdin=PIPE, stdout=PIPE)
+        xsel_proc.communicate(sanitized_input)
 
-    report_copy(sanitized_input)
+        report_copy(sanitized_input)
+    except Exception as e:
+        print("Failed to copy: {}", e)
 
 if __name__ == "__main__":
     main()
