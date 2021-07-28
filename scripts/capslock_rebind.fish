@@ -4,7 +4,7 @@ set found_kb false
 
 while true
   sleep 1
-  if lsusb | grep 'Topre Corporation' > /dev/null
+  if lsusb | grep 'Keyboard/Hub' > /dev/null
     if not $found_kb
       echo "kb connected; rebinding."
       setxkbmap -option caps:escape
