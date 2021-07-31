@@ -16,7 +16,7 @@ function fzf_key_bindings
     -o -type d -print \
     -o -type l -print 2> /dev/null | sed 's@^\./@@'"
 
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 40%
+    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
     begin
       set -lx FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT --reverse $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS"
       eval "$FZF_CTRL_T_COMMAND | "(__fzfcmd)' -m --query "'$fzf_query'"' | while read -l r; set result $result $r; end
@@ -36,7 +36,7 @@ function fzf_key_bindings
   end
 
   function fzf-history-widget -d "Show command history"
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 40%
+    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
     begin
       set -lx FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT $FZF_DEFAULT_OPTS --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m"
 
@@ -66,7 +66,7 @@ function fzf_key_bindings
     set -q FZF_CTRL_Q_COMMAND; or set -l FZF_CTRL_Q_COMMAND "
     command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
     -o -print 2> /dev/null | sed 's@^\./@@'"
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 40%
+    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
     begin
       set -lx FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
       eval "$FZF_CTRL_Q_COMMAND | "(__fzfcmd)' +m --query "'$fzf_query'"' | read -l result
@@ -90,7 +90,7 @@ function fzf_key_bindings
     set -q FZF_CTRL_O_COMMAND; or set -l FZF_CTRL_O_COMMAND "
     command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
     -o -type d -print 2> /dev/null | sed 's@^\./@@'"
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 40%
+    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
     begin
       set -lx FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
       eval "$FZF_CTRL_O_COMMAND | "(__fzfcmd)' +m --query "'$fzf_query'"' | read -l result
@@ -113,7 +113,7 @@ function fzf_key_bindings
     set -q FZF_CTRL_K_COMMAND; or set -l FZF_CTRL_K_COMMAND "
     command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
     -o -type d -print 2> /dev/null | sed 's@^\./@@'"
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 40%
+    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
     begin
       set -lx FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
       eval "$FZF_CTRL_K_COMMAND | "(__fzfcmd)' +m --query "'$fzf_query'"' | read -l result
@@ -131,11 +131,11 @@ function fzf_key_bindings
 
   function __fzfcmd
     set -q FZF_TMUX; or set FZF_TMUX 0
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 40%
+    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
     if [ $FZF_TMUX -eq 1 ]
       echo "fzf-tmux -d$FZF_TMUX_HEIGHT"
     else
-      echo "fzf --bind tab:down,btab:up +m --cycle --preview 'bat --color always -r :40 {}'"
+      echo "fzf --bind tab:down,btab:up +m --cycle --preview 'bat --color always -r :40 {}' --preview-window down:rounded"
     end
   end
 
