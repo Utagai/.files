@@ -1,14 +1,10 @@
 function fish_prompt
+  function _git_branch_name
+    echo (git symbolic-ref HEAD 2>/dev/null | sed -e 's|^refs/heads/||')
+  end
 
-  if not set -q -g __fish_robbyrussell_functions_defined
-    set -g __fish_robbyrussell_functions_defined
-    function _git_branch_name
-      echo (git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
-    end
-
-    function _is_git_dirty
-      echo (git status -s --ignore-submodules=dirty ^/dev/null)
-    end
+  function _is_git_dirty
+    echo (git status -s --ignore-submodules=dirty 2>/dev/null)
   end
 
   set -l pink (set_color -o b48ead)
