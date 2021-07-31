@@ -27,9 +27,8 @@ return require('packer').startup(function()
   use 'tpope/vim-rhubarb'
 
   -- Finder.
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
+  use 'junegunn/fzf'
+  use 'junegunn/fzf.vim'
 
   -- Better fish script editing.
   use 'dag/vim-fish'
