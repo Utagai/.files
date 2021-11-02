@@ -21,6 +21,9 @@ vim.g["airline#extensions#tabline#enabled"] = 1
 vim.g["airline#extensions#tabline#show_buffers"] = 1
 -- And their number, since that is important.
 vim.g["airline#extensions#tabline#buffer_nr_show"] = 1
+-- Stop showing whitespace errors. We use formatters for our languages that fix
+-- this for us, as well as an autocmd.
+vim.g["airline#extensions#whitespace#enabled"] = 0
 -- Makes it so that the names of each buffer is as short as possible.
 -- It only shows the filename, but if there are conflicts, will show an
 -- abbreviated full path.
