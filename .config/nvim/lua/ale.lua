@@ -9,12 +9,17 @@ vim.g.ale_fixers = {
   go = {'goimports'};
   haskell = {'brittany'};
   rust = {'rustfmt'};
+  javascript = {'prettier'};
+  typescript = {'prettier'};
+  typescriptreact = {'prettier'};
 }
 
 -- Set the linters for certain file types.
 vim.g.ale_linters = {
   go = {'golint'};
   haskell = {'hlint'};
+  typescript = {'eslint'};
+  typescriptreact = {'eslint'};
 }
 
 -- Run the fixer(s) on save.
