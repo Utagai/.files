@@ -38,6 +38,8 @@ return require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   -- Better i3 config/etc syntax highlighting.
   use 'mboughaba/i3config.vim'
+  -- Better tsx support.
+  use 'peitalin/vim-jsx-typescript'
 
   -- Nord colorscheme, but with some personal tweaks.
   use 'Utagai/nord-vim'
