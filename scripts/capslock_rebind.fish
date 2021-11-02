@@ -1,4 +1,4 @@
-#!/usr/local/bin/fish
+#!/usr/bin/fish
 
 set found_kb false
 
