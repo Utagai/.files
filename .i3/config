@@ -170,7 +170,11 @@ for_window [class="firefox" instance="Places"] floating enable
 for_window [class="discord"] floating enable
 for_window [class="Signal"] floating enable
 for_window [class="Electron"] floating enable
+for_window [title="Android Emulator*"] floating enable
 for_window [class="^.*"] border pixel 2
+# We have to put this exclusion rule _after_ the above rule, or else the above
+# rule will override it and add a border anyways.
+for_window [title="Android Emulator*"] border pixel 0
 client.focused #809fA2 #809fA2 #809fA2 #809fA2
 client.unfocused #efdce1 #efdce1 #efdce1 #efdce1
 client.focused_inactive #efdce1 #efdce1 #efdce1 #efdce1
