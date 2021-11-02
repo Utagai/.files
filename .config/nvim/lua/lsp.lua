@@ -45,7 +45,7 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':cnext<CR>zz', { noremap = true, silent =
 vim.api.nvim_set_keymap('n', '<CR>', ':.cc<CR>:cclose<CR>zz', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-q>', ':cclose<CR>', { noremap = true, silent = true })
 
-local servers = {'gopls', 'rust_analyzer'}
+local servers = {'gopls', 'rust_analyzer', 'tsserver'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
