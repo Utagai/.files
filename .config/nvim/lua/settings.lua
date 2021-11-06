@@ -20,11 +20,11 @@ vim.opt.softtabstop = 2
 -- Always show statusline.
 vim.opt.laststatus = 2
 
--- Allows vim to the set the title to whatever the titlestring is. See
--- commands.vim for how we set that.
--- This is the last piece of the puzzle that enables tmux to give useful names
--- to each of its windows containing a running vim instance.
+-- Allows vim to the set the title of the window. This is important for us
+-- despite using a tiling window manage without title panes because it means
+-- tmux can automatically label our windows with the file we are have open.
 vim.opt.title = true
+vim.opt.titlestring = vim.api.nvim_eval('expand("%:t")')
 
 -- Increase the yank buffer size.
 vim.opt.viminfo = '\'50,<1000,s100,h'
