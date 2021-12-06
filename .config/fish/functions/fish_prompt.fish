@@ -12,19 +12,19 @@ function fish_prompt
   set -l marine (set_color -o 5E81AC)
   set -l default (set_color -o 96BEC8)
 
-  set -l circle "|"
+  set -l separator "|"
   set -l cwd $marine(basename (prompt_pwd))
 
   if [ (_git_branch_name) ]
     if [ (_is_git_dirty) ]
-      echo -n -s $cwd " " $pink $circle " " $default
+      echo -n -s $cwd " " $pink $separator " " $default
     else
-      echo -n -s $cwd " " $green $circle " " $default
+      echo -n -s $cwd " " $green $separator " " $default
     end
   else
-    echo -n -s $cwd " " $marine $circle " " $default
+    echo -n -s $cwd " " $marine $separator " " $default
   end
 
-
+  printf '\033[6 q'
 
 end
