@@ -1,4 +1,4 @@
-# Defined in - @ line 2
 function suvim
-	sudo nvim $argv
+  set EDITOR nvim
+	sudo -e $argv
 end
