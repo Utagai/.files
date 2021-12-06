@@ -43,7 +43,7 @@ class App:
 
 
 workspace_cmds = {
-        'workspace 1': [App('Terminal', 'xst')],
+        'workspace 1': [App('Terminal', 'alacritty')],
         'workspace 2': [App('Browser', 'firefox')],
         'workspace 3': [App('Email', 'thunderbird')],
         'workspace 4': [App('Music', 'spotify')],

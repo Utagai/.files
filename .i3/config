@@ -25,9 +25,9 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec xst
+bindsym Mod1+Return exec alacritty
 bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/stodo.sh"
-bindsym Mod1+Shift+Return exec "~/dotfiles/scripts/stfloat.sh"
+bindsym Mod1+Shift+Return exec "~/dotfiles/scripts/alacritty_float.sh"
 
 # kill focused window
 bindsym Mod1+Shift+q kill
@@ -155,7 +155,7 @@ for_window [class="Eog" instance="eog"] floating enable
 for_window [class="feh" instance="feh"] floating enable
 for_window [class="CImg" instance="CImg"] floating enable
 for_window [class="st" instance="floating"] floating enable
-for_window [title="xst" instance="floating"] floating enable
+for_window [title="Alacritty" instance="floating"] floating enable
 for_window [title="Settings"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
 for_window [class="Nautilus" instance="nautilus"] floating enable
