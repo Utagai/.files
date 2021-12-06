@@ -32,3 +32,7 @@ vim.g.ale_sign_error = '✗'
 -- Lang-specific settings.
 vim.g.ale_go_govet_options = '-composites=false'
 vim.g.ale_rust_cargo_use_clippy = true
+
+-- Keybinds for jumping to next/previous warnings/errors.
+vim.api.nvim_set_keymap('n', 'ap', ':ALEPrevious<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'an', ':ALENext<CR>', { silent = true })
