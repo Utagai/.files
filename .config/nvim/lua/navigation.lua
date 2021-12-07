@@ -11,7 +11,7 @@ vim.api.nvim_command('command! -nargs=* W w')
 vim.api.nvim_command(
 "command! -bang -nargs=* GGrep " ..
 "call fzf#vim#grep(" ..
-  "'git grep --line-number '.shellescape(<q-args>), 0," ..
+  "'git grep --untracked --line-number '.shellescape(<q-args>), 0," ..
   "{" ..
     "'dir': systemlist('git rev-parse --show-toplevel')[0]," ..
     "'options': ['--bind', 'tab:down,btab:up', '+m', '--cycle']" ..
