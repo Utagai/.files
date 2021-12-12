@@ -1,0 +1,77 @@
+font:
+  normal:
+    family: "terminal_monospace"
+    # This is intentional... we strongly prefer the font's looks when it is bold.
+    style: Bold
+
+  bold:
+    family: "terminal_monospace"
+    style: Bold
+
+  italic:
+    family: "terminal_monospace"
+    style: Italic
+
+  bold_italic:
+    family: "terminal_monospace"
+    style: Bold Italic
+
+  size: 11
+
+# Colors (Nord)
+# These are taken from the the alacritty wiki:
+# https://github.com/alacritty/alacritty/wiki/Color-schemes
+colors:
+   # Default colors
+   primary:
+     background: '#2C2C2C'
+     foreground: '#A7A7A7'
+
+   # Normal colors
+   normal:
+     black:   '#3B4252'
+     red:     '#BF616A'
+     green:   '#A3BE8C'
+     yellow:  '#EBCB8B'
+     blue:    '#81A1C1'
+     magenta: '#B48EAD'
+     cyan:    '#88C0D0'
+     white:   '#E5E9F0'
+
+   # Bright colors
+   bright:
+     black:   '#4C566A'
+     red:     '#BF616A'
+     green:   '#A3BE8C'
+     yellow:  '#EBCB8B'
+     blue:    '#81A1C1'
+     magenta: '#B48EAD'
+     cyan:    '#8FBCBB'
+     white:   '#ECEFF4'
+
+background_opacity: 0.9
+
+window:
+  padding:
+    x: 30
+    y: 30
+
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: true
+
+
+# scrolling:
+#   # Maximum number of lines in the scrollback buffer.
+#   # Specifying '0' will disable scrolling.
+#   history: 100000
+#
+#   # Scrolling distance multiplier.
+#   multiplier: 10
+
+cursor:
+  style:
+    shape: Beam
+    blinking: On
+
+shell:
+  program: /usr/local/bin/tmux
