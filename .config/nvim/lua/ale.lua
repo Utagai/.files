@@ -23,10 +23,10 @@ vim.g.ale_linters = {
 }
 
 -- Run the fixer(s) on save.
-vim.g.ale_fix_on_save = true
+vim.g.ale_fix_on_save = 1
 
 -- Choose the symbols for warnings/errors.
-vim.g.ale_sign_warning = '❗'
+vim.g.ale_sign_warning = '!'
 vim.g.ale_sign_error = '✗'
 
 -- Lang-specific settings.
