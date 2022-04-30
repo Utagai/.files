@@ -14,6 +14,9 @@ exec --no-startup-id xrandr --output DP-0 --mode 1920x1080 --rate 144
 # Initialize workspaces with default set up on workspaces 1-4+.
 exec --no-startup-id "~/dotfiles/scripts/init_workspaces.py"
 
+# Unlock the keyring
+exec --no-startup-id "~/dotfiles/scripts/op.fish init"
+
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
@@ -36,6 +39,8 @@ bindsym Mod1+Shift+q kill
 bindsym Mod1+space exec "~/dotfiles/scripts/rofi.sh 'exec'"
 # workspace switch via rofi
 bindsym Mod4+Tab exec "~/dotfiles/scripts/rofi.sh 'tab'"
+# 1Password chooser via rofi
+bindsym Mod4+l exec "~/dotfiles/scripts/op.fish"
 
 # change focus
 bindsym Mod1+h focus left
