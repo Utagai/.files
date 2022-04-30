@@ -49,9 +49,8 @@ colors:
      cyan:    '#8FBCBB'
      white:   '#ECEFF4'
 
-background_opacity: 0.9
-
 window:
+  opacity: 0.9
   padding:
     x: 30
     y: 30
@@ -70,8 +69,7 @@ window:
 
 cursor:
   style:
-    shape: Beam
-    blinking: On
+    shape: Block
 
 shell:
   program: /usr/local/bin/tmux
