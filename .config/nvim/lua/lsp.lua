@@ -5,8 +5,18 @@ local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   require'lsp_signature'.on_attach({
     hint_enable = false,
+    floating_window = false,
+    hint_enable = true,
+    hint_prefix = "arg: ",
   })
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+  vim.diagnostic.config({
+    float = {
+      source = 'always',
+      border = border
+    },
+  })
 
   -- Mappings
   local opts = { noremap=true, silent=true }
