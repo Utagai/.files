@@ -172,6 +172,7 @@ for_window [class="discord"] floating enable
 for_window [class="Signal"] floating enable
 for_window [class="Electron"] floating enable
 for_window [title="Android Emulator*"] floating enable
+for_window [class="1Password"] floating enable
 for_window [class="^.*"] border pixel 2
 # We have to put this exclusion rule _after_ the above rule, or else the above
 # rule will override it and add a border anyways.
