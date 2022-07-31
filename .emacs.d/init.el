@@ -30,7 +30,8 @@
 (setq ring-bell-function 'ignore)
 
 ;; Transparent background.
-(set-frame-parameter (selected-frame) 'alpha '(93 . 93))
+(unless (string= system-type "windows-nt")
+  (set-frame-parameter (selected-frame) 'alpha '(93 . 93)))
 
 ;; Stops scrolling from jumping up a lot when we hit the bottom or top of the buffer viewport.
 (setq scroll-conservatively 101)
