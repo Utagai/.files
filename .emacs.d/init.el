@@ -16,6 +16,9 @@
 ;; Set font
 (set-face-attribute 'default nil :font "Fantasque Sans Mono" :height 120)
 
+;; Set default working directory to 'home' on Windows:
+(when (string= system-type "windows-nt") (setq default-directory "C:\\Users\\may\\Documents"))
+
 ;; Set tab-width
 (setq tab-width 2)
 
@@ -248,8 +251,11 @@
     "Switches to the other buffer (defined by other-buffer)."
     (interactive)
     (switch-to-buffer (other-buffer)))
+  (general-auto-unbind-keys)
   ;; We should probably split this into further functions for each prefix.
-  (general-def 'normal 'override
+  ;; I think we should get the SPC prefix working in visual mode... so we can have commands work on the visual selection.
+  (general-def
+    :states '(normal visual)
     :prefix "SPC"
 	"f" '(find-file :which-key "find file")
 	"bs" '(counsel-switch-buffer :which-key "switch buffers")
@@ -267,7 +273,7 @@
 	"ol" '(org-insert-link :which-key "insert a link in Org")
 	"o|" '(org-cycle :which-key "cycle visibility/format"))
 
-  (general-define-key
+  (general-def
      :keymaps 'transient-base-map
      "<escape>" 'transient-quit-one)
 )
