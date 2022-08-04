@@ -38,9 +38,8 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec alacritty
-bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/stodo.sh"
-bindsym Mod1+Shift+Return exec "~/dotfiles/scripts/alacritty_float.sh"
+bindsym Mod4+Return exec alacritty
+bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/alacritty_float.sh"
 
 # kill focused window
 bindsym Mod1+Shift+q kill
@@ -186,6 +185,9 @@ for_window [title="Android Emulator*"] floating enable
 for_window [class="discord"] floating enable
 for_window [class="Signal"] floating enable
 for_window [class="Electron"] floating enable
+for_window [class="1Password"] floating enable
+for_window [class="mpv"] floating enable
+for_window [title="Android Emulator*"] floating enable
 # Revert to default i3 bordering (but without the title bar).
 # for_window [class="^.*"] border pixel 2
 for_window [class="^.*"] border pixel 2
