@@ -1,3 +1,5 @@
+(set-frame-parameter nil 'internal-border-width 20)
+
 ;; Disable that positively grotesque emacs startup.
 (setq inhibit-startup-message t)
 
@@ -5,8 +7,25 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-(set-fringe-mode 10)
+(set-fringe-mode 0)
 (menu-bar-mode -1)
+
+;; Set emacs' exec path to match our shell PATH.
+(defun set-exec-path-from-shell-PATH ()
+  "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
+
+This is particularly useful under Mac OS X and macOS, where GUI
+apps are not started from a shell."
+  (interactive)
+
+  (let ((path-from-shell (replace-regexp-in-string
+			  "[ \t\n]*$" "" (replace-regexp-in-string
+					  "\s" ":" (shell-command-to-string
+						    "$SHELL --login -c 'echo $PATH'")))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(set-exec-path-from-shell-PATH)
 
 ; disable backup
 (setq backup-inhibited t)
