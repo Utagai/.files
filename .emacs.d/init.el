@@ -74,7 +74,7 @@
    '("1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-   '(org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
+   '(counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -214,7 +214,7 @@
 (use-package org
   :config
   (setq org-ellipsis " ▾"
-	org-hide-emphasis-markers t 
+	org-hide-emphasis-markers t
 	org-startup-indented t
 	org-edit-src-content-indentation 0)
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -233,6 +233,56 @@
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode))
 
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t)
+  (setq lsp-headerline-breadcrumb-enable nil))
+
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-select-next))
+        (:map lsp-mode-map
+         ("<backtab>" . company-select-previous))
+  :custom
+  (company-selection-wrap-around t)
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+
+(use-package go-mode
+  :hook (go-mode . lsp-deferred))
+
+(use-package rustic
+  :hook (rust-mode . lsp-deferred))
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/code")
+    (setq projectile-project-search-path '("~/code")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
 (use-package general
   :after org
   :init
@@ -246,7 +296,7 @@
                                   replace))
   :config
   (general-override-mode)
-  
+
   (defun may/switch-to-other-buffer ()
     "Switches to the other buffer (defined by other-buffer)."
     (interactive)
@@ -268,6 +318,10 @@
 	"rr" '(eval-last-sexp :which-key "evaluate sexp")
 	"rb" '(eval-buffer :which-key "evaluate buffer")
 	"gs" '(magit-status :which-key "run magit-status")
+	"lgd" '(evil-goto-definition :which-key "go to definition on point")
+	"lgr" '(lsp-find-references :which-key "find references of point")
+	"lp" '(projectile-find-file :which-key "find file by name")
+	"ls" '(projectile-ripgrep :which-key "find file by content search")
 	"oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
 	"oe" '(visible-mode :which-key "toggle Org hide emphasis")
 	"ol" '(org-insert-link :which-key "insert a link in Org")
@@ -275,8 +329,7 @@
 
   (general-def
      :keymaps 'transient-base-map
-     "<escape>" 'transient-quit-one)
-)
+     "<escape>" 'transient-quit-one))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
