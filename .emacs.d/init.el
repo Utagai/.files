@@ -11,6 +11,7 @@
 (menu-bar-mode -1)
 
 ;; Set emacs' exec path to match our shell PATH.
+;; TODO: This can be written as a lambda.
 (defun set-exec-path-from-shell-PATH ()
   "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
 
@@ -224,10 +225,10 @@ apps are not started from a shell."
                   (org-level-2 . 1.1)
                   (org-level-3 . 1.05)
                   (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
+                  (org-level-5 . 0.95)
+                  (org-level-6 . 0.90)
+                  (org-level-7 . 0.85)
+                  (org-level-8 . 0.80)))
     (set-face-attribute (car face) nil :height (cdr face))))
 
 (use-package org
