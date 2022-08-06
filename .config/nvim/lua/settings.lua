@@ -34,4 +34,4 @@ vim.opt.viminfo = '\'50,<1000,s100,h'
 -- of work... it's a risk but I don't care.
 vim.o.backup = false
 vim.g.writebackup = false
-vim.bo.swapfile = false
+vim.o.swapfile = false
