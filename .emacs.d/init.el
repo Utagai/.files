@@ -327,8 +327,7 @@ apps are not started from a shell."
 (use-package general
   :after org
   :init
-  (setq general-override-states '(insert
-                                  emacs
+  (setq general-override-states '(emacs
                                   hybrid
                                   normal
                                   visual
@@ -337,20 +336,21 @@ apps are not started from a shell."
                                   replace))
   :config
   (general-override-mode)
+  (general-auto-unbind-keys)
 
   (defun may/switch-to-other-buffer ()
     "Switches to the other buffer (defined by other-buffer)."
     (interactive)
     (switch-to-buffer (other-buffer)))
-  (general-auto-unbind-keys)
   ;; We should probably split this into further functions for each prefix.
   ;; I think we should get the SPC prefix working in visual mode... so we can have commands work on the visual selection.
   (general-def
-    :states '(normal visual)
+		:states '(normal visual motion)
+    :keymaps 'override
     :prefix "SPC"
 	"f" '(find-file :which-key "find file")
 	"bs" '(counsel-switch-buffer :which-key "switch buffers")
-	"bk" '(kill-buffer :which-key "kill current buffer")
+	"bk" '(kill-buffer :which-key "kill current buffer") ; TODO: This is not actually killing the current buffer... it asks you what to kill.
 	"bb" '(may/switch-to-other-buffer :which-key "switch to other buffer")
 	"hv" '(describe-variable :which-key "describe a variable")
 	"hf" '(describe-function :which-key "describe a function")
