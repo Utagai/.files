@@ -300,7 +300,11 @@ apps are not started from a shell."
   (setq typescript-indent-level 2))
 
 (use-package go-mode
-  :hook (go-mode . lsp-deferred))
+  :hook (go-mode . lsp-deferred)
+	:custom
+	(gofmt-command "goimports")
+	:config
+	(add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package rustic
   :hook (rust-mode . lsp-deferred))
