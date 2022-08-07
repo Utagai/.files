@@ -287,6 +287,13 @@ apps are not started from a shell."
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
+(use-package tree-sitter)
+(use-package tree-sitter-langs
+	:after tree-sitter
+	:config
+	(global-tree-sitter-mode)
+	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
 (use-package flycheck
 	:init (global-flycheck-mode)
 	:config
