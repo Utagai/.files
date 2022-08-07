@@ -1,3 +1,6 @@
+;;; init.el --- Emacs configuration
+;;; Code:
+
 (set-frame-parameter nil 'internal-border-width 20)
 
 ;; Disable that positively grotesque emacs startup.
@@ -13,7 +16,10 @@
 ;; Set emacs' exec path to match our shell PATH.
 ;; TODO: This can be written as a lambda.
 (defun set-exec-path-from-shell-PATH ()
-  "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
+  "Set up Emacs' variable `exec-path' via $PATH.
+
+This would make variable `exec-path' match the PATH environment
+variable used by the user's shell.
 
 This is particularly useful under Mac OS X and macOS, where GUI
 apps are not started from a shell."
@@ -68,6 +74,10 @@ apps are not started from a shell."
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Package configuration
+
+;;; Commentary:
+;;
+
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
@@ -216,7 +226,7 @@ apps are not started from a shell."
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (defun may/org-font-setup ()
-  ;; Replace list hyphen with dot
+  "Replace list hyphen with dot."
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
@@ -347,9 +357,24 @@ apps are not started from a shell."
 	"ol" '(org-insert-link :which-key "insert a link in Org")
 	"o|" '(org-cycle :which-key "cycle visibility/format"))
 
+	(general-def
+		:states '(normal motion)
+		:keymaps 'override
+		:prefix "g"
+		"r" 'lsp-find-references
+		"n" 'flycheck-next-error
+		"p" 'flycheck-previous-error
+		"e" 'lsp-rename
+		"k" 'lsp-describe-thing-at-point)
+
   (general-def
      :keymaps 'transient-base-map
      "<escape>" 'transient-quit-one))
 
+
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(provide 'init)
+
+;;; init.el ends here
