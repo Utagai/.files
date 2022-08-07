@@ -47,7 +47,7 @@ apps are not started from a shell."
 (when (string= system-type "windows-nt") (setq default-directory "C:\\Users\\may\\Documents"))
 
 ;; Set tab-width
-(setq tab-width 2)
+(setq-default tab-width 2)
 
 ;; Turn on line numbers
 (column-number-mode)
