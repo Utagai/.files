@@ -55,7 +55,7 @@ apps are not started from a shell."
 (global-display-line-numbers-mode t)
 
 ;; Turn on relative line numbers
-(setq display-line-numbers-type 'relative)
+(setq-default display-line-numbers-type 'relative)
 
 ; Turn off ring-bell
 (setq ring-bell-function 'ignore)
@@ -156,13 +156,15 @@ apps are not started from a shell."
 	;; padding to the end of the bar.
 	(setq mode-line-misc-info '("  "))
 
+	(declare-function doom-modeline-def-modeline 'cover-flycheck-func-nodef-at-runtime)
 	;; Customize what's in our bar.
 	(doom-modeline-def-modeline 'custom-line
 	  '(bar modals matches buffer-info selection-info)
 	  '(vcs checker misc-info))
 	
 	(defun setup-custom-doom-modeline ()
-	   (doom-modeline-set-modeline 'custom-line 'default))
+		(declare-function doom-modeline-set-modeline 'cover-flycheck-func-nodef-at-runtime)
+	  (doom-modeline-set-modeline 'custom-line 'default))
 	(add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
 	
 	(doom-modeline-mode 1))
@@ -191,13 +193,6 @@ apps are not started from a shell."
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-(defun org-toggle-emphasis ()
-  "Toggle hiding/showing of org emphasize markers."
-  (interactive)
-  (if org-hide-emphasis-markers
-      (set-variable 'org-hide-emphasis-markers nil)
-    (set-variable 'org-hide-emphasis-markers t)))
-
 ;; Vim emulation.
 (use-package evil
   :init
@@ -209,6 +204,7 @@ apps are not started from a shell."
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
+	(declare-function evil-set-undo-system 'cover-flycheck-func-nodef-at-runtime)
   (evil-set-undo-system 'undo-redo)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
@@ -216,6 +212,7 @@ apps are not started from a shell."
   ;; line as if it was actually split across multiple lines. Could be
   ;; useful for markdown editing for example. We'll keep it out for
   ;; now.
+	(declare-function evil-global-set-key 'cover-flycheck-func-nodef-at-runtime)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
@@ -281,6 +278,7 @@ apps are not started from a shell."
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
+	(declare-function lsp-enable-which-key-integration 'cover-flycheck-func-nodef-at-runtime)
   (lsp-enable-which-key-integration t)
   (setq lsp-headerline-breadcrumb-enable nil))
 
@@ -309,7 +307,9 @@ apps are not started from a shell."
 (use-package flycheck
 	:init (global-flycheck-mode)
 	:config
-	(defun run-flycheck (_) (flycheck-buffer))
+	(defun run-flycheck (_)
+		(declare-function flycheck-buffer 'cover-flycheck-func-nodef-at-runtime)
+		(flycheck-buffer))
 	(add-to-list 'window-buffer-change-functions 'run-flycheck))
 
 (use-package typescript-mode
@@ -350,14 +350,15 @@ apps are not started from a shell."
 (use-package general
   :after org
   :init
-  (setq general-override-states '(emacs
-                                  hybrid
-                                  normal
-                                  visual
-                                  motion
-                                  operator
-                                  replace))
+  (setq-default general-override-states '(emacs
+																					hybrid
+																					normal
+																					visual
+																					motion
+																					operator
+																					replace))
   :config
+	(declare-function general-override-mode 'cover-flycheck-func-nodef-at-runtime)
   (general-override-mode)
   (general-auto-unbind-keys)
 
