@@ -42,7 +42,7 @@ apps are not started from a shell."
 (setq auto-save-default nil)
 
 ;; Set font
-(set-face-attribute 'default nil :font "Fantasque Sans Mono" :height 120)
+(set-face-attribute 'default nil :font "Fantasque Sans Mono" :height 100)
 
 ;; Set default working directory to 'home' on Windows:
 (when (string= system-type "windows-nt") (setq default-directory "C:\\Users\\may\\Documents"))
@@ -149,12 +149,23 @@ apps are not started from a shell."
 (use-package all-the-icons)
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1))
+	:config
+	(setq doom-modeline-height 35)
 
-;; Whether display the buffer encoding.
-(setq doom-modeline-buffer-encoding nil)
-(setq doom-modeline-major-mode-icon t)
-(setq doom-modeline-buffer-state-icon nil)
+	;; Set the global mode string to some spaces to add artificial
+	;; padding to the end of the bar.
+	(setq mode-line-misc-info '("  "))
+
+	;; Customize what's in our bar.
+	(doom-modeline-def-modeline 'custom-line
+	  '(bar modals matches buffer-info selection-info)
+	  '(vcs checker misc-info))
+	
+	(defun setup-custom-doom-modeline ()
+	   (doom-modeline-set-modeline 'custom-line 'default))
+	(add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
+	
+	(doom-modeline-mode 1))
 
 ;; Set theme.
 (use-package doom-themes
