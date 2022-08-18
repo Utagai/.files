@@ -42,7 +42,7 @@ apps are not started from a shell."
 (setq auto-save-default nil)
 
 ;; Set font
-(set-face-attribute 'default nil :font "Fantasque Sans Mono" :height 100)
+(set-face-attribute 'default nil :font "Cascadia Code PL" :height 100)
 
 ;; Set default working directory to 'home' on Windows:
 (when (string= system-type "windows-nt") (setq default-directory "C:\\Users\\may\\Documents"))
@@ -69,10 +69,8 @@ apps are not started from a shell."
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
-                term-mode-hook))
-  ; TODO: These things are not defined?
-  ;shell-mode-hook
-                ;eshell-mode-hook
+                term-mode-hook
+								vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Package configuration
@@ -106,7 +104,7 @@ apps are not started from a shell."
 	 '("1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
+	 '(vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -346,6 +344,8 @@ apps are not started from a shell."
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
+
+(use-package vterm)
 
 (use-package general
   :after org
