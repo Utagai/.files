@@ -418,6 +418,7 @@ apps are not started from a shell."
 	"lgr" '(lsp-find-references :which-key "find references of point")
 	"lp" '(projectile-find-file :which-key "find file by name")
 	"ls" '(projectile-ripgrep :which-key "find file by content search")
+	"ps" '(projectile-switch-project :which-key "switch project")
 	"oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
 	"oe" '(visible-mode :which-key "toggle Org hide emphasis")
 	"ol" '(org-insert-link :which-key "insert a link in Org")
