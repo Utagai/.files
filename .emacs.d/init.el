@@ -414,6 +414,7 @@ apps are not started from a shell."
 	"rr" '(eval-last-sexp :which-key "evaluate sexp")
 	"rb" '(eval-buffer :which-key "evaluate buffer")
 	"gs" '(magit-status :which-key "run magit-status")
+	"cc" '(with-editor-finish :which-key "finish the editing session")
 	"lgd" '(evil-goto-definition :which-key "go to definition on point")
 	"lgr" '(lsp-find-references :which-key "find references of point")
 	"lp" '(projectile-find-file :which-key "find file by name")
