@@ -151,10 +151,6 @@ apps are not started from a shell."
          ("RET" . ivy-alt-done)
          ("TAB" . ivy-next-line)
          ("<backtab>" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
@@ -425,6 +421,7 @@ apps are not started from a shell."
 	"ol" '(org-insert-link :which-key "insert a link in Org")
 	"o|" '(org-cycle :which-key "cycle visibility/format"))
 
+	;; Note that gd is already defined by evil. For some reason.
 	(general-def
 		:states '(normal motion)
 		:keymaps 'override
