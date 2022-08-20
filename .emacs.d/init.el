@@ -392,6 +392,11 @@ apps are not started from a shell."
     "Switches to the other buffer (defined by other-buffer)."
     (interactive)
     (switch-to-buffer (other-buffer)))
+
+	(defun may/kill-current-buffer ()
+		(interactive)
+		(kill-buffer (current-buffer)))
+
   ;; We should probably split this into further functions for each prefix.
   ;; I think we should get the SPC prefix working in visual mode... so we can have commands work on the visual selection.
   (general-def
@@ -400,7 +405,7 @@ apps are not started from a shell."
     :prefix "SPC"
 	"f" '(find-file :which-key "find file")
 	"bs" '(counsel-switch-buffer :which-key "switch buffers")
-	"bk" '(kill-buffer :which-key "kill current buffer") ; TODO: This is not actually killing the current buffer... it asks you what to kill.
+	"bk" '(may/kill-current-buffer :which-key "kill current buffer")
 	"bb" '(may/switch-to-other-buffer :which-key "switch to other buffer")
 	"hv" '(describe-variable :which-key "describe a variable")
 	"hf" '(describe-function :which-key "describe a function")
