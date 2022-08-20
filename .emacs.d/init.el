@@ -137,6 +137,8 @@ apps are not started from a shell."
 ;; TODO: We should remove this I think.
 (use-package command-log-mode)
 
+(use-package dash)
+
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
          ("C-x b" . counsel-ibuffer)
@@ -367,7 +369,37 @@ apps are not started from a shell."
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
-(use-package vterm)
+(use-package vterm
+	:after dash
+	:functions (-map -filter)
+	:config
+	(defun may/vterm/names ()
+		(-map
+		 (lambda (buf) (buffer-name buf))
+		 (-filter
+			(lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
+			(buffer-list))))
+
+	(defvar may/vterm/num 0)
+
+	(declare-function may/vterm/names "init.el")
+	(defun may/vterm/switch ()
+		(interactive)
+		(ivy-read "Switch to term: " (may/vterm/names)
+							:require-match t
+							:action (lambda (bufname) (switch-to-buffer bufname))))
+
+	(defun may/vterm/make (&optional name)
+		(setq may/vterm/num (1+ may/vterm/num))
+		(let ((base (format "[vterm] %d" may/vterm/num)))
+			(if (not (null name))
+					(vterm (format "%s %s" base name))
+				(vterm base))))
+
+	(declare-function may/vterm/make "init.el")
+	(defun may/vterm/ask-make ()
+		(interactive)
+		(may/vterm/make (read-string "Name for new vterm: "))))
 
 (use-package general
   :after org
@@ -389,6 +421,9 @@ apps are not started from a shell."
     (interactive)
     (switch-to-buffer (other-buffer)))
 
+	;; TODO: There may be an issue with how we're doing this here. We
+	;; may need to grab the current buffer name, switch to the
+	;; other-buffer, and then kill the buffer that was current.
 	(defun may/kill-current-buffer ()
 		(interactive)
 		(kill-buffer (current-buffer)))
@@ -415,6 +450,8 @@ apps are not started from a shell."
 	"lgr" '(lsp-find-references :which-key "find references of point")
 	"lp" '(projectile-find-file :which-key "find file by name")
 	"ls" '(projectile-ripgrep :which-key "find file by content search")
+	"tc" '(may/vterm/ask-make :which-key "create a vterm instance")
+	"tt" '(may/vterm/switch :which-key "switch to a vterm instance")
 	"ps" '(projectile-switch-project :which-key "switch project")
 	"oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
 	"oe" '(visible-mode :which-key "toggle Org hide emphasis")
