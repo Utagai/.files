@@ -119,7 +119,7 @@ apps are not started from a shell."
 	 '("1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
+	 '(hl-todo frames-only-mode vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -337,6 +337,10 @@ apps are not started from a shell."
   :hook (typescript-mode . lsp-deferred)
   :config
   (setq typescript-indent-level 2))
+
+(use-package hl-todo
+	:config
+	(global-hl-todo-mode))
 
 (use-package prettier-js
 	:init
