@@ -1,7 +1,22 @@
 ;;; init.el --- Emacs configuration
 ;;; Code:
 
+;; Start emacs as a server
+(server-start)
+
+;; Padding
 (set-frame-parameter nil 'internal-border-width 20)
+
+;; For new frames, padding + transparency, and disabling of scroll
+;; bars.
+;; TODO: I am curious to know if setting these is enough, and we no
+;; longer need (scroll-bar-mode -1) or (set-fringe-mode 0).
+(setq default-frame-alist '(
+														(alpha . (93 . 93))
+														(internal-border-width . 20)
+														(left-fringe . 0)
+														(right-fringe . 0)
+														(vertical-scroll-bars)))
 
 ;; Disable that positively grotesque emacs startup.
 (setq inhibit-startup-message t)
@@ -111,6 +126,13 @@ apps are not started from a shell."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;; Frames only mode, but only on Linux where we have i3.
+(unless (string= system-type "windows-nt")
+  (use-package frames-only-mode
+		:config
+		(frames-only-mode)))
 
 ;; TODO: We should remove this I think.
 (use-package command-log-mode)
