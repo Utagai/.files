@@ -59,8 +59,9 @@ apps are not started from a shell."
 ;; Set font
 (set-face-attribute 'default nil :font "Cascadia Code PL" :height 100)
 
-;; Set default working directory to 'home' on Windows:
-(when (string= system-type "windows-nt") (setq default-directory "C:\\Users\\may\\Documents"))
+;; Set default working directory to the notes directory on Windows
+;; (the only thing I use emacs for on Windows):
+(when (string= system-type "windows-nt") (setq default-directory "C:\\Users\\may\\Documents\\notes"))
 
 ;; Set tab-width
 (setq-default tab-width 2)
