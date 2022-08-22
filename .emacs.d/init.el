@@ -12,7 +12,8 @@
 ;; TODO: I am curious to know if setting these is enough, and we no
 ;; longer need (scroll-bar-mode -1) or (set-fringe-mode 0).
 (setq default-frame-alist '(
-														(alpha . (93 . 93))
+														(unless (string= system-type "windows-nt")
+															(alpha . (93 . 93)))
 														(internal-border-width . 20)
 														(left-fringe . 0)
 														(right-fringe . 0)
@@ -76,10 +77,6 @@ apps are not started from a shell."
 ; Turn off ring-bell
 (setq ring-bell-function 'ignore)
 
-;; Transparent background.
-(unless (string= system-type "windows-nt")
-  (set-frame-parameter (selected-frame) 'alpha '(93 . 93)))
-
 ;; Stops scrolling from jumping up a lot when we hit the bottom or top of the buffer viewport.
 (setq scroll-conservatively 101)
 
@@ -120,7 +117,8 @@ apps are not started from a shell."
 	 '("1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(hl-todo frames-only-mode vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package)))
+	 '(hl-todo frames-only-mode vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package))
+ '(warning-suppress-types '((use-package) (use-package) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -129,11 +127,9 @@ apps are not started from a shell."
  )
 
 
-;; Frames only mode, but only on Linux where we have i3.
-(unless (string= system-type "windows-nt")
-  (use-package frames-only-mode
-		:config
-		(frames-only-mode)))
+(use-package frames-only-mode
+	:config
+	(frames-only-mode))
 
 ;; TODO: We should remove this I think.
 (use-package command-log-mode)
@@ -370,37 +366,38 @@ apps are not started from a shell."
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
-(use-package vterm
-	:after dash
-	:functions (-map -filter)
-	:config
-	(defun may/vterm/names ()
-		(-map
-		 (lambda (buf) (buffer-name buf))
-		 (-filter
-			(lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
-			(buffer-list))))
-
-	(defvar may/vterm/num 0)
-
-	(declare-function may/vterm/names "init.el")
-	(defun may/vterm/switch ()
-		(interactive)
-		(ivy-read "Switch to term: " (may/vterm/names)
-							:require-match t
-							:action (lambda (bufname) (switch-to-buffer bufname))))
-
-	(defun may/vterm/make (&optional name)
-		(setq may/vterm/num (1+ may/vterm/num))
-		(let ((base (format "[vterm] %d" may/vterm/num)))
-			(if (not (null name))
-					(vterm (format "%s %s" base name))
-				(vterm base))))
-
-	(declare-function may/vterm/make "init.el")
-	(defun may/vterm/ask-make ()
-		(interactive)
-		(may/vterm/make (read-string "Name for new vterm: "))))
+(unless (string= system-type "windows-nt")
+	(use-package vterm
+		:after dash
+		:functions (-map -filter)
+		:config
+		(defun may/vterm/names ()
+			(-map
+			 (lambda (buf) (buffer-name buf))
+			 (-filter
+				(lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
+				(buffer-list))))
+	
+		(defvar may/vterm/num 0)
+	
+		(declare-function may/vterm/names "init.el")
+		(defun may/vterm/switch ()
+			(interactive)
+			(ivy-read "Switch to term: " (may/vterm/names)
+								:require-match t
+								:action (lambda (bufname) (switch-to-buffer bufname))))
+	
+		(defun may/vterm/make (&optional name)
+			(setq may/vterm/num (1+ may/vterm/num))
+			(let ((base (format "[vterm] %d" may/vterm/num)))
+				(if (not (null name))
+						(vterm (format "%s %s" base name))
+					(vterm base))))
+	
+		(declare-function may/vterm/make "init.el")
+		(defun may/vterm/ask-make ()
+			(interactive)
+			(may/vterm/make (read-string "Name for new vterm: ")))))
 
 (use-package general
   :after org
