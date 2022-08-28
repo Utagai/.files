@@ -383,15 +383,15 @@ apps are not started from a shell."
   (declare-function may/vterm/get-next-num "init.el")
   (defun may/vterm/get-next-num ()
     (let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
-			(if sorted-vterm-names
-					(or
-					  ;; Find a gap in the vterm buffers to fill, starting from smallest numbered gap to largest.
-						(-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
-						                     (-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
-						;; If we do not find any such gap, just return the next number.
-						(1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))
-				  ;; In the initial case when there are no vterm buffers yet, just start from 1.
-					1)))
+      (if sorted-vterm-names
+          (or
+            ;; Find a gap in the vterm buffers to fill, starting from smallest numbered gap to largest.
+            (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
+                                 (-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
+            ;; If we do not find any such gap, just return the next number.
+            (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))
+          ;; In the initial case when there are no vterm buffers yet, just start from 1.
+          1)))
 
   (defun may/vterm/switch ()
     (interactive)
