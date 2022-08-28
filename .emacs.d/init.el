@@ -382,6 +382,7 @@ apps are not started from a shell."
 
   (declare-function may/vterm/get-next-num "init.el")
   (defun may/vterm/get-next-num ()
+    ;; Define this first since we'll be referencing it a bunch.
     (let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
       (if sorted-vterm-names
           (or
