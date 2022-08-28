@@ -367,37 +367,45 @@ apps are not started from a shell."
   :config (counsel-projectile-mode))
 
 (unless (string= system-type "windows-nt")
-	(use-package vterm
-		:after dash
-		:functions (-map -filter)
-		:config
-		(defun may/vterm/names ()
-			(-map
-			 (lambda (buf) (buffer-name buf))
-			 (-filter
-				(lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
-				(buffer-list))))
-	
-		(defvar may/vterm/num 0)
-	
-		(declare-function may/vterm/names "init.el")
-		(defun may/vterm/switch ()
-			(interactive)
-			(ivy-read "Switch to term: " (may/vterm/names)
-								:require-match t
-								:action (lambda (bufname) (switch-to-buffer bufname))))
-	
-		(defun may/vterm/make (&optional name)
-			(setq may/vterm/num (1+ may/vterm/num))
-			(let ((base (format "[vterm] %d" may/vterm/num)))
-				(if (not (null name))
-						(vterm (format "%s %s" base name))
-					(vterm base))))
-	
-		(declare-function may/vterm/make "init.el")
-		(defun may/vterm/ask-make ()
-			(interactive)
-			(may/vterm/make (read-string "Name for new vterm: ")))))
+(use-package vterm
+	:after dash
+	:functions (-map -filter -sort -map-indexed -first -first-item -second-item -last-item)
+	:config
+	(declare-function may/vterm/names "init.el")
+	(defun may/vterm/names ()
+		(-map
+		 (lambda (buf) (buffer-name buf))
+		 (-filter
+			(lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
+			(buffer-list))))
+
+	(declare-function may/vterm/name-to-num "init.el")
+	(defun may/vterm/name-to-num (s) (string-to-number (nth 1 (split-string s))))
+
+	(declare-function may/vterm/get-next-num "init.el")
+	(defun may/vterm/get-next-num ()
+		(let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
+			(or
+			 (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
+														(-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
+			 (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))))
+
+	(defun may/vterm/switch ()
+		(interactive)
+		(ivy-read "Switch to term: " (may/vterm/names)
+							:require-match t
+							:action (lambda (bufname) (switch-to-buffer bufname))))
+
+	(declare-function may/vterm/make "init.el")
+	(defun may/vterm/make (&optional name)
+		(let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
+			(if (not (null name))
+					(vterm (format "%s %s" base name))
+				(vterm base))))
+
+	(defun may/vterm/ask-make ()
+		(interactive)
+		(may/vterm/make (read-string "Name for new vterm: ")))))
 
 (use-package general
   :after org
