@@ -11,13 +11,11 @@
 ;; bars.
 ;; TODO: I am curious to know if setting these is enough, and we no
 ;; longer need (scroll-bar-mode -1) or (set-fringe-mode 0).
-(setq default-frame-alist '(
-														(unless (string= system-type "windows-nt")
-															(alpha . (93 . 93)))
-														(internal-border-width . 20)
-														(left-fringe . 0)
-														(right-fringe . 0)
-														(vertical-scroll-bars)))
+(setq default-frame-alist '((unless (string= system-type "windows-nt") (alpha . (93 . 93)))
+                            (internal-border-width . 20)
+                            (left-fringe . 0)
+                            (right-fringe . 0)
+                            (vertical-scroll-bars)))
 
 ;; Disable that positively grotesque emacs startup.
 (setq inhibit-startup-message t)
@@ -41,11 +39,11 @@ This is particularly useful under Mac OS X and macOS, where GUI
 apps are not started from a shell."
   (interactive)
 
-	(unless (string= system-type "windows-nt")
+  (unless (string= system-type "windows-nt")
   (let ((path-from-shell (replace-regexp-in-string
-			  "[ \t\n]*$" "" (replace-regexp-in-string
-					  "\s" ":" (shell-command-to-string
-						    "$SHELL --login -c 'echo $PATH'")))))
+        "[ \t\n]*$" "" (replace-regexp-in-string
+            "\s" ":" (shell-command-to-string
+                "$SHELL --login -c 'echo $PATH'")))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator)))))
 
@@ -83,7 +81,7 @@ apps are not started from a shell."
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
-								vterm-mode-hook))
+                vterm-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Package configuration
@@ -93,7 +91,7 @@ apps are not started from a shell."
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+       ("melpa-stable" . "https://stable.melpa.org/packages/")
        ("org" . "https://orgmode.org/elpa/")
        ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
@@ -114,10 +112,10 @@ apps are not started from a shell."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 '("1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
+   '("1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(hl-todo frames-only-mode vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package))
+   '(hl-todo frames-only-mode vterm tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package))
  '(warning-suppress-types '((use-package) (use-package) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -128,8 +126,8 @@ apps are not started from a shell."
 
 
 (use-package frames-only-mode
-	:config
-	(frames-only-mode))
+  :config
+  (frames-only-mode))
 
 ;; TODO: We should remove this I think.
 (use-package command-log-mode)
@@ -164,25 +162,25 @@ apps are not started from a shell."
 (use-package all-the-icons)
 (use-package doom-modeline
   :ensure t
-	:config
-	(setq doom-modeline-height 35)
+  :config
+  (setq doom-modeline-height 35)
 
-	;; Set the global mode string to some spaces to add artificial
-	;; padding to the end of the bar.
-	(setq mode-line-misc-info '("  "))
+  ;; Set the global mode string to some spaces to add artificial
+  ;; padding to the end of the bar.
+  (setq mode-line-misc-info '("  "))
 
-	(declare-function doom-modeline-def-modeline 'cover-flycheck-func-nodef-at-runtime)
-	;; Customize what's in our bar.
-	(doom-modeline-def-modeline 'custom-line
-	  '(bar modals matches buffer-info selection-info)
-	  '(vcs checker misc-info))
-	
-	(defun setup-custom-doom-modeline ()
-		(declare-function doom-modeline-set-modeline 'cover-flycheck-func-nodef-at-runtime)
-	  (doom-modeline-set-modeline 'custom-line 'default))
-	(add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
-	
-	(doom-modeline-mode 1))
+  (declare-function doom-modeline-def-modeline 'cover-flycheck-func-nodef-at-runtime)
+  ;; Customize what's in our bar.
+  (doom-modeline-def-modeline 'custom-line
+    '(bar modals matches buffer-info selection-info)
+    '(vcs checker misc-info))
+  
+  (defun setup-custom-doom-modeline ()
+    (declare-function doom-modeline-set-modeline 'cover-flycheck-func-nodef-at-runtime)
+    (doom-modeline-set-modeline 'custom-line 'default))
+  (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
+  
+  (doom-modeline-mode 1))
 
 ;; Set theme.
 (use-package doom-themes
@@ -219,7 +217,7 @@ apps are not started from a shell."
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
-	(declare-function evil-set-undo-system 'cover-flycheck-func-nodef-at-runtime)
+  (declare-function evil-set-undo-system 'cover-flycheck-func-nodef-at-runtime)
   (evil-set-undo-system 'undo-redo)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
@@ -227,7 +225,7 @@ apps are not started from a shell."
   ;; line as if it was actually split across multiple lines. Could be
   ;; useful for markdown editing for example. We'll keep it out for
   ;; now.
-	(declare-function evil-global-set-key 'cover-flycheck-func-nodef-at-runtime)
+  (declare-function evil-global-set-key 'cover-flycheck-func-nodef-at-runtime)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
@@ -269,9 +267,9 @@ apps are not started from a shell."
 (use-package org
   :config
   (setq org-ellipsis " ▾"
-	org-hide-emphasis-markers t
-	org-startup-indented t
-	org-edit-src-content-indentation 0)
+  org-hide-emphasis-markers t
+  org-startup-indented t
+  org-edit-src-content-indentation 0)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (may/org-font-setup))
 
@@ -293,7 +291,7 @@ apps are not started from a shell."
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
-	(declare-function lsp-enable-which-key-integration 'cover-flycheck-func-nodef-at-runtime)
+  (declare-function lsp-enable-which-key-integration 'cover-flycheck-func-nodef-at-runtime)
   (lsp-enable-which-key-integration t)
   (setq lsp-headerline-breadcrumb-enable nil))
 
@@ -314,18 +312,18 @@ apps are not started from a shell."
 
 (use-package tree-sitter)
 (use-package tree-sitter-langs
-	:after tree-sitter
-	:config
-	(global-tree-sitter-mode)
-	(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  :after tree-sitter
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package flycheck
-	:init (global-flycheck-mode)
-	:config
-	(defun run-flycheck (_)
-		(declare-function flycheck-buffer 'cover-flycheck-func-nodef-at-runtime)
-		(flycheck-buffer))
-	(add-to-list 'window-buffer-change-functions 'run-flycheck))
+  :init (global-flycheck-mode)
+  :config
+  (defun run-flycheck (_)
+    (declare-function flycheck-buffer 'cover-flycheck-func-nodef-at-runtime)
+    (flycheck-buffer))
+  (add-to-list 'window-buffer-change-functions 'run-flycheck))
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -334,19 +332,19 @@ apps are not started from a shell."
   (setq typescript-indent-level 2))
 
 (use-package hl-todo
-	:config
-	(global-hl-todo-mode))
+  :config
+  (global-hl-todo-mode))
 
 (use-package prettier-js
-	:init
-	(add-hook 'typescript-mode-hook 'prettier-js-mode))
+  :init
+  (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package go-mode
   :hook (go-mode . lsp-deferred)
-	:custom
-	(gofmt-command "goimports")
-	:config
-	(add-hook 'before-save-hook 'gofmt-before-save))
+  :custom
+  (gofmt-command "goimports")
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package rustic
   :hook (rust-mode . lsp-deferred))
@@ -368,57 +366,57 @@ apps are not started from a shell."
 
 (unless (string= system-type "windows-nt")
 (use-package vterm
-	:after dash
-	:functions (-map -filter -sort -map-indexed -first -first-item -second-item -last-item)
-	:config
-	(declare-function may/vterm/names "init.el")
-	(defun may/vterm/names ()
-		(-map
-		 (lambda (buf) (buffer-name buf))
-		 (-filter
-			(lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
-			(buffer-list))))
+  :after dash
+  :functions (-map -filter -sort -map-indexed -first -first-item -second-item -last-item)
+  :config
+  (declare-function may/vterm/names "init.el")
+  (defun may/vterm/names ()
+    (-map
+     (lambda (buf) (buffer-name buf))
+     (-filter
+      (lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
+      (buffer-list))))
 
-	(declare-function may/vterm/name-to-num "init.el")
-	(defun may/vterm/name-to-num (s) (string-to-number (nth 1 (split-string s))))
+  (declare-function may/vterm/name-to-num "init.el")
+  (defun may/vterm/name-to-num (s) (string-to-number (nth 1 (split-string s))))
 
-	(declare-function may/vterm/get-next-num "init.el")
-	(defun may/vterm/get-next-num ()
-		(let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
-			(or
-			 (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
-														(-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
-			 (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))))
+  (declare-function may/vterm/get-next-num "init.el")
+  (defun may/vterm/get-next-num ()
+    (let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
+      (or
+       (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
+                            (-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
+       (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))))
 
-	(defun may/vterm/switch ()
-		(interactive)
-		(ivy-read "Switch to term: " (may/vterm/names)
-							:require-match t
-							:action (lambda (bufname) (switch-to-buffer bufname))))
+  (defun may/vterm/switch ()
+    (interactive)
+    (ivy-read "Switch to term: " (may/vterm/names)
+              :require-match t
+              :action (lambda (bufname) (switch-to-buffer bufname))))
 
-	(declare-function may/vterm/make "init.el")
-	(defun may/vterm/make (&optional name)
-		(let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
-			(if (not (null name))
-					(vterm (format "%s %s" base name))
-				(vterm base))))
+  (declare-function may/vterm/make "init.el")
+  (defun may/vterm/make (&optional name)
+    (let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
+      (if (not (null name))
+          (vterm (format "%s %s" base name))
+        (vterm base))))
 
-	(defun may/vterm/ask-make ()
-		(interactive)
-		(may/vterm/make (read-string "Name for new vterm: ")))))
+  (defun may/vterm/ask-make ()
+    (interactive)
+    (may/vterm/make (read-string "Name for new vterm: ")))))
 
 (use-package general
   :after org
   :init
   (setq-default general-override-states '(emacs
-																					hybrid
-																					normal
-																					visual
-																					motion
-																					operator
-																					replace))
+                                          hybrid
+                                          normal
+                                          visual
+                                          motion
+                                          operator
+                                          replace))
   :config
-	(declare-function general-override-mode 'cover-flycheck-func-nodef-at-runtime)
+  (declare-function general-override-mode 'cover-flycheck-func-nodef-at-runtime)
   (general-override-mode)
   (general-auto-unbind-keys)
 
@@ -427,53 +425,53 @@ apps are not started from a shell."
     (interactive)
     (switch-to-buffer (other-buffer)))
 
-	;; TODO: There may be an issue with how we're doing this here. We
-	;; may need to grab the current buffer name, switch to the
-	;; other-buffer, and then kill the buffer that was current.
-	(defun may/kill-current-buffer ()
-		(interactive)
-		(kill-buffer (current-buffer)))
+  ;; TODO: There may be an issue with how we're doing this here. We
+  ;; may need to grab the current buffer name, switch to the
+  ;; other-buffer, and then kill the buffer that was current.
+  (defun may/kill-current-buffer ()
+    (interactive)
+    (kill-buffer (current-buffer)))
 
   ;; We should probably split this into further functions for each prefix.
   ;; I think we should get the SPC prefix working in visual mode... so we can have commands work on the visual selection.
   (general-def
-		:states '(normal visual motion)
+    :states '(normal visual motion)
     :keymaps 'override
     :prefix "SPC"
-	"f" '(find-file :which-key "find file")
-	"bs" '(counsel-switch-buffer :which-key "switch buffers")
-	"bk" '(may/kill-current-buffer :which-key "kill current buffer")
-	"bb" '(may/switch-to-other-buffer :which-key "switch to other buffer")
-	"hv" '(describe-variable :which-key "describe a variable")
-	"hf" '(describe-function :which-key "describe a function")
-	"hc" '(describe-command :which-key "describe a command")
-	"x" '(counsel-M-x :which-key "execute a command")
-	"rr" '(eval-last-sexp :which-key "evaluate sexp")
-	"rb" '(eval-buffer :which-key "evaluate buffer")
-	"gs" '(magit-status :which-key "run magit-status")
-	"cc" '(with-editor-finish :which-key "finish the editing session")
-	"lgd" '(evil-goto-definition :which-key "go to definition on point")
-	"lgr" '(lsp-find-references :which-key "find references of point")
-	"lp" '(projectile-find-file :which-key "find file by name")
-	"ls" '(projectile-ripgrep :which-key "find file by content search")
-	"tc" '(may/vterm/ask-make :which-key "create a vterm instance")
-	"tt" '(may/vterm/switch :which-key "switch to a vterm instance")
-	"ps" '(projectile-switch-project :which-key "switch project")
-	"oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
-	"oe" '(visible-mode :which-key "toggle Org hide emphasis")
-	"ol" '(org-insert-link :which-key "insert a link in Org")
-	"o|" '(org-cycle :which-key "cycle visibility/format"))
+  "f" '(find-file :which-key "find file")
+  "bs" '(counsel-switch-buffer :which-key "switch buffers")
+  "bk" '(may/kill-current-buffer :which-key "kill current buffer")
+  "bb" '(may/switch-to-other-buffer :which-key "switch to other buffer")
+  "hv" '(describe-variable :which-key "describe a variable")
+  "hf" '(describe-function :which-key "describe a function")
+  "hc" '(describe-command :which-key "describe a command")
+  "x" '(counsel-M-x :which-key "execute a command")
+  "rr" '(eval-last-sexp :which-key "evaluate sexp")
+  "rb" '(eval-buffer :which-key "evaluate buffer")
+  "gs" '(magit-status :which-key "run magit-status")
+  "cc" '(with-editor-finish :which-key "finish the editing session")
+  "lgd" '(evil-goto-definition :which-key "go to definition on point")
+  "lgr" '(lsp-find-references :which-key "find references of point")
+  "lp" '(projectile-find-file :which-key "find file by name")
+  "ls" '(projectile-ripgrep :which-key "find file by content search")
+  "tc" '(may/vterm/ask-make :which-key "create a vterm instance")
+  "tt" '(may/vterm/switch :which-key "switch to a vterm instance")
+  "ps" '(projectile-switch-project :which-key "switch project")
+  "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
+  "oe" '(visible-mode :which-key "toggle Org hide emphasis")
+  "ol" '(org-insert-link :which-key "insert a link in Org")
+  "o|" '(org-cycle :which-key "cycle visibility/format"))
 
-	;; Note that gd is already defined by evil. For some reason.
-	(general-def
-		:states '(normal motion)
-		:keymaps 'override
-		:prefix "g"
-		"r" 'lsp-find-references
-		"n" 'flycheck-next-error
-		"p" 'flycheck-previous-error
-		"e" 'lsp-rename
-		"k" 'lsp-describe-thing-at-point)
+  ;; Note that gd is already defined by evil. For some reason.
+  (general-def
+    :states '(normal motion)
+    :keymaps 'override
+    :prefix "g"
+    "r" 'lsp-find-references
+    "n" 'flycheck-next-error
+    "p" 'flycheck-previous-error
+    "e" 'lsp-rename
+    "k" 'lsp-describe-thing-at-point)
 
   (general-def
      :keymaps 'transient-base-map
