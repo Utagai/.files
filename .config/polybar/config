@@ -76,12 +76,12 @@
 
   modules-left = i3 xwindow
   modules-center = date
-  modules-right = volume memory cpu temperature network battery powermenu
+  modules-right = volume memory cpu temperature network battery
 
 [module/xwindow]
   type = internal/xwindow
   label = %title:0:85:...%
-  label-foreground = ${color-values.dark-white}
+  label-foreground = ${color-values.foreground}
 
 [module/i3]
   type = internal/i3
