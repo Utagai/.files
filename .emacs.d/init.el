@@ -486,6 +486,7 @@ apps are not started from a shell."
     :keymaps 'override
     :prefix "g"
     "r" 'lsp-find-references
+    "i" 'lsp-find-implementation
     "n" 'flycheck-next-error
     "p" 'flycheck-previous-error
     "e" 'lsp-rename
