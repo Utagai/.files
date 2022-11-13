@@ -156,7 +156,7 @@ for_window [class="st" instance="floating"] floating enable
 for_window [title="Alacritty" instance="floating"] floating enable
 for_window [title="Settings"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
-for_window [class="Nautilus" instance="nautilus"] floating enable
+for_window [class="Pcmanfm" instance="pcmanfm"] floating enable
 for_window [class="Org.gnome.Nautilus" instance="org.gnome.Nautilus"] floating enable
 for_window [class="Lxappearance" instance="lxappearance"] floating enable
 for_window [title="PangoCairo:*"] floating enable
