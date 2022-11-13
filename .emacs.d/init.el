@@ -11,11 +11,13 @@
 ;; bars.
 ;; TODO: I am curious to know if setting these is enough, and we no
 ;; longer need (scroll-bar-mode -1) or (set-fringe-mode 0).
-(setq default-frame-alist '((unless (string= system-type "windows-nt") (alpha . (93 . 93)))
+(setq default-frame-alist '((alpha . (93 . 93))
                             (internal-border-width . 20)
                             (left-fringe . 0)
                             (right-fringe . 0)
                             (vertical-scroll-bars)))
+
+(when (string= system-type "windows-nt") (add-to-list 'default-frame-alist '(alpha . (100 . 100))))
 
 ;; Disable that positively grotesque emacs startup.
 (setq inhibit-startup-message t)
