@@ -1,3 +1,0 @@
-[submodule "xst"]
-	path = xst
-	url = git@github.com:utagai/xst.git
