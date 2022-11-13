@@ -6,7 +6,7 @@ some hacky artifacts from my short stint on OS X and/or WSL.
 ### Screenshot(s)
 Here's a simple GIF showing the two 'modes' my environment can be in:
 
-![demo](./rsrc/screenshot/screenshot.gif)
+![demo](./rsrc/screenshot.png)
 
 * **Normal** - What I usually use. It's pretty, but tries to stay as practical as it can.
 * **Focused** - Avoids caring about aesthetics and goes for as minimal as it can. 
