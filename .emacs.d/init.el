@@ -59,7 +59,7 @@ apps are not started from a shell."
 (setq auto-save-default nil)
 
 ;; Set font
-(set-face-attribute 'default nil :font "Cascadia Code PL" :height 100)
+(set-face-attribute 'default nil :font "Cascadia Code PL" :height 95)
 
 ;; Set default working directory to the notes directory on Windows
 ;; (the only thing I use emacs for on Windows):
