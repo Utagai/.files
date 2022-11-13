@@ -167,8 +167,7 @@ for_window [class="Matplotlib" instance="matplotlib"] floating enable
 for_window [class="Eog" instance="eog"] floating enable
 for_window [class="feh" instance="feh"] floating enable
 for_window [class="CImg" instance="CImg"] floating enable
-for_window [class="st" instance="floating"] floating enable
-for_window [title="Alacritty" instance="floating"] floating enable
+for_window [title="scratchmacs"] floating enable
 for_window [title="Settings"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
 for_window [class="Pcmanfm" instance="pcmanfm"] floating enable
