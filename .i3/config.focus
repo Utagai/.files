@@ -39,7 +39,7 @@ floating_modifier Mod1
 
 # start a terminal
 bindsym Mod4+Return exec alacritty
-bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/alacritty_float.sh"
+bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/emacs_float.sh"
 
 # kill focused window
 bindsym Mod1+Shift+q kill
