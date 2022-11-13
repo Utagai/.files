@@ -329,10 +329,18 @@ apps are not started from a shell."
   (add-to-list 'window-buffer-change-functions 'run-flycheck))
 
 (use-package typescript-mode
-  :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
+	:init
+	(require 'typescript-mode)
   :config
-  (setq typescript-indent-level 2))
+  (setq typescript-indent-level 2)
+  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+  (define-derived-mode typescriptreact-mode typescript-mode "TypeScript TSX")
+  ;; use our derived mode for tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
+  ;; by default, typescript-mode is mapped to the treesitter typescript parser
+  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
 (use-package hl-todo
   :config
