@@ -72,4 +72,4 @@ cursor:
     shape: Block
 
 shell:
-  program: /usr/local/bin/tmux
+  program: /usr/bin/fish
