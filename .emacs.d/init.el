@@ -474,6 +474,7 @@ apps are not started from a shell."
   "tc" '(may/vterm/ask-make :which-key "create a vterm instance")
   "tt" '(may/vterm/switch :which-key "switch to a vterm instance")
   "ps" '(projectile-switch-project :which-key "switch project")
+  "pd" '(projectile-dired :which-key "open project dired")
   "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
   "oe" '(visible-mode :which-key "toggle Org hide emphasis")
   "ol" '(org-insert-link :which-key "insert a link in Org")
