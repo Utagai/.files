@@ -28,8 +28,8 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod4+Return exec alacritty
-bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/emacs_float.sh"
+bindsym Mod4+Return exec "~/dotfiles/scripts/emacs.fish"
+bindsym Mod4+Shift+Return exec "~/dotfiles/scripts/emacs.fish 'float'"
 
 # kill focused window
 bindsym Mod1+Shift+q kill
