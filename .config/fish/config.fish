@@ -13,6 +13,7 @@ set -x GOPATH "$HOME/.go"
 set -x PATH $PATH "$GOPATH/bin/"
 set -x PATH $PATH "$HOME/.local/bin/"
 set -x PATH $PATH "$HOME/.cabal/bin/"
+set -x PATH $PATH "/home/may/.local/share/nvm/v16.15.0/bin/"
 
 # Set some fzf related environment variables to use ripgrep.
 set -x FZF_DEFAULT_COMMAND "rg --files --hidden --follow -g '!.git/'"
