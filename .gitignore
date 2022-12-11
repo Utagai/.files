@@ -19,3 +19,6 @@ completions/
 .config/fish/conf.d
 .config/fish/fish_plugins
 packer_compiled.lua
+# MongoDB-specific stuff for work.
+10gen.lua
+_nvm*
