@@ -17,6 +17,9 @@ exec --no-startup-id "~/dotfiles/scripts/init_workspaces.py"
 # Unlock the keyring
 exec --no-startup-id "~/dotfiles/scripts/op.fish init"
 
+# Start the emacs daemon
+exec --no-startup-id "emacs --daemon"
+
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k

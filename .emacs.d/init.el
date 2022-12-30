@@ -1,9 +1,6 @@
 ;;; init.el --- Emacs configuration
 ;;; Code:
 
-;; Start emacs as a server
-(server-start)
-
 ;; Padding
 (set-frame-parameter nil 'internal-border-width 20)
 

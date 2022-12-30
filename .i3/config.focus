@@ -17,6 +17,9 @@ exec --no-startup-id i3-msg workspace 1
 exec --no-startup-id i3-msg move workspace to output left
 exec_always --no-startup-id "~/dotfiles/scripts/renumber_workspaces.py"
 
+# Start the emacs daemon
+exec --no-startup-id "emacs --daemon"
+
 # Rebind caps lock to escape.
 exec --no-startup-id setxkbmap -option caps:escape
 
