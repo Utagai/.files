@@ -388,6 +388,62 @@ apps are not started from a shell."
   :functions (-map -filter -sort -map-indexed -first -first-item -second-item -last-item)
 	:commands (vterm-send-key vterm-send-return)
 	:init
+	;; HACK: Forgive me lord.
+	;; So, because we like to have a bit of a visual gap around our
+	;; emacs buffer, the amount of columns vterm gets to actually play
+	;; with gets limited.
+	;; Now, normally, this would be OK. vterm will
+	;; use window-body-width to determine this "correctly". In reality
+	;; however, the amount of _pixels_ that the gap we introduce to
+	;; emacs is not 1:1 with the number of emulated terminal _columns_
+	;; that vterm thinks it can render.
+	;; In reality, what ends up happening is that vterm actually
+	;; overcounts by a tiny bit depending on what the true pixel size of
+	;; the emacs window is. Sometimes it overcounts, sometimes it
+	;; manages to avoid doing so.
+	;; Now, something else vterm does under
+	;; the hood is call stty so that programs can determine how many
+	;; rows and columns they have to work with. This is based on its
+	;; potentially overcounted value. This causes programs that care to
+	;; read this value and use it to format and structure its output.
+	;; Normally, this doesn't matter and some programs who care may not
+	;; even cause any weirdness, but there is one particular class of
+	;; program that is particularly affected by this issue: programs
+	;; with single-line updating, carriage-return based progress bars.
+	;; An example of such a program is the yay AUR helper for Arch.  If
+	;; yay gets the overcounted value, it will try to draw progress bars
+	;; that are a tad too large, and will force a line wrap.  This will
+	;; break the ability of the carriage return to overwrite a prior
+	;; progress bar.  So, instead of the ideal "animation" of seeing a
+	;; progress bar like:
+	;;
+	;;		Line 1: [                                         ] 0%
+	;;
+	;; Turn into:
+	;;
+	;;		Line 1: [=========================================] 100%
+	;;
+	;; In real time on a single line, you instead get this crap:
+	;;
+	;;		Line 1:   [                                       ] 0%
+	;;		Line 2:   [=                                      ] 1%
+	;;		Line 3:   [=                                      ] 2%
+	;;		Line 4:   [==                                     ] 3%
+	;;		Line N:   ...
+	;;		Line 99:  [====================================== ] 99%
+	;;		Line 100: [=======================================] 100%
+	;;
+	;; So, we fix this by adding a hook to vterm-mode, which is where
+	;; this incorrect stty call happens. This code comes in and
+	;; "corrects" the stty by setting the column value to be 1 less than
+	;; vterm thinks it should. This actually means that we now sometimes
+	;; undercount, but it is _always_ better to undercount than to
+	;; overcount.
+	;; Typically, I would consider opening a pull request, but I'm not
+	;; sure if I'll stick with vterm, and I'm also not completely
+	;; certain on what the correct implementation looks like -- this is
+	;; just a hack.
+  (add-hook 'vterm-mode-hook (lambda () (call-process "/home/may/dotfiles/scripts/decr_stty_cols.fish")))
 	(declare-function may/vterm/names "init.el")
   (defun may/vterm/names ()
     (-map
