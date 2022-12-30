@@ -339,7 +339,11 @@ apps are not started from a shell."
   (defun run-flycheck (_)
     (declare-function flycheck-buffer 'cover-flycheck-func-nodef-at-runtime)
     (flycheck-buffer))
-  (add-to-list 'window-buffer-change-functions 'run-flycheck))
+  (add-to-list 'window-buffer-change-functions 'run-flycheck)
+	;; Stops Flycheck from annoyingly spawning a new window (or frame
+	;; for us) and stealing focus just because we forgot to deleted the
+	;; wrong character for a brief second.
+	(setq flycheck-display-errors-function nil))
 
 (use-package typescript-mode
   :hook (typescript-mode . lsp-deferred)
@@ -586,6 +590,7 @@ apps are not started from a shell."
   "vw." '(may/vterm/send-vim-w :which-key "send :w<RET>")
   "vwq." '(may/vterm/send-vim-wq :which-key "send :wq<RET>")
   "lspr" '(lsp-workspace-restart :which-key "restart LSP")
+  "fcl" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
   "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
   "oe" '(visible-mode :which-key "toggle Org hide emphasis")
   "ol" '(org-insert-link :which-key "insert a link in Org")
