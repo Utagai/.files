@@ -571,6 +571,7 @@ apps are not started from a shell."
   "vq." '(may/vterm/send-vim-q :which-key "send :q<RET>")
   "vw." '(may/vterm/send-vim-w :which-key "send :w<RET>")
   "vwq." '(may/vterm/send-vim-wq :which-key "send :wq<RET>")
+  "lspr" '(lsp-workspace-restart :which-key "restart LSP")
   "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
   "oe" '(visible-mode :which-key "toggle Org hide emphasis")
   "ol" '(org-insert-link :which-key "insert a link in Org")
