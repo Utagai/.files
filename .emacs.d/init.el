@@ -386,8 +386,9 @@ apps are not started from a shell."
 (use-package vterm
   :after dash
   :functions (-map -filter -sort -map-indexed -first -first-item -second-item -last-item)
-  :config
-  (declare-function may/vterm/names "init.el")
+	:commands (vterm-send-key vterm-send-return)
+	:init
+	(declare-function may/vterm/names "init.el")
   (defun may/vterm/names ()
     (-map
      (lambda (buf) (buffer-name buf))
@@ -427,7 +428,27 @@ apps are not started from a shell."
 
   (defun may/vterm/ask-make ()
     (interactive)
-    (may/vterm/make (read-string "Name for new vterm: ")))))
+    (may/vterm/make (read-string "Name for new vterm: ")))
+
+	(defun may/vterm/send-vim-q ()
+		(interactive)
+		(vterm-send-key ":")
+		(vterm-send-key "q")
+		(vterm-send-return))
+
+	(defun may/vterm/send-vim-w ()
+		(interactive)
+		(vterm-send-key ":")
+		(vterm-send-key "w")
+		(vterm-send-return))
+
+	(defun may/vterm/send-vim-wq ()
+		(interactive)
+		(vterm-send-key ":")
+		(vterm-send-key "w")
+		(vterm-send-key "q")
+		(vterm-send-return))
+  :config
 
 (use-package general
   :after org
