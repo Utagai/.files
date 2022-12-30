@@ -449,6 +449,7 @@ apps are not started from a shell."
 		(vterm-send-key "q")
 		(vterm-send-return))
   :config
+	(setq vterm-timer-delay 0.0001)))
 
 (use-package general
   :after org
