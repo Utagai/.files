@@ -443,7 +443,7 @@ apps are not started from a shell."
 	;; sure if I'll stick with vterm, and I'm also not completely
 	;; certain on what the correct implementation looks like -- this is
 	;; just a hack.
-  (add-hook 'vterm-mode-hook (lambda () (call-process "/home/may/dotfiles/scripts/decr_stty_cols.fish")))
+	(add-hook 'vterm-mode-hook (lambda () (call-process "/home/may/dotfiles/scripts/decr_stty_cols.fish")))
 	(declare-function may/vterm/names "init.el")
   (defun may/vterm/names ()
     (-map
