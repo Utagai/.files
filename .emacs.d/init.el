@@ -306,6 +306,7 @@ apps are not started from a shell."
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
+	(setq lsp-lens-enable nil)
   (declare-function lsp-enable-which-key-integration 'cover-flycheck-func-nodef-at-runtime)
   (lsp-enable-which-key-integration t)
   (setq lsp-headerline-breadcrumb-enable nil))
