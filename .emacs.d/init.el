@@ -452,7 +452,10 @@ apps are not started from a shell."
 	  (-map
 	   (lambda (buf) (buffer-name buf))
 	   (-filter
-	    (lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
+	    (lambda (buf) (with-current-buffer buf
+											(and
+											 (string= "vterm-mode" major-mode)
+											 (string-match-p (regexp-quote "[vterm]")  (buffer-name)))))
 	    (buffer-list))))
 	
 	(declare-function may/vterm/name-to-num "init.el")
