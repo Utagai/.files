@@ -288,6 +288,9 @@ apps are not started from a shell."
 (use-package dockerfile-mode
 	:ensure t)
 
+;; NOTE: We need this to avoid certain errors/bugs with lsp-mode.
+(use-package yasnippet
+	:ensure t)
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
