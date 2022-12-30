@@ -547,6 +547,7 @@ apps are not started from a shell."
     :keymaps 'override
     :prefix "SPC"
   "f" '(find-file :which-key "find file")
+  "bas" '(switch-to-buffer :which-key "switch buffers")
   "bs" '(projectile-switch-to-buffer :which-key "switch buffers")
   "bk" '(may/kill-current-buffer :which-key "kill current buffer")
   "bb" '(may/switch-to-other-buffer :which-key "switch to other buffer")
