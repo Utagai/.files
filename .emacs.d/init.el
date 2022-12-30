@@ -480,10 +480,13 @@ apps are not started from a shell."
 	
 	(declare-function may/vterm/make "init.el")
 	(defun may/vterm/make (&optional name)
-	  (let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
-	    (if (not (null name))
+		(let ((old-dir default-directory))
+			(setq default-directory (projectile-project-root))
+			(let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
+				(if (not (null name))
 	        (vterm (format "%s %s" base name))
-	      (vterm base))))
+					(vterm base)))
+			(setq default-directory old-dir)))
 	
 	(defun may/vterm/ask-make ()
 	  (interactive)
