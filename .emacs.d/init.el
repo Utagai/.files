@@ -445,66 +445,66 @@ apps are not started from a shell."
 	;; just a hack.
 	(add-hook 'vterm-mode-hook (lambda () (call-process "/home/may/dotfiles/scripts/decr_stty_cols.fish")))
 	(declare-function may/vterm/names "init.el")
-  (defun may/vterm/names ()
-    (-map
-     (lambda (buf) (buffer-name buf))
-     (-filter
-      (lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
-      (buffer-list))))
-
-  (declare-function may/vterm/name-to-num "init.el")
-  (defun may/vterm/name-to-num (s) (string-to-number (nth 1 (split-string s))))
-
-  (declare-function may/vterm/get-next-num "init.el")
-  (defun may/vterm/get-next-num ()
-    ;; Define this first since we'll be referencing it a bunch.
-    (let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
-      (if sorted-vterm-names
-          (or
-            ;; Find a gap in the vterm buffers to fill, starting from smallest numbered gap to largest.
-            (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
-                                 (-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
-            ;; If we do not find any such gap, just return the next number.
-            (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))
-          ;; In the initial case when there are no vterm buffers yet, just start from 1.
-          1)))
-
-  (defun may/vterm/switch ()
-    (interactive)
-    (ivy-read "Switch to term: " (may/vterm/names)
-              :require-match t
-              :action (lambda (bufname) (switch-to-buffer bufname))))
-
-  (declare-function may/vterm/make "init.el")
-  (defun may/vterm/make (&optional name)
-    (let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
-      (if (not (null name))
-          (vterm (format "%s %s" base name))
-        (vterm base))))
-
-  (defun may/vterm/ask-make ()
-    (interactive)
-    (may/vterm/make (read-string "Name for new vterm: ")))
-
+	(defun may/vterm/names ()
+	  (-map
+	   (lambda (buf) (buffer-name buf))
+	   (-filter
+	    (lambda (buf) (with-current-buffer buf (string= "vterm-mode" major-mode)))
+	    (buffer-list))))
+	
+	(declare-function may/vterm/name-to-num "init.el")
+	(defun may/vterm/name-to-num (s) (string-to-number (nth 1 (split-string s))))
+	
+	(declare-function may/vterm/get-next-num "init.el")
+	(defun may/vterm/get-next-num ()
+	  ;; Define this first since we'll be referencing it a bunch.
+	  (let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
+	    (if sorted-vterm-names
+	        (or
+	          ;; Find a gap in the vterm buffers to fill, starting from smallest numbered gap to largest.
+	          (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
+	                               (-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
+	          ;; If we do not find any such gap, just return the next number.
+	          (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))
+	        ;; In the initial case when there are no vterm buffers yet, just start from 1.
+	        1)))
+	
+	(defun may/vterm/switch ()
+	  (interactive)
+	  (ivy-read "Switch to term: " (may/vterm/names)
+	            :require-match t
+	            :action (lambda (bufname) (switch-to-buffer bufname))))
+	
+	(declare-function may/vterm/make "init.el")
+	(defun may/vterm/make (&optional name)
+	  (let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
+	    (if (not (null name))
+	        (vterm (format "%s %s" base name))
+	      (vterm base))))
+	
+	(defun may/vterm/ask-make ()
+	  (interactive)
+	  (may/vterm/make (read-string "Name for new vterm: ")))
+	
 	(defun may/vterm/send-vim-q ()
 		(interactive)
 		(vterm-send-key ":")
 		(vterm-send-key "q")
 		(vterm-send-return))
-
+	
 	(defun may/vterm/send-vim-w ()
 		(interactive)
 		(vterm-send-key ":")
 		(vterm-send-key "w")
 		(vterm-send-return))
-
+	
 	(defun may/vterm/send-vim-wq ()
 		(interactive)
 		(vterm-send-key ":")
 		(vterm-send-key "w")
 		(vterm-send-key "q")
 		(vterm-send-return))
-  :config
+	:config
 	(setq vterm-timer-delay 0.0001)))
 
 (use-package general
