@@ -425,13 +425,16 @@ apps are not started from a shell."
 	;;
 	;; In real time on a single line, you instead get this crap:
 	;;
-	;;		Line 1:   [                                       ] 0%
-	;;		Line 2:   [=                                      ] 1%
-	;;		Line 3:   [=                                      ] 2%
-	;;		Line 4:   [==                                     ] 3%
+	;;		Line 1:   [                                       ] 0
+	;;		Line 2:   %
+	;;		Line 3:   [=                                      ] 1
+	;;		Line 4:   %
 	;;		Line N:   ...
-	;;		Line 99:  [====================================== ] 99%
-	;;		Line 100: [=======================================] 100%
+	;;		Line N+1: %
+	;;		Line 99:  [====================================== ] 99
+	;;		Line 100:  %
+	;;		Line 101: [=======================================] 100
+	;;		Line 102: %
 	;;
 	;; So, we fix this by adding a hook to vterm-mode, which is where
 	;; this incorrect stty call happens. This code comes in and
