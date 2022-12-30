@@ -55,7 +55,11 @@ apps are not started from a shell."
 ; disable auto save
 (setq auto-save-default nil)
 
-(set-face-attribute 'default nil :font "Cascadia Code PL" :height 90)
+;; Add a hook to after-make-frame-functions to set the font.
+;; This shouldn't be necessary, but for some reason, if we do not do
+;; this, then the font emacs renders end up being weirdly aliased
+;; until we evaluate this line a second time.
+(add-hook 'after-make-frame-functions (lambda (frame) (set-face-attribute 'default frame :font "Cascadia Code PL" :height 90)))
 
 ;; Set default working directory to the notes directory on Windows
 ;; (the only thing I use emacs for on Windows):
