@@ -11,11 +11,14 @@ exec --no-startup-id setxkbmap -option caps:escape
 # silently error on our thinkpad, so yeah, whatever.
 exec --no-startup-id xrandr --output DP-0 --mode 1920x1080 --rate 144
 
-# Initialize workspaces with default set up on workspaces 1-4+.
-exec --no-startup-id "~/dotfiles/scripts/init_workspaces.py"
-
 # Unlock the keyring
 exec --no-startup-id "~/dotfiles/scripts/op.fish init"
+
+# Rebind caps lock to escape.
+exec --no-startup-id setxkbmap -option caps:escape
+
+# Set mouse sensitivity
+exec --no-startup-id xinput set-prop 8 'libinput Accel Speed' -0.5
 
 # Start the emacs daemon
 exec --no-startup-id "emacs --daemon"

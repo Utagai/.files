@@ -6,25 +6,14 @@
 #
 # To get a config file with the same key positions, but for your current
 # layout, use the i3-config-wizard
-#
 
 exec --no-startup-id picom
-# exec nm-applet
-
-# Handle issues with dual display immediately.
-exec --no-startup-id "~/dotfiles/scripts/monitor.sh"
-exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id i3-msg move workspace to output left
-exec_always --no-startup-id "~/dotfiles/scripts/renumber_workspaces.py"
 
 # Start the emacs daemon
 exec --no-startup-id "emacs --daemon"
 
 # Rebind caps lock to escape.
 exec --no-startup-id setxkbmap -option caps:escape
-
-# Initialize workspaces with default set up on workspaces 1-4.
-exec --no-startup-id "~/dotfiles/scripts/init_workspaces.py"
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
