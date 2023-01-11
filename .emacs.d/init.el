@@ -118,7 +118,7 @@ apps are not started from a shell."
 	 '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(dockerfile-mode yaml-mode vterm fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy command-log-mode use-package))
+	 '(dockerfile-mode yaml-mode vterm fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel which-key rainbow-delimiters doom-modeline command-log-mode use-package))
  '(warning-suppress-types '((use-package) (use-package) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -290,10 +290,12 @@ apps are not started from a shell."
 (use-package dockerfile-mode
 	:ensure t)
 
-;; NOTE: We need this to avoid certain errors/bugs with lsp-mode.
+;; NOTE: We need this regardless of whether we use snippets to avoid
+;; certain errors/bugs with lsp-mode.
+;; However, snippets seem to be pretty nifty, so we'll keep this
+;; around for now.
 (use-package yasnippet
 	:ensure t)
-
 (use-package yasnippet-snippets
 	:after yasnippet
 	:ensure t
@@ -583,6 +585,8 @@ apps are not started from a shell."
   "lgr" '(lsp-find-references :which-key "find references of point")
   "lp" '(projectile-find-file :which-key "find file by name")
   "ls" '(projectile-ripgrep :which-key "find file by content search")
+  "le" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
+  "lr" '(lsp-workspace-restart :which-key "restart LSP")
   "tc" '(may/vterm/ask-make :which-key "create a vterm instance")
   "tt" '(may/vterm/switch :which-key "switch to a vterm instance")
   "ps" '(projectile-switch-project :which-key "switch project")
@@ -591,8 +595,6 @@ apps are not started from a shell."
   "vq." '(may/vterm/send-vim-q :which-key "send :q<RET>")
   "vw." '(may/vterm/send-vim-w :which-key "send :w<RET>")
   "vwq." '(may/vterm/send-vim-wq :which-key "send :wq<RET>")
-  "lspr" '(lsp-workspace-restart :which-key "restart LSP")
-  "fcl" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
   "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
   "oe" '(visible-mode :which-key "toggle Org hide emphasis")
   "ol" '(org-insert-link :which-key "insert a link in Org")
