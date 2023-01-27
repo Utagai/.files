@@ -116,7 +116,7 @@ apps are not started from a shell."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
+	 '("570263442ce6735821600ec74a9b032bc5512ed4539faf61168f2fdf747e0668" "ce4234c32262924c1d2f43e6b61312634938777071f1129c7cde3ebd4a3028da" "00cec71d41047ebabeb310a325c365d5bc4b7fab0a681a2a108d32fb161b4006" "b99e334a4019a2caa71e1d6445fc346c6f074a05fcbb989800ecbe54474ae1b0" "2e05569868dc11a52b08926b4c1a27da77580daa9321773d92822f7a639956ce" "bf948e3f55a8cd1f420373410911d0a50be5a04a8886cabe8d8e471ad8fdba8e" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
 	 '(dockerfile-mode yaml-mode vterm fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel which-key rainbow-delimiters doom-modeline command-log-mode use-package))
@@ -192,7 +192,7 @@ apps are not started from a shell."
 
 ;; TODO: I don't think we'll actually want this.
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook (lisp-mode . rainbow-delimiters-mode))
 
 (use-package which-key
   :init (which-key-mode)
