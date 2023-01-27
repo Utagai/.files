@@ -303,7 +303,7 @@ apps are not started from a shell."
 	:commands (yas-reload-all)
 	:config
 	(yas-reload-all)
-	(dolist (mode '(org-mode-hook go-mode-hook))
+	(dolist (mode '(org-mode-hook go-mode-hook rust-mode-hook))
 		(add-hook mode (lambda () (yas-minor-mode)))))
 
 (use-package lsp-mode
@@ -384,7 +384,10 @@ apps are not started from a shell."
 (use-package yaml-mode)
 
 (use-package rustic
-  :hook (rust-mode . lsp-deferred))
+  :hook (rust-mode . lsp-deferred)
+	:config
+	(setq rustic-format-trigger 'on-save)
+	(modify-syntax-entry ?_ "w" rust-mode-syntax-table))
 
 (use-package projectile
   :diminish projectile-mode
