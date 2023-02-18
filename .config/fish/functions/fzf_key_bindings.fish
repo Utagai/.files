@@ -106,29 +106,6 @@ function fzf_key_bindings
     commandline -f repaint
   end
 
-  function fzf-cd-widget -d "Change directory"
-    set -l dir "$GOPATH/src/github.com/10gen/mongohouse"
-    set -l fzf_query ''
-
-    set -q FZF_CTRL_K_COMMAND; or set -l FZF_CTRL_K_COMMAND "
-    command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
-    -o -type d -print 2> /dev/null | sed 's@^\./@@'"
-    set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
-    begin
-      set -lx FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
-      eval "$FZF_CTRL_K_COMMAND | "(__fzfcmd)' +m --query "'$fzf_query'"' | read -l result
-
-      if [ -n "$result" ]
-        vim $result
-
-        # Remove last token from commandline.
-        commandline -t ""
-      end
-    end
-
-    commandline -f repaint
-  end
-
   function __fzfcmd
     set -q FZF_TMUX; or set FZF_TMUX 0
     set -q FZF_TMUX_HEIGHT; or set FZF_TMUX_HEIGHT 80%
@@ -141,14 +118,12 @@ function fzf_key_bindings
 
   bind \ct fzf-file-widget
   bind \cr fzf-history-widget
-  bind \ck fzf-cd-widget
   bind \co fzf-vim-widget
   bind \cq fzf-notes-widget
 
   if bind -M insert > /dev/null 2>&1
     bind -M insert \ct fzf-file-widget
     bind -M insert \cr fzf-history-widget
-    bind -M insert \ck fzf-cd-widget
     bind -M insert \co fzf-vim-widget
     bind -M insert \cq fzf-notes-widget
   end
