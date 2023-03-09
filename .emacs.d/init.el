@@ -387,7 +387,8 @@ apps are not started from a shell."
   :hook (rust-mode . lsp-deferred)
 	:config
 	(setq rustic-format-trigger 'on-save)
-	(modify-syntax-entry ?_ "w" rust-mode-syntax-table))
+	(modify-syntax-entry ?_ "w" rust-mode-syntax-table)
+	(setq lsp-rust-analyzer-cargo-watch-command "clippy"))
 
 (use-package projectile
   :diminish projectile-mode
