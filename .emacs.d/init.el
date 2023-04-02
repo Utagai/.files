@@ -84,8 +84,7 @@ apps are not started from a shell."
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
-                term-mode-hook
-                vterm-mode-hook))
+                term-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Package configuration
@@ -119,7 +118,7 @@ apps are not started from a shell."
 	 '("570263442ce6735821600ec74a9b032bc5512ed4539faf61168f2fdf747e0668" "ce4234c32262924c1d2f43e6b61312634938777071f1129c7cde3ebd4a3028da" "00cec71d41047ebabeb310a325c365d5bc4b7fab0a681a2a108d32fb161b4006" "b99e334a4019a2caa71e1d6445fc346c6f074a05fcbb989800ecbe54474ae1b0" "2e05569868dc11a52b08926b4c1a27da77580daa9321773d92822f7a639956ce" "bf948e3f55a8cd1f420373410911d0a50be5a04a8886cabe8d8e471ad8fdba8e" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(dockerfile-mode yaml-mode vterm fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel which-key rainbow-delimiters doom-modeline command-log-mode use-package))
+	 '(dockerfile-mode yaml-mode fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel which-key rainbow-delimiters doom-modeline command-log-mode use-package))
  '(warning-suppress-types '((use-package) (use-package) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -406,140 +405,6 @@ apps are not started from a shell."
   :config (counsel-projectile-mode)
 	(setq counsel-rg-base-command "rg --hidden -g '!.git/' --with-filename --no-heading --line-number --color never %s"))
 
-(unless (string= system-type "windows-nt")
-(use-package vterm
-  :after dash
-  :functions (-map -filter -sort -map-indexed -first -first-item -second-item -last-item)
-	:commands (vterm-send-key vterm-send-return)
-	:init
-	;; HACK: Forgive me lord.
-	;; So, because we like to have a bit of a visual gap around our
-	;; emacs buffer, the amount of columns vterm gets to actually play
-	;; with gets limited.
-	;; Now, normally, this would be OK. vterm will use window-body-width
-	;; to determine this "correctly". In reality however, the amount of
-	;; _pixels_ that the gap we introduce to emacs is not 1:1 with the
-	;; number of emulated terminal _columns_ that vterm thinks it can
-	;; render.
-	;; In reality, what ends up happening is that vterm actually
-	;; overcounts by a tiny bit depending on what the true pixel size of
-	;; the emacs window is. Sometimes it overcounts, sometimes it
-	;; manages to avoid doing so.
-	;; Now, something else vterm does under the hood is call stty so
-	;; that programs can determine how many rows and columns they have
-	;; to work with. This is based on its potentially overcounted
-	;; value. This causes programs that care to read this value and use
-	;; it to format and structure its output.  Normally, this doesn't
-	;; matter and some programs who care may not even cause any
-	;; weirdness, but there is one particular class of program that is
-	;; particularly affected by this issue: programs with single-line
-	;; updating, carriage-return based progress bars.  An example of
-	;; such a program is the yay AUR helper for Arch.  If yay gets the
-	;; overcounted value, it will try to draw progress bars that are a
-	;; tad too large, and will force a line wrap.  This will break the
-	;; ability of the carriage return to overwrite a prior progress bar.
-	;; So, instead of the ideal "animation" of seeing a progress bar
-	;; like:
-	;;
-	;;		Line 1: [                                         ] 0%
-	;;
-	;; Turn into:
-	;;
-	;;		Line 1: [=========================================] 100%
-	;;
-	;; In real time on a single line, you instead get this crap:
-	;;
-	;;		Line 1:   [                                       ] 0
-	;;		Line 2:   %
-	;;		Line 3:   [=                                      ] 1
-	;;		Line 4:   %
-	;;		Line N:   ...
-	;;		Line N+1: %
-	;;		Line 99:  [====================================== ] 99
-	;;		Line 100:  %
-	;;		Line 101: [=======================================] 100
-	;;		Line 102: %
-	;;
-	;; So, we fix this by adding a hook to vterm-mode, which is where
-	;; this incorrect stty call happens. This code comes in and
-	;; "corrects" the stty by setting the column value to be 1 less than
-	;; vterm thinks it should. This actually means that we now sometimes
-	;; undercount, but it is _always_ better to undercount than to
-	;; overcount.
-	;; Typically, I would consider opening a pull request, but I'm not
-	;; sure if I'll stick with vterm, and I'm also not completely
-	;; certain on what the correct implementation looks like -- this is
-	;; just a hack.
-	(add-hook 'vterm-mode-hook (lambda () (call-process "/home/may/dotfiles/scripts/decr_stty_cols.fish")))
-	(declare-function may/vterm/names "init.el")
-	(defun may/vterm/names ()
-	  (-map
-	   (lambda (buf) (buffer-name buf))
-	   (-filter
-	    (lambda (buf) (with-current-buffer buf
-											(and
-											 (string= "vterm-mode" major-mode)
-											 (string-match-p (regexp-quote "[vterm]")  (buffer-name)))))
-	    (buffer-list))))
-	
-	(declare-function may/vterm/name-to-num "init.el")
-	(defun may/vterm/name-to-num (s) (string-to-number (nth 1 (split-string s))))
-	
-	(declare-function may/vterm/get-next-num "init.el")
-	(defun may/vterm/get-next-num ()
-	  ;; Define this first since we'll be referencing it a bunch.
-	  (let ((sorted-vterm-names (-sort (lambda (a b) (string< a b)) (may/vterm/names))))
-	    (if sorted-vterm-names
-	        (or
-	          ;; Find a gap in the vterm buffers to fill, starting from smallest numbered gap to largest.
-	          (-first-item (-first (lambda (it) (/= (-first-item it) (may/vterm/name-to-num (-second-item it))))
-	                               (-map-indexed (lambda (idx it) (list (1+ idx) it)) sorted-vterm-names)))
-	          ;; If we do not find any such gap, just return the next number.
-	          (1+ (may/vterm/name-to-num (-last-item sorted-vterm-names))))
-	        ;; In the initial case when there are no vterm buffers yet, just start from 1.
-	        1)))
-	
-	(defun may/vterm/switch ()
-	  (interactive)
-	  (ivy-read "Switch to term: " (may/vterm/names)
-	            :require-match t
-	            :action (lambda (bufname) (switch-to-buffer bufname))))
-	
-	(declare-function may/vterm/make "init.el")
-	(defun may/vterm/make (&optional name)
-		(let ((old-dir default-directory))
-			(setq default-directory (projectile-project-root))
-			(let ((base (format "[vterm] %d" (may/vterm/get-next-num))))
-				(if (not (null name))
-	        (vterm (format "%s %s" base name))
-					(vterm base)))
-			(setq default-directory old-dir)))
-	
-	(defun may/vterm/ask-make ()
-	  (interactive)
-	  (may/vterm/make (read-string "Name for new vterm: ")))
-	
-	(defun may/vterm/send-vim-q ()
-		(interactive)
-		(vterm-send-key ":")
-		(vterm-send-key "q")
-		(vterm-send-return))
-	
-	(defun may/vterm/send-vim-w ()
-		(interactive)
-		(vterm-send-key ":")
-		(vterm-send-key "w")
-		(vterm-send-return))
-	
-	(defun may/vterm/send-vim-wq ()
-		(interactive)
-		(vterm-send-key ":")
-		(vterm-send-key "w")
-		(vterm-send-key "q")
-		(vterm-send-return))
-	:config
-	(setq vterm-timer-delay 0.0001)))
-
 (use-package general
   :after org
   :init
@@ -592,14 +457,8 @@ apps are not started from a shell."
   "ls" '(projectile-ripgrep :which-key "find file by content search")
   "le" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
   "lr" '(lsp-workspace-restart :which-key "restart LSP")
-  "tc" '(may/vterm/ask-make :which-key "create a vterm instance")
-  "tt" '(may/vterm/switch :which-key "switch to a vterm instance")
   "ps" '(projectile-switch-project :which-key "switch project")
   "pd" '(projectile-dired :which-key "open project dired")
-  "ve" '(vterm-send-escape :which-key "send <ESC>")
-  "vq." '(may/vterm/send-vim-q :which-key "send :q<RET>")
-  "vw." '(may/vterm/send-vim-w :which-key "send :w<RET>")
-  "vwq." '(may/vterm/send-vim-wq :which-key "send :wq<RET>")
   "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
   "oe" '(visible-mode :which-key "toggle Org hide emphasis")
   "ol" '(org-insert-link :which-key "insert a link in Org")
