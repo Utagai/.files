@@ -197,9 +197,8 @@ apps are not started from a shell."
 (use-package doom-themes
   :init (load-theme 'doom-nord))
 
-;; TODO: I don't think we'll actually want this.
 (use-package rainbow-delimiters
-  :hook (lisp-mode . rainbow-delimiters-mode))
+  :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
 (use-package which-key
   :init (which-key-mode)
