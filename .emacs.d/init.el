@@ -6,8 +6,6 @@
 
 ;; For new frames, padding + transparency, and disabling of scroll
 ;; bars.
-;; TODO: I am curious to know if setting these is enough, and we no
-;; longer need (scroll-bar-mode -1) or (set-fringe-mode 0).
 (setq default-frame-alist '((alpha . (93 . 93))
                             (internal-border-width . 20)
                             (left-fringe . 0)
@@ -28,10 +26,8 @@
 (setq inhibit-startup-message t)
 
 ;; Removing some unneeded UI elements
-(scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-(set-fringe-mode 0)
 (menu-bar-mode -1)
 
 ;; Set emacs' exec path to match our shell PATH.
