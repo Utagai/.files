@@ -146,8 +146,8 @@
   :init
   (ivy-mode 1))
 
-;; TODO: Should we use :after ivy?
 (use-package ivy-rich
+	:after ivy
   :init
   (ivy-rich-mode 1))
 
