@@ -30,18 +30,8 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 
-;; Set emacs' exec path to match our shell PATH.
-;; TODO: This can be written as a lambda.
-(defun set-exec-path-from-shell-PATH ()
-  "Set up Emacs' variable `exec-path' via $PATH.
 
-This would make variable `exec-path' match the PATH environment
-variable used by the user's shell.
-
-This is particularly useful under Mac OS X and macOS, where GUI
-apps are not started from a shell."
-  (interactive)
-
+(lambda ()
   (unless (string= system-type "windows-nt")
   (let ((path-from-shell (replace-regexp-in-string
         "[ \t\n]*$" "" (replace-regexp-in-string
@@ -49,8 +39,6 @@ apps are not started from a shell."
                 "$SHELL --login -c 'echo $PATH'")))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator)))))
-
-(set-exec-path-from-shell-PATH)
 
 ; disable backup
 (setq backup-inhibited t)
