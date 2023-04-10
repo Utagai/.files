@@ -140,9 +140,6 @@ apps are not started from a shell."
   :config
   (frames-only-mode))
 
-;; TODO: We should remove this I think.
-(use-package command-log-mode)
-
 (use-package dash)
 
 (use-package counsel
