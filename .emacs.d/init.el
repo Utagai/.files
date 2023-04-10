@@ -212,10 +212,6 @@
   (evil-set-undo-system 'undo-redo)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
-  ;; TODO: This is basically a thing that lets you treat a wrapped
-  ;; line as if it was actually split across multiple lines. Could be
-  ;; useful for markdown editing for example. We'll keep it out for
-  ;; now.
   (declare-function evil-global-set-key 'cover-flycheck-func-nodef-at-runtime)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
@@ -413,9 +409,6 @@
     (interactive)
     (switch-to-buffer (other-buffer)))
 
-  ;; TODO: There may be an issue with how we're doing this here. We
-  ;; may need to grab the current buffer name, switch to the
-  ;; other-buffer, and then kill the buffer that was current.
   (defun may/kill-current-buffer ()
     (interactive)
     (kill-buffer (current-buffer)))
