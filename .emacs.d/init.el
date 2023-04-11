@@ -283,7 +283,7 @@
 (use-package yasnippet-snippets
 	:after yasnippet
 	:ensure t
-	:commands (yas-reload-all)
+	:commands (yas-reload-all) ;; TODO: I think we can start using require instead of :commands...
 	:config
 	(yas-reload-all)
 	(dolist (mode '(org-mode-hook go-mode-hook rust-mode-hook))
@@ -389,6 +389,7 @@
   :config (counsel-projectile-mode)
 	(setq counsel-rg-base-command "rg --hidden -g '!.git/' --with-filename --no-heading --line-number --color never %s"))
 
+(require 'projectile)
 (use-package general
   :after org
   :init
@@ -412,6 +413,26 @@
   (defun may/kill-current-buffer ()
     (interactive)
     (kill-buffer (current-buffer)))
+
+	(defun may/rename-file ()
+		(interactive)
+		(let* ((root (projectile-acquire-root))
+					 (source (projectile-completing-read "Rename: " (projectile-project-files root)))
+					 (abs-source (concat root source))
+					 (src-rel-dir (file-name-directory source))
+					 (base-dir (concat (projectile-acquire-root) src-rel-dir))
+					 (target (read-file-name "To: " base-dir source nil)))
+			(message target)
+			(rename-file abs-source target)))
+
+	(defun may/delete-file ()
+		(interactive)
+		(let* ((root (projectile-acquire-root))
+					 (fi (projectile-completing-read "Delete: " (projectile-project-files root)))
+					 (abs-fi (concat root fi)))
+			(delete-file abs-fi)))
+
+	;;
 
   ;; We should probably split this into further functions for each prefix.
   ;; I think we should get the SPC prefix working in visual mode... so we can have commands work on the visual selection.
@@ -437,7 +458,9 @@
   "lp" '(projectile-find-file :which-key "find file by name")
   "ls" '(projectile-ripgrep :which-key "find file by content search")
   "le" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
-  "lr" '(lsp-workspace-restart :which-key "restart LSP")
+  "lsr" '(lsp-workspace-restart :which-key "restart LSP")
+  "lr" '(may/rename-file :which-key "rename a file in the project")
+  "ld" '(may/delete-file :which-key "delete a file in the project")
   "ps" '(projectile-switch-project :which-key "switch project")
   "pd" '(projectile-dired :which-key "open project dired")
   "oi" '(org-toggle-inline-images :which-key "toggle Org inline images")
