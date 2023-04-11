@@ -422,7 +422,6 @@
 					 (src-rel-dir (file-name-directory source))
 					 (base-dir (concat (projectile-acquire-root) src-rel-dir))
 					 (target (read-file-name "To: " base-dir source nil)))
-			(message target)
 			(rename-file abs-source target)))
 
 	(defun may/delete-file ()
@@ -453,8 +452,6 @@
   "rb" '(eval-buffer :which-key "evaluate buffer")
   "gs" '(magit-status :which-key "run magit-status")
   "cc" '(with-editor-finish :which-key "finish the editing session")
-  "lgd" '(evil-goto-definition :which-key "go to definition on point")
-  "lgr" '(lsp-find-references :which-key "find references of point")
   "lp" '(projectile-find-file :which-key "find file by name")
   "ls" '(projectile-ripgrep :which-key "find file by content search")
   "le" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
