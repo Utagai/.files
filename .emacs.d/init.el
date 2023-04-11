@@ -292,10 +292,13 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
+	:defines lsp-completion-provider
   :config
 	(setq lsp-lens-enable nil)
   (declare-function lsp-enable-which-key-integration 'cover-flycheck-func-nodef-at-runtime)
   (lsp-enable-which-key-integration t)
+	;; Stop lsp-mode from messing with the completion provider, allowing snippets to coexist.
+	(setq lsp-completion-provider :none)
   (setq lsp-headerline-breadcrumb-enable nil))
 
 (use-package company
@@ -308,10 +311,25 @@
   :custom
   (company-selection-wrap-around t)
   (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
+  (company-idle-delay 0.0)
+	:config
+	;; Taken from:
+	;; https://www.reddit.com/r/emacs/comments/bm8r3c/comment/emutora/
+	;; Adds company-yasnippet to all company backends, so that company
+	;; will start showing snippets.
+	(setq company-backends
+				(mapcar (lambda (backends)
+									(if (and (listp backends) (memq 'company-yasnippet backends))
+											backends
+										(append (if (consp backends)
+																backends
+															(list backends))
+														'(:with company-yasnippet)))) company-backends)))
 
 (use-package company-box
-  :hook (company-mode . company-box-mode))
+  :hook (company-mode . company-box-mode)
+	;; Add a hook to disable that attrocious vomit green default color for snippets in company-box.
+	:hook (company-box-mode . (lambda () (setq company-box-backends-colors '()))))
 
 (use-package tree-sitter)
 (use-package tree-sitter-langs
