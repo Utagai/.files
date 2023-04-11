@@ -280,17 +280,16 @@
 ;; around for now.
 (use-package yasnippet
 	:ensure t)
+(require 'yasnippet)
 (use-package yasnippet-snippets
 	:after yasnippet
 	:ensure t
-	:commands (yas-reload-all) ;; TODO: I think we can start using require instead of :commands...
 	:config
 	(yas-reload-all)
 	(dolist (mode '(org-mode-hook go-mode-hook rust-mode-hook))
 		(add-hook mode (lambda () (yas-minor-mode)))))
 
 (use-package lsp-mode
-  :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
@@ -335,8 +334,6 @@
 
 (use-package typescript-mode
   :hook (typescript-mode . lsp-deferred)
-	:init
-	(require 'typescript-mode)
   :config
   (setq typescript-indent-level 2)
   ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
@@ -368,10 +365,11 @@
 
 (use-package rustic
   :hook (rust-mode . lsp-deferred)
+	:init
+	(defvar lsp-rust-analyzer-cargo-watch-command "clippy")
 	:config
 	(setq rustic-format-trigger 'on-save)
-	(modify-syntax-entry ?_ "w" rust-mode-syntax-table)
-	(setq lsp-rust-analyzer-cargo-watch-command "clippy"))
+	(modify-syntax-entry ?_ "w" rust-mode-syntax-table))
 
 (use-package projectile
   :diminish projectile-mode
@@ -384,12 +382,12 @@
   (when (file-directory-p "~/code")
     (setq projectile-project-search-path '("~/code")))
   (setq projectile-switch-project-action #'projectile-dired))
+(require 'projectile)
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode)
 	(setq counsel-rg-base-command "rg --hidden -g '!.git/' --with-filename --no-heading --line-number --color never %s"))
 
-(require 'projectile)
 (use-package general
   :after org
   :init
