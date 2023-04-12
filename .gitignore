@@ -23,3 +23,5 @@ packer_compiled.lua
 10gen.lua
 _nvm*
 flycheck_init.el
+.emacs.d/*
+!.emacs.d/init.el
