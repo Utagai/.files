@@ -110,7 +110,7 @@
 	 '("570263442ce6735821600ec74a9b032bc5512ed4539faf61168f2fdf747e0668" "ce4234c32262924c1d2f43e6b61312634938777071f1129c7cde3ebd4a3028da" "00cec71d41047ebabeb310a325c365d5bc4b7fab0a681a2a108d32fb161b4006" "b99e334a4019a2caa71e1d6445fc346c6f074a05fcbb989800ecbe54474ae1b0" "2e05569868dc11a52b08926b4c1a27da77580daa9321773d92822f7a639956ce" "bf948e3f55a8cd1f420373410911d0a50be5a04a8886cabe8d8e471ad8fdba8e" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" default))
  '(org-hide-emphasis-markers t)
  '(package-selected-packages
-	 '(dockerfile-mode yaml-mode fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic go-mode company-box company typescript-mode lsp-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel which-key rainbow-delimiters doom-modeline command-log-mode use-package))
+	 '(go-mode yasnippet yasnippet-snippets eglot dockerfile-mode yaml-mode fish-mode hl-todo frames-only-mode tree-sitter-langs tree-sitter prettier-js flycheck counsel-projectile projectile rustic company-box company typescript-mode org-autolist markdown-mode evil-surround org-bullets evil-magit magit evil-collection evil general all-the-icons doom-themes helpful counsel which-key rainbow-delimiters doom-modeline command-log-mode use-package))
  '(warning-suppress-types '((use-package) (use-package) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -289,24 +289,15 @@
 	(dolist (mode '(org-mode-hook go-mode-hook rust-mode-hook))
 		(add-hook mode (lambda () (yas-minor-mode)))))
 
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-	:defines lsp-completion-provider
-  :config
-	(setq lsp-lens-enable nil)
-  (declare-function lsp-enable-which-key-integration 'cover-flycheck-func-nodef-at-runtime)
-  (lsp-enable-which-key-integration t)
-	;; Stop lsp-mode from messing with the completion provider, allowing snippets to coexist.
-	(setq lsp-completion-provider :none)
-  (setq lsp-headerline-breadcrumb-enable nil))
+(use-package eglot
+  :ensure t)
 
 (use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
+	:after eglot
+	:hook (eglot-managed-mode . company-mode)
   :bind (:map company-active-map
          ("<tab>" . company-select-next))
-        (:map lsp-mode-map
+        (:map company-active-map
          ("<backtab>" . company-select-previous))
   :custom
   (company-selection-wrap-around t)
@@ -338,6 +329,9 @@
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
+;; NOTE: We do not NEED flycheck. eglot works with flymake
+;; out-of-the-box. Flycheck is a bit nicer to work with though, so we
+;; keep it around.
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
@@ -351,7 +345,7 @@
 	(setq flycheck-display-errors-function nil))
 
 (use-package typescript-mode
-  :hook (typescript-mode . lsp-deferred)
+  :hook (typescript-mode . eglot-ensure)
   :config
   (setq typescript-indent-level 2)
   ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
@@ -371,7 +365,7 @@
   (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package go-mode
-  :hook (go-mode . lsp-deferred)
+  :hook (go-mode . eglot-ensure)
   :custom
   (gofmt-command "goimports")
   :config
@@ -382,10 +376,12 @@
 (use-package yaml-mode)
 
 (use-package rustic
-  :hook (rust-mode . lsp-deferred)
 	:init
-	(defvar lsp-rust-analyzer-cargo-watch-command "clippy")
+	(push 'rustic-clippy flycheck-checkers)
 	:config
+	;; Note that due to the below line, we do not need to make sure we
+	;; add eglot-ensure on hook.
+	(setq rustic-lsp-client 'eglot)
 	(setq rustic-format-trigger 'on-save)
 	(modify-syntax-entry ?_ "w" rust-mode-syntax-table))
 
@@ -471,7 +467,6 @@
   "lp" '(projectile-find-file :which-key "find file by name")
   "ls" '(projectile-ripgrep :which-key "find file by content search")
   "le" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
-  "lsr" '(lsp-workspace-restart :which-key "restart LSP")
   "lr" '(may/rename-file :which-key "rename a file in the project")
   "ld" '(may/delete-file :which-key "delete a file in the project")
   "ps" '(projectile-switch-project :which-key "switch project")
@@ -486,12 +481,12 @@
     :states '(normal motion)
     :keymaps 'override
     :prefix "g"
-    "r" 'lsp-find-references
-    "i" 'lsp-find-implementation
+    "r" 'xref-find-references
+    "i" 'eglot-find-implementation
     "n" 'flycheck-next-error
     "p" 'flycheck-previous-error
-    "e" 'lsp-rename
-    "k" 'lsp-describe-thing-at-point)
+    "e" 'eglot-rename
+    "k" 'eldoc-print-current-symbol-info)
 
   (general-def
      :keymaps 'transient-base-map
