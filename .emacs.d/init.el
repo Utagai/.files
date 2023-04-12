@@ -274,12 +274,13 @@
 (use-package dockerfile-mode
 	:ensure t)
 
-;; NOTE: We need this regardless of whether we use snippets to avoid
-;; certain errors/bugs with lsp-mode.
-;; However, snippets seem to be pretty nifty, so we'll keep this
-;; around for now.
 (use-package yasnippet
-	:ensure t)
+	:ensure t
+	:config
+	(define-key yas-minor-mode-map [(tab)]        nil)
+	(define-key yas-minor-mode-map (kbd "TAB")    nil)
+	(define-key yas-minor-mode-map (kbd "<tab>")  nil))
+
 (require 'yasnippet)
 (use-package yasnippet-snippets
 	:after yasnippet
