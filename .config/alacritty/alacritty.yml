@@ -75,3 +75,6 @@ cursor:
 
 shell:
   program: /usr/bin/fish
+
+key_bindings:
+  - { key: 5, mods: Shift, mode: VI|~Search, action: Last }
