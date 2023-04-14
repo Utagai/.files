@@ -24,7 +24,7 @@ font:
 colors:
    # Default colors
    primary:
-     background: '#2C2C2C'
+     background: '#252a33'
      foreground: '#A7A7A7'
 
    # Normal colors
@@ -50,10 +50,10 @@ colors:
      white:   '#ECEFF4'
 
 window:
-  opacity: 0.9
+  opacity: 0.87
   padding:
-    x: 15
-    y: 15
+    x: 30
+    y: 30
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
