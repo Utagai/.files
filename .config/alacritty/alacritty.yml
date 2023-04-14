@@ -58,6 +58,8 @@ window:
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
 
+live_config_reload: true
+
 
 # scrolling:
 #   # Maximum number of lines in the scrollback buffer.
