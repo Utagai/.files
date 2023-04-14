@@ -16,7 +16,7 @@ font:
     family: "terminal_monospace"
     style: Bold Italic
 
-  size: 9
+  size: 11
 
 # Colors (Nord)
 # These are taken from the the alacritty wiki:
