@@ -152,6 +152,7 @@
   (ivy-rich-mode 1))
 
 (use-package all-the-icons)
+(require 'doom-modeline)
 (use-package doom-modeline
   :ensure t
   :config
@@ -161,14 +162,12 @@
   ;; padding to the end of the bar.
   (setq mode-line-misc-info '("  "))
 
-  (declare-function doom-modeline-def-modeline 'cover-flycheck-func-nodef-at-runtime)
   ;; Customize what's in our bar.
   (doom-modeline-def-modeline 'custom-line
     '(bar modals matches buffer-info selection-info)
     '(vcs checker misc-info))
   
   (defun setup-custom-doom-modeline ()
-    (declare-function doom-modeline-set-modeline 'cover-flycheck-func-nodef-at-runtime)
     (doom-modeline-set-modeline 'custom-line 'default))
   (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
   
@@ -198,6 +197,7 @@
   ([remap describe-key] . helpful-key))
 
 ;; Vim emulation.
+(require 'evil)
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -208,11 +208,9 @@
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
-  (declare-function evil-set-undo-system 'cover-flycheck-func-nodef-at-runtime)
   (evil-set-undo-system 'undo-redo)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
-  (declare-function evil-global-set-key 'cover-flycheck-func-nodef-at-runtime)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
@@ -333,11 +331,11 @@
 ;; NOTE: We do not NEED flycheck. eglot works with flymake
 ;; out-of-the-box. Flycheck is a bit nicer to work with though, so we
 ;; keep it around.
+(require 'flycheck)
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
   (defun run-flycheck (_)
-    (declare-function flycheck-buffer 'cover-flycheck-func-nodef-at-runtime)
     (flycheck-buffer))
   (add-to-list 'window-buffer-change-functions 'run-flycheck)
 	;; Stops Flycheck from annoyingly spawning a new window (or frame
@@ -403,6 +401,7 @@
   :config (counsel-projectile-mode)
 	(setq counsel-rg-base-command "rg --hidden -g '!.git/' --with-filename --no-heading --line-number --color never %s"))
 
+(require 'general)
 (use-package general
   :after org
   :init
@@ -414,7 +413,6 @@
                                           operator
                                           replace))
   :config
-  (declare-function general-override-mode 'cover-flycheck-func-nodef-at-runtime)
   (general-override-mode)
   (general-auto-unbind-keys)
 
@@ -467,7 +465,7 @@
   "cc" '(with-editor-finish :which-key "finish the editing session")
   "lp" '(projectile-find-file :which-key "find file by name")
   "ls" '(projectile-ripgrep :which-key "find file by content search")
-  "le" '(flycheck-list-errors :which-key "list flycheck errors in a new frame")
+  "le" '(flymake-show-buffer-diagnostics :which-key "list flymake errors in a new frame")
   "lr" '(may/rename-file :which-key "rename a file in the project")
   "ld" '(may/delete-file :which-key "delete a file in the project")
   "ps" '(projectile-switch-project :which-key "switch project")
@@ -484,8 +482,8 @@
     :prefix "g"
     "r" 'xref-find-references
     "i" 'eglot-find-implementation
-    "n" 'flycheck-next-error
-    "p" 'flycheck-previous-error
+    "n" 'flymake-goto-next-error
+    "p" 'flymake-goto-previous-error
     "e" 'eglot-rename
     "k" 'eldoc-print-current-symbol-info)
 
