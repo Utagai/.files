@@ -1,0 +1,27 @@
+#sidebar-header{ display: none }
+
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] > #sidebar-header{
+  display: none
+}
+
+/*  Hide the tabs within TabsToolbar*/
+.toolbar-items {
+    display: none;
+}
+
+/* Make the min/max/close buttons align to the right*/
+#TabsToolbar {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+/*  Hide the titlebar spacers, which push the buttons away from the corner */
+.titlebar-spacer {
+    display: none;
+}
+
+/* Hide the sidebar header */
+#sidebar-header {
+    display: none;
+}
+
