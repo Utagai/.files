@@ -6,7 +6,7 @@
 
 ;; For new frames, padding + transparency, and disabling of scroll
 ;; bars.
-(setq default-frame-alist '((alpha . (93 . 93))
+(setq default-frame-alist '((alpha . (86 . 86))
                             (internal-border-width . 20)
                             (left-fringe . 0)
                             (right-fringe . 0)
@@ -51,8 +51,8 @@
 ;; This shouldn't be necessary, but for some reason, if we do not do
 ;; this, then the font emacs renders end up being weirdly aliased
 ;; until we evaluate this line a second time.
-(set-face-attribute 'default nil :font "Cascadia Code PL" :height 90)
-(add-hook 'after-make-frame-functions (lambda (frame) (set-face-attribute 'default frame :font "Cascadia Code PL" :height 90)))
+(set-face-attribute 'default nil :font "Cascadia Mono PL" :height 110)
+(add-hook 'after-make-frame-functions (lambda (frame) (set-face-attribute 'default frame :font "Cascadia Mono PL" :height 110)))
 
 ;; Set default working directory to the notes directory on Windows
 ;; (the only thing I use emacs for on Windows):

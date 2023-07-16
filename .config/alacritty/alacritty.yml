@@ -20,10 +20,10 @@ font:
 # These are taken from the the alacritty wiki:
 # https://github.com/alacritty/alacritty/wiki/Color-schemes
 colors:
-   # Default colors
-   primary:
-     background: '#252a33'
-     foreground: '#A7A7A7'
+  # Default colors
+  primary:
+    background: "#2e3440"
+    foreground: "#A7A7A7"
 
    # Normal colors
    normal:
@@ -48,7 +48,7 @@ colors:
      white:   '#ECEFF4'
 
 window:
-  opacity: 0.87
+  opacity: 0.86
   padding:
     x: 30
     y: 30
