@@ -1,8 +1,6 @@
 font:
   normal:
     family: "terminal_monospace"
-    # This is intentional... we strongly prefer the font's looks when it is bold.
-    style: Bold
 
   bold:
     family: "terminal_monospace"
