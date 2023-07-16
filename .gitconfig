@@ -4,10 +4,10 @@
 [core]
   editor = nvim
 [pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
 [include]
   path = ~/.config/delta/nord.gitconfig
 [delta]
@@ -50,4 +50,4 @@
 [url "git@github.com:"]
   insteadOf = https://github.com/
 [commit]
-	gpgSign = true
+  gpgSign = true
