@@ -1,0 +1,9 @@
+[Unit]
+Description=Maintains a deck battery percentage anywhere from 79-81%, inclusive..
+
+[Service]
+Type=simple
+ExecStart=/home/may/dotfiles/scripts/deck_bat_ctrl.fish
+
+[Install]
+WantedBy=multi-user.target
