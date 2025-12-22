@@ -22,15 +22,25 @@ format_duration() {
   echo "$result"
 }
 
-precmd() { 
+# Format epoch seconds as HH:MM:SS (macOS + Linux)
+format_time() {
+  local sec=$1
+  if [[ "$(uname)" == "Darwin" ]]; then
+    date -r "$sec" +"%H:%M:%S"
+  else
+    date -d "@$sec" +"%H:%M:%S"
+  fi
+}
+
+precmd() {
   local CMD_END=$EPOCHREALTIME
 
   local START_SEC=${CMD_START%%.*}
   local END_SEC=${CMD_END%%.*}
   local DURATION=$(( END_SEC - START_SEC ))
 
-  local END_FMT=$(date -r $END_SEC +"%H:%M:%S")
-  local DUR_FMT=$(format_duration $DURATION)
+  local END_FMT=$(format_time "$END_SEC")
+  local DUR_FMT=$(format_duration "$DURATION")
 
   RPROMPT='%F{139}❮%f %F{64}'"$END_FMT"'%f %F{139}≈%f %F{64}'"$DUR_FMT"'%f %F{139}❯%f'
 }
