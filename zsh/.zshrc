@@ -166,3 +166,42 @@ PROMPT_EOF
 }
 export PATH="$HOME/.local/bin:$PATH"
 alias rv="echo $?"
+
+quick() {
+  local allow_existing=0
+
+  if [[ $# -ne 1 && $# -ne 2 ]]; then
+    echo "Invalid arguments; expecting quick [-p] DIR_NAME [-p]"
+    return 1
+  fi
+
+  local name
+  if [[ $# -eq 2 && "$1" == "-p" ]]; then
+    allow_existing=1
+    name="$2"
+  elif [[ $# -eq 2 && "$2" == "-p" ]]; then
+    allow_existing=1
+    name="$1"
+  elif [[ $# -eq 1 ]]; then
+    name="$1"
+  else
+    echo "Invalid arguments; expecting quick [-p] DIR_NAME [-p]"
+    return 1
+  fi
+
+  local base="$HOME/quick"
+  local target="$base/$name"
+
+  if [[ -e "$target" && $allow_existing -eq 0 ]]; then
+    echo "Directory $HOME/quick/$target already exists; use -p"
+    return 1
+  fi
+
+  mkdir -p "$target" || return 1
+
+  (
+    cd "$target" || exit 1
+    export IS_QUICK_SUBSHELL=true
+    exec zsh
+  )
+}

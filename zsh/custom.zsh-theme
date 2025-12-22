@@ -45,8 +45,9 @@ precmd() {
   RPROMPT='%F{139}❮%f %F{64}'"$END_FMT"'%f %F{139}≈%f %F{64}'"$DUR_FMT"'%f %F{139}❯%f'
 }
 
-# Prompt layout (left)
-PROMPT='%F{218}❮%f %F{151}%1~%f$( \
+PROMPT='%F{218}❮%f $( \
+  [[ -n $IS_QUICK_SUBSHELL ]] && echo "%F{126}quick!%f %F{218}≈%f " \
+)%F{151}%1~%f$( \
   git_info=$(git_prompt_info); \
   [[ -n $git_info ]] && echo " %F{218}≈%f $git_info" \
 ) %F{218}❯%f '
