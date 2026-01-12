@@ -205,3 +205,13 @@ quick() {
     exec zsh
   )
 }
+
+untilfail() {
+  local count=0
+  while "$@"; do
+    ((count++))
+    echo "✓ Run $count succeeded"
+  done
+  echo "✗ Failed after $count successful runs"
+  return 1
+}
