@@ -115,6 +115,8 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/$USER/go/bin
 
+eval "$(ssh-agent -s)" > /dev/null
+
 uh() {
   local description="$*"
   local stdin_info=""
@@ -214,4 +216,52 @@ untilfail() {
   done
   echo "✗ Failed after $count successful runs"
   return 1
+}
+
+worktree() {
+  if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Error: Not in a git repository"
+    return 1
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "Usage: worktree <branch-name> [-b base-branch]"
+    return 1
+  fi
+
+  local branch_name="$1"
+  local base_branch="${2:--b}"
+  local create_new=false
+
+  # Check if -b flag and base branch provided
+  if [[ "$2" == "-b" && -n "$3" ]]; then
+    create_new=true
+    base_branch="$3"
+  fi
+
+  local repo_name=$(basename "$(git rev-parse --show-toplevel)")
+  local worktrees_base="$HOME/code/worktrees/$repo_name"
+  mkdir -p "$worktrees_base"
+
+  local worktree_path="$worktrees_base/$branch_name"
+
+  if [[ -d "$worktree_path" ]]; then
+    echo "Error: Worktree directory already exists: $worktree_path"
+    return 1
+  fi
+
+  if [[ "$create_new" == true ]]; then
+    git worktree add -b "$branch_name" "$worktree_path" "$base_branch"
+  else
+    git worktree add "$worktree_path" "$branch_name"
+  fi
+
+  if [[ $? -eq 0 ]]; then
+    echo "✓ Created worktree for branch '$branch_name'"
+    echo "✓ Location: $worktree_path"
+    cd "$worktree_path"
+  else
+    echo "Error: Failed to create worktree"
+    return 1
+  fi
 }
