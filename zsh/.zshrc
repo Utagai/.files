@@ -277,3 +277,36 @@ worktree() {
     return 1
   fi
 }
+
+cdworktree() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: cdworktree <branch-name>"
+    return 1
+  fi
+
+  local branch_name="$1"
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [[ $? -ne 0 ]]; then
+    echo "Error: Not in a git repository"
+    return 1
+  fi
+
+  local repo_name
+  repo_name=$(basename "$repo_root")
+  local worktrees_base="$HOME/code/worktrees/$repo_name"
+  local worktree_path="$worktrees_base/$branch_name"
+
+  if [[ ! -d "$worktree_path" ]]; then
+    echo "Error: Worktree directory does not exist for branch '$branch_name'"
+    return 1
+  fi
+
+  if ! git branch --all --list | grep -qw "$branch_name"; then
+    echo "Error: Branch '$branch_name' does not exist in the repository"
+    return 1
+  fi
+
+  cd "$worktree_path" || return 1
+  echo "✓ Switched to worktree for branch '$branch_name'"
+}
