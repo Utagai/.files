@@ -246,8 +246,9 @@ worktree() {
   local worktree_path="$worktrees_base/$branch_name"
 
   if [[ -d "$worktree_path" ]]; then
-    echo "Error: Worktree directory already exists: $worktree_path"
-    return 1
+    echo "✓ Worktree directory already exists: $worktree_path"
+    cd "$worktree_path"
+    return 0
   fi
 
   if [[ "$create_new" == true ]]; then
