@@ -115,8 +115,6 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/$USER/go/bin
 
-eval "$(ssh-agent -s)" > /dev/null
-
 uh() {
   local description="$*"
   local stdin_info=""
@@ -233,13 +231,15 @@ worktree() {
   local base_branch="${2:--b}"
   local create_new=false
 
-  # Check if -b flag and base branch provided
   if [[ "$2" == "-b" && -n "$3" ]]; then
     create_new=true
     base_branch="$3"
   fi
 
-  local repo_name=$(basename "$(git rev-parse --show-toplevel)")
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel)
+  local repo_name
+  repo_name=$(basename "$repo_root")
   local worktrees_base="$HOME/code/worktrees/$repo_name"
   mkdir -p "$worktrees_base"
 
@@ -259,7 +259,18 @@ worktree() {
   if [[ $? -eq 0 ]]; then
     echo "✓ Created worktree for branch '$branch_name'"
     echo "✓ Location: $worktree_path"
+
     cd "$worktree_path"
+
+    for file in .env .env.sh; do
+      if [[ -f "$repo_root/$file" ]]; then
+        cp "$repo_root/$file" "$worktree_path/"
+      fi
+    done
+
+    if [[ -d "$repo_root/.claude" ]]; then
+      cp -r "$repo_root/.claude" "$worktree_path/"
+    fi
   else
     echo "Error: Failed to create worktree"
     return 1
