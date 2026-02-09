@@ -1,3 +1,6 @@
+EXTRA_FILE="$HOME/.oh-my-zsh/custom/extra.sh"
+[[ -f "$EXTRA_FILE" ]] && source "$EXTRA_FILE"
+
 ZSH_THEME_GIT_PROMPT_PREFIX="%F{151}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%f"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
@@ -34,7 +37,6 @@ format_time() {
 
 precmd() {
   local CMD_END=$EPOCHREALTIME
-
   local START_SEC=${CMD_START%%.*}
   local END_SEC=${CMD_END%%.*}
   local DURATION=$(( END_SEC - START_SEC ))
@@ -48,6 +50,8 @@ precmd() {
 PROMPT='%F{218}❮%f $( \
   [[ -n $IS_QUICK_SUBSHELL ]] && echo "%F{126}quick!%f %F{218}≈%f " \
 )%F{151}%1~%f$( \
+  [[ -n $EXTRA_PROMPT ]] && echo " %F{218}≈%f %F{151}$EXTRA_PROMPT%f" \
+)$( \
   git_info=$(git_prompt_info); \
   [[ -n $git_info ]] && echo " %F{218}≈%f $git_info" \
 ) %F{218}❯%f '
