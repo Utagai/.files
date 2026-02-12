@@ -165,7 +165,7 @@ PROMPT_EOF
   done
 }
 export PATH="$HOME/.local/bin:$PATH"
-alias rv="echo $?"
+alias rv='echo $?'
 
 quick() {
   local allow_existing=0
