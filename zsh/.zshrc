@@ -279,36 +279,45 @@ worktree() {
 }
 
 cdworktree() {
-  if [[ -z "$1" ]]; then
-    echo "Usage: cdworktree <branch-name>"
-    return 1
-  fi
+  local repo_root repo_name worktrees_base branch_name worktree_path
 
-  local branch_name="$1"
-  local repo_root
+  # 1. Identify the repo and its worktree base directory
   repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
   if [[ $? -ne 0 ]]; then
     echo "Error: Not in a git repository"
     return 1
   fi
 
-  local repo_name
   repo_name=$(basename "$repo_root")
-  local worktrees_base="$HOME/code/worktrees/$repo_name"
-  local worktree_path="$worktrees_base/$branch_name"
+  worktrees_base="$HOME/code/worktrees/$repo_name"
 
-  if [[ ! -d "$worktree_path" ]]; then
-    echo "Error: Worktree directory does not exist for branch '$branch_name'"
+  if [[ ! -d "$worktrees_base" ]]; then
+    echo "Error: Worktree base directory not found: $worktrees_base"
     return 1
   fi
 
-  if ! git branch --all --list | grep -qw "$branch_name"; then
-    echo "Error: Branch '$branch_name' does not exist in the repository"
+  # 2. Determine the target branch/folder
+  if [[ -z "$1" ]]; then
+    # No argument? Use fzf to select from folders in the worktree base
+    # 'mindepth 1 / maxdepth 1' ensures we only see the actual worktree folders
+    branch_name=$(find "$worktrees_base" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | fzf --height 40% --reverse --prompt="Select Worktree > ")
+    
+    # If user hits ESC or cancels fzf
+    [[ -z "$branch_name" ]] && return 0
+  else
+    branch_name="$1"
+  fi
+
+  # 3. Validation and Navigation
+  worktree_path="$worktrees_base/$branch_name"
+
+  if [[ ! -d "$worktree_path" ]]; then
+    echo "Error: Worktree directory does not exist for '$branch_name'"
     return 1
   fi
 
   cd "$worktree_path" || return 1
-  echo "✓ Switched to worktree for branch '$branch_name'"
+  echo "✓ Switched to worktree: $branch_name"
 }
 
 cpcmd() {
