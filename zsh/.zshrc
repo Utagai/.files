@@ -313,12 +313,12 @@ cdworktree() {
 
 cpcmd() {
   local selected_command
-
+  
   # 1. We use 'fc' (fix command) which is Zsh's built-in history tool.
   #    'fc -l -n 1' lists all history starting from entry 1, without line numbers.
-  # 2. We use fzf normally (no need for complex Perl delimiters here because
+  # 2. We use fzf normally (no need for complex Perl delimiters here because 
   #    Zsh handles the line grouping when outputting via fc).
-
+  
   selected_command=$(fc -l -n 1 | fzf \
         --tac \
         --tiebreak=index \
@@ -330,7 +330,7 @@ cpcmd() {
   if [[ -n "$selected_command" ]]; then
     # Trim leading/trailing whitespace which fc sometimes adds
     selected_command=$(echo "$selected_command" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-
+    
     if [[ "$OSTYPE" == "darwin"* ]]; then
       echo -n "$selected_command" | pbcopy
     else
