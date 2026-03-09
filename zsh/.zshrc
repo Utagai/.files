@@ -228,22 +228,32 @@ worktree() {
   fi
 
   local branch_name="$1"
-  local base_branch="${2:--b}"
+  local repo_root=$(git rev-parse --show-toplevel)
+  local repo_name=$(basename "$repo_root")
+  local worktrees_base="$HOME/code/worktrees/$repo_name"
+  local worktree_path="$worktrees_base/$branch_name"
+
+  # 1. Determine the default base branch (main or master)
+  local default_base
+  if git show-ref --verify --quiet refs/heads/main; then
+    default_base="main"
+  else
+    default_base="master"
+  fi
+
+  # 2. Parse arguments for explicit base branch
+  local base_branch=$default_base
   local create_new=false
 
   if [[ "$2" == "-b" && -n "$3" ]]; then
     create_new=true
     base_branch="$3"
+  elif ! git show-ref --verify --quiet "refs/heads/$branch_name" && ! git show-ref --verify --quiet "refs/remotes/origin/$branch_name"; then
+    # If branch doesn't exist locally or remotely, we must create it
+    create_new=true
   fi
 
-  local repo_root
-  repo_root=$(git rev-parse --show-toplevel)
-  local repo_name
-  repo_name=$(basename "$repo_root")
-  local worktrees_base="$HOME/code/worktrees/$repo_name"
   mkdir -p "$worktrees_base"
-
-  local worktree_path="$worktrees_base/$branch_name"
 
   if [[ -d "$worktree_path" ]]; then
     echo "✓ Worktree directory already exists: $worktree_path"
@@ -251,27 +261,24 @@ worktree() {
     return 0
   fi
 
+  # 3. Execution
   if [[ "$create_new" == true ]]; then
+    echo "Creating new branch '$branch_name' from '$base_branch'..."
     git worktree add -b "$branch_name" "$worktree_path" "$base_branch"
   else
+    echo "Checking out existing branch '$branch_name'..."
     git worktree add "$worktree_path" "$branch_name"
   fi
 
   if [[ $? -eq 0 ]]; then
-    echo "✓ Created worktree for branch '$branch_name'"
-    echo "✓ Location: $worktree_path"
-
+    echo "✓ Created worktree at: $worktree_path"
     cd "$worktree_path"
 
+    # Copy config files
     for file in .env .env.sh; do
-      if [[ -f "$repo_root/$file" ]]; then
-        cp "$repo_root/$file" "$worktree_path/"
-      fi
+      [[ -f "$repo_root/$file" ]] && cp "$repo_root/$file" "$worktree_path/"
     done
-
-    if [[ -d "$repo_root/.claude" ]]; then
-      cp -r "$repo_root/.claude" "$worktree_path/"
-    fi
+    [[ -d "$repo_root/.claude" ]] && cp -r "$repo_root/.claude" "$worktree_path/"
   else
     echo "Error: Failed to create worktree"
     return 1
