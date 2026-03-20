@@ -1,3 +1,7 @@
+autoload -Uz vcs_info
+precmd_functions+=( vcs_info )
+zstyle ':vcs_info:git:*' formats '%b'
+
 EXTRA_FILE="$HOME/.oh-my-zsh/custom/extra.sh"
 [[ -f "$EXTRA_FILE" ]] && source "$EXTRA_FILE"
 
@@ -35,6 +39,20 @@ format_time() {
   fi
 }
 
+build_prompt() {
+  local git_info=$vcs_info_msg_0_
+  local prompt="%F{218}❮%f"
+  [[ -n $IS_QUICK_SUBSHELL ]] && prompt+=" %F{126}quick!%f %F{218}≈%f"
+  prompt+=" %F{151}%1~%f"
+  [[ -n $EXTRA_PROMPT ]] && prompt+=" %F{218}≈%f %F{151}$EXTRA_PROMPT%f"
+  
+  # Format the git info with your specific colors
+  [[ -n $git_info ]] && prompt+=" %F{218}≈%f %F{151}$git_info%f"
+  
+  prompt+=" %F{218}❯%f "
+  echo "$prompt"
+}
+
 precmd() {
   local CMD_END=$EPOCHREALTIME
   local START_SEC=${CMD_START%%.*}
@@ -45,13 +63,5 @@ precmd() {
   local DUR_FMT=$(format_duration "$DURATION")
 
   RPROMPT='%F{139}❮%f %F{64}'"$END_FMT"'%f %F{139}≈%f %F{64}'"$DUR_FMT"'%f %F{139}❯%f'
+  PROMPT=$(build_prompt)
 }
-
-PROMPT='%F{218}❮%f $( \
-  [[ -n $IS_QUICK_SUBSHELL ]] && echo "%F{126}quick!%f %F{218}≈%f " \
-)%F{151}%1~%f$( \
-  [[ -n $EXTRA_PROMPT ]] && echo " %F{218}≈%f %F{151}$EXTRA_PROMPT%f" \
-)$( \
-  git_info=$(git_prompt_info); \
-  [[ -n $git_info ]] && echo " %F{218}≈%f $git_info" \
-) %F{218}❯%f '
