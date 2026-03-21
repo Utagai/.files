@@ -113,7 +113,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/$HOME/go/bin
+export PATH=$PATH:$HOME/go/bin
 
 uh() {
   local description="$*"
