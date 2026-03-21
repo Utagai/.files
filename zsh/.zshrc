@@ -357,3 +357,7 @@ cpcmd() {
     echo "❌ No command selected."
   fi
 }
+
+brch() {
+  git branch --show-current
+}
