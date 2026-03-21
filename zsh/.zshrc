@@ -381,3 +381,23 @@ ghpr() {
   # Execute gh with the constructed arguments
   gh pr create "${args[@]}"
 }
+
+ocr() {
+  local sessions selection selected_id fzf_status
+
+  # 1. Fetch data, sorted by updated timestamp descending
+  sessions=$(opencode session list --format json | jq -r 'sort_by(.updated) | reverse | .[] | "\(.id) | \(.title)"')
+  
+  # Check if sessions were actually returned
+  [[ -z "$sessions" ]] && return 1
+
+  # 2. Interactive selection
+  selection=$(printf "%s\n" "$sessions" | fzf --delimiter="|" --with-nth=2..)
+  fzf_status=$?
+
+  if [[ $fzf_status -eq 0 && -n "$selection" ]]; then
+    # 3. Extract ID and execute
+    selected_id="${selection%% | *}"
+    opencode -s "$selected_id"
+  fi
+}
