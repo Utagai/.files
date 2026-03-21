@@ -1,5 +1,6 @@
 autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats '%b'
+setopt TRANSIENT_RPROMPT
 
 EXTRA_FILE="$HOME/.oh-my-zsh/custom/extra.sh"
 [[ -f "$EXTRA_FILE" ]] && source "$EXTRA_FILE"
