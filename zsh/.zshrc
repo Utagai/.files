@@ -361,3 +361,23 @@ cpcmd() {
 brch() {
   git branch --show-current
 }
+
+ghpr() {
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  local args=("--fill")
+
+  if [[ "$branch" == "main" || "$branch" == "master" ]]; then
+    echo "Error: Cannot create a PR from '$branch'."
+    return 1
+  fi
+
+  # Check for the --browse flag
+  if [[ "$1" == "--browse" ]]; then
+    args+=("--web")
+  fi
+
+  git push -u origin "$branch"
+  
+  # Execute gh with the constructed arguments
+  gh pr create "${args[@]}"
+}
