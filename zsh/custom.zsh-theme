@@ -1,5 +1,4 @@
 autoload -Uz vcs_info
-precmd_functions+=( vcs_info )
 zstyle ':vcs_info:git:*' formats '%b'
 
 EXTRA_FILE="$HOME/.oh-my-zsh/custom/extra.sh"
@@ -45,15 +44,16 @@ build_prompt() {
   [[ -n $IS_QUICK_SUBSHELL ]] && prompt+=" %F{126}quick!%f %F{218}≈%f"
   prompt+=" %F{151}%1~%f"
   [[ -n $EXTRA_PROMPT ]] && prompt+=" %F{218}≈%f %F{151}$EXTRA_PROMPT%f"
-  
-  # Format the git info with your specific colors
+
   [[ -n $git_info ]] && prompt+=" %F{218}≈%f %F{151}$git_info%f"
-  
+
   prompt+=" %F{218}❯%f "
   echo "$prompt"
 }
 
 precmd() {
+  vcs_info
+
   local CMD_END=$EPOCHREALTIME
   local START_SEC=${CMD_START%%.*}
   local END_SEC=${CMD_END%%.*}
