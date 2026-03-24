@@ -1,0 +1,13 @@
+# aesthetics
+theme = Nord
+cursor-style = bar
+background-opacity = 0.35
+background-opacity-cells = true
+background-blur=true
+macos-titlebar-style = tabs
+
+# typography
+font-size=14
+font-thicken=true
+font-thicken-strength=1
+adjust-cell-height=1
